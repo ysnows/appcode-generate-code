@@ -13,6 +13,9 @@ import com.intellij.psi.PsiFile;
 
 import org.apache.http.util.TextUtils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import main.java.utils.CommonUtil;
 import main.java.utils.MyNotifier;
 
@@ -41,34 +44,52 @@ public class newLineView extends AnAction {
                 String strContent = document.getText();
                 int firstEndIndex = strContent.indexOf("@end");
 
-                document.insertString(firstEndIndex - 1, "\n@property(nonatomic, strong) LineView *view" + name + ";");
+                document.insertString(firstEndIndex - 1, "\n@property(nonatomic, strong) LineView *line" + name + ";");
 
                 strContent = document.getText();
                 int lastEndIndex = strContent.lastIndexOf("@end");
                 StringBuilder strBuilder = new StringBuilder();
-                strBuilder.append("\n- (LineView *)view").append(name).append(" {\n");
+                strBuilder.append("\n- (LineView *)line").append(name).append(" {\n");
 
-                strBuilder.append("\tif (!_view").append(name).append("){\n");
+                strBuilder.append("\tif (!_line").append(name).append("){\n");
 
-                strBuilder.append("\t\t_view").append(name).append(" = [[LineView alloc] initWithFrame:CGRectZero];\n");
+                strBuilder.append("\t\t_line").append(name).append(" = [[LineView alloc] initWithFrame:CGRectZero];\n");
 
                 if (!TextUtils.isBlank(bgcolor)) {
-                    strBuilder.append("\t\t_view").append(name).append(".backgroundColor = ").append(CommonUtil.processColor(bgcolor)).append(";\n");
+                    strBuilder.append("\t\t_line").append(name).append(".backgroundColor = ").append(CommonUtil.processColor(bgcolor)).append(";\n");
                 }
 
                 if (!TextUtils.isBlank(radius)) {
-                    strBuilder.append("\t\t[_view").append(name).append(" corner_radius:kNum(").append(radius).append(")];\n");
+                    strBuilder.append("\t\t[_line").append(name).append(" corner_radius:kNum(").append(radius).append(")];\n");
                 }
 
                 if (!TextUtils.isBlank(border) && !TextUtils.isBlank(border_color)) {
-                    strBuilder.append("\t\t[_view").append(name).append(" border:kNum(").append(border).append(") color:").append(CommonUtil.processColor(border_color)).append("];\n");
+                    strBuilder.append("\t\t[_line").append(name).append(" border:kNum(").append(border).append(") color:").append(CommonUtil.processColor(border_color)).append("];\n");
                 }
 
                 strBuilder.append("\t}\n");
-                strBuilder.append("\treturn _view").append(name).append(";\n");
+                strBuilder.append("\treturn _line").append(name).append(";\n");
                 strBuilder.append("}\n");
 
                 document.insertString(lastEndIndex - 1, strBuilder.toString());
+
+
+                strContent = document.getText();
+                int index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)updateConstraints");
+
+                strBuilder = new StringBuilder();
+                strBuilder.append("\n\t[self.line").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
+                strBuilder.append("}];\n");
+                document.insertString(index - 1, strBuilder.toString());
+
+                strContent = document.getText();
+                index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)loadView");
+
+                strBuilder = new StringBuilder();
+                strBuilder.append("\n\t[self.contentView addSubview:self.line").append(name).append("];");
+                document.insertString(index - 1, strBuilder.toString());
+
+
                 Project project = editor.getProject();
                 if (project == null) {
                     resultMessage[0] = "当前工程不能为空！";

@@ -9,6 +9,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -154,4 +156,37 @@ public class CommonUtil {
         String text = String.format("@\"%s\"", string);
         return text;
     }
+
+
+    public static int getIndexOfMethod(String input, String methodStrPattern) {
+        Pattern pattern = Pattern.compile(methodStrPattern, Pattern.DOTALL);
+
+        Matcher matcher = pattern.matcher(input);
+        int end = 0;
+        while (matcher.find()) {
+            end = matcher.toMatchResult().end();
+            System.out.println("no-end" + end);
+            break;
+        }
+        pattern = Pattern.compile("-\\s+\\(", Pattern.DOTALL);
+        String subinput = input.substring(end);
+
+        matcher = pattern.matcher(subinput);
+
+        int newEnd = 0;
+        while (matcher.find()) {
+            newEnd = matcher.toMatchResult().end();
+            System.out.println("no-end" + newEnd);
+            break;
+        }
+        int index;
+        if (newEnd == 0) {
+            index = input.lastIndexOf("}");
+        } else {
+            String substring = input.substring(0, end + newEnd);
+            index = substring.lastIndexOf("}");
+        }
+        return index;
+    }
+
 }

@@ -71,6 +71,25 @@ public class newUIView extends AnAction {
                 strBuilder.append("}\n");
 
                 document.insertString(lastEndIndex - 1, strBuilder.toString());
+
+                strContent = document.getText();
+                int index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)updateConstraints");
+
+                strBuilder = new StringBuilder();
+                strBuilder.append("\n\t[self.view").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
+                strBuilder.append("}];\n");
+                document.insertString(index - 1, strBuilder.toString());
+
+                strContent = document.getText();
+                index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)loadView");
+
+                strBuilder = new StringBuilder();
+                strBuilder.append("\n\t[self.contentView addSubview:self.view").append(name).append("];");
+                document.insertString(index - 1, strBuilder.toString());
+
+
+
+
                 Project project = editor.getProject();
                 if (project == null) {
                     resultMessage[0] = "当前工程不能为空！";

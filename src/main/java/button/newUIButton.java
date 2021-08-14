@@ -74,11 +74,26 @@ public class newUIButton extends AnAction {
                 strBuilder.append("}\n");
 
                 document.insertString(lastEndIndex - 1, strBuilder.toString());
-                Project project = editor.getProject();
-                if (project == null) {
-                    resultMessage[0] = "当前工程不能为空！";
-                    return;
-                }
+
+
+
+                strContent = document.getText();
+                int index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)updateConstraints");
+
+                strBuilder = new StringBuilder();
+                strBuilder.append("\n\t[self.btn").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
+                strBuilder.append("}];\n");
+                document.insertString(index - 1, strBuilder.toString());
+
+                strContent = document.getText();
+                index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)loadView");
+
+                strBuilder = new StringBuilder();
+                strBuilder.append("\n\t[self.contentView addSubview:self.btn").append(name).append("];");
+                document.insertString(index - 1, strBuilder.toString());
+
+
+
             });
         }
 
