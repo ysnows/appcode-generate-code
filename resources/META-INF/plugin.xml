@@ -45,6 +45,16 @@
             <add-to-group group-id="GenerateGroup" anchor="first" />
             <keyboard-shortcut keymap="$default" first-keystroke="meta alt P" />
         </action >
+        <action id="newUIView" class="main.java.view.newUIView" text="newUIView"
+                description="newUIView" >
+            <add-to-group group-id="GenerateGroup" anchor="first" />
+            <keyboard-shortcut keymap="$default" first-keystroke="meta alt P" />
+        </action >
+        <action id="newLineView" class="main.java.line.newLineView" text="newLineView"
+                description="newLineView" >
+            <add-to-group group-id="GenerateGroup" anchor="first" />
+            <keyboard-shortcut keymap="$default" first-keystroke="meta alt P" />
+        </action >
     </actions >
 
 </idea-plugin >
