@@ -40,6 +40,11 @@
             <add-to-group group-id="GenerateGroup" anchor="first" />
             <keyboard-shortcut keymap="$default" first-keystroke="meta alt P" />
         </action >
+        <action id="newUITextField" class="main.java.textfield.newUITextField" text="newUITextField"
+                description="newUITextField" >
+            <add-to-group group-id="GenerateGroup" anchor="first" />
+            <keyboard-shortcut keymap="$default" first-keystroke="meta alt P" />
+        </action >
     </actions >
 
 </idea-plugin >
