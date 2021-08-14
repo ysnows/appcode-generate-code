@@ -80,7 +80,7 @@ public class newUIImageView extends AnAction {
 
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self.img").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
-                strBuilder.append("}];\n");
+                strBuilder.append("\n\t}];\n");
                 document.insertString(index - 1, strBuilder.toString());
 
                 strContent = document.getText();
