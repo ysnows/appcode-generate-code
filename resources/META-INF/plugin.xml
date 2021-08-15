@@ -18,6 +18,11 @@
     <depends >com.intellij.modules.platform</depends >
 
     <extensions defaultExtensionNs="com.intellij" >
+        <completion.contributor
+            implementationClass="main.java.masory.MyCompletionContributor"
+            language="any"
+            order="first"
+        />
         <notificationGroup id="Custom Notification Group" displayType="BALLOON"
                            key="notification.group.name" />
     </extensions >

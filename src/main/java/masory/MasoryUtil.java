@@ -2,6 +2,7 @@ package main.java.masory;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 
@@ -60,7 +61,6 @@ class MasoryUtil {
                         //当前文字不是数字
                         processedText = processedText + ")";
                         builder.append(".").append(processedText);
-
                     } else {
                         //当前文字是数字
                         processedText = ")." + processedText;
@@ -69,7 +69,6 @@ class MasoryUtil {
                 } else {
                     builder.append(".").append(processedText);
                 }
-
 
                 if (i == strList.length - 1) {
                     if (isViewText(text)) {
@@ -164,6 +163,22 @@ class MasoryUtil {
             return 1;
         }
         return 0;
+    }
+
+
+    public static ArrayList<String> getPropertyList(String text) {
+        var pattern = Pattern.compile("@property.*\\s\\*(\\w+);");
+        var matcher = pattern.matcher(text);
+
+        var list = new ArrayList<String>();
+        while (true) {
+            var b = matcher.find();
+            if (!b) break;
+            list.add(matcher.group(1));
+        }
+
+        return list;
+
     }
 
 }

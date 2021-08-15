@@ -37,6 +37,8 @@ public class masory extends AnAction {
                 resultMessage[0] = "Editor can not be null!";
                 return;
             }
+
+
             Document document = editor.getDocument();
 
             SelectionModel selectionModel = editor.getSelectionModel();
@@ -54,6 +56,7 @@ public class masory extends AnAction {
 
             document.deleteString(lineStartOffset, lineEndOffset);
             document.insertString(lineStartOffset, masory);
+
 
         });
     }
