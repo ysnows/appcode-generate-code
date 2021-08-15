@@ -26,11 +26,12 @@ class MasoryUtil {
 //        str = "h.w.12;";
 //        str = "y.viewTop.12;";
 //        str = "l.t.cont.12;r.cont.r.12;w.h.170";
+        str = "l.r.viewTop.";
 
 
-        String builder = parseMasory(str);
+        var needCompletion = isNeedCompletion(str);
 
-        System.out.println(builder.toString());
+        System.out.println(needCompletion);
     }
 
     @NotNull
@@ -178,6 +179,11 @@ class MasoryUtil {
         }
 
         return list;
+
+    }
+
+    public static boolean isNeedCompletion(String text) {
+        return Pattern.matches("(\\w\\.)+", text);
 
     }
 

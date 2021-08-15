@@ -7,6 +7,7 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.progress.ProgressManager;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.util.ProcessingContext;
 
 import org.jetbrains.annotations.NotNull;
@@ -33,30 +34,23 @@ class DictionaryCompletionProvider extends CompletionProvider<CompletionParamete
         }
 
 
-        String prefix = result.getPrefixMatcher().getPrefix();
-        if (prefix.isEmpty()) {
-            return;
-        }
-
         // make sure that our prefix is the last word
         // for plain text file, all the content up to the caret is the prefix
         // we don't want that, because we're only completing a single word
         CompletionResultSet dictResult;
-        int lastSpace = prefix.lastIndexOf(' ');
-        if (lastSpace >= 0 && lastSpace < prefix.length() - 1) {
-            prefix = prefix.substring(lastSpace + 1);
-            dictResult = result.withPrefixMatcher(prefix);
-        } else {
-            dictResult = result;
-        }
+//        int lastSpace = prefix.lastIndexOf(' ');
+//        if (lastSpace >= 0 && lastSpace < prefix.length() - 1) {
+//            prefix = prefix.substring(lastSpace + 1);
+//            dictResult = result.withPrefixMatcher(prefix);
+//        } else {
+        dictResult = result;
+//        }
 
-        int length = prefix.length();
-        char firstChar = prefix.charAt(0);
-        boolean isUppercase = Character.isUpperCase(firstChar);
-
+//        int length = prefix.length();
+//        char firstChar = prefix.charAt(0);
+//        boolean isUppercase = Character.isUpperCase(firstChar);
 
         process(parameters, dictResult);
-        result = dictResult;
 
     }
 
@@ -65,16 +59,28 @@ class DictionaryCompletionProvider extends CompletionProvider<CompletionParamete
 
         var editor = parameters.getEditor();
         var document = editor.getDocument();
-        var propertyList = MasoryUtil.getPropertyList(document.getText());
+
+        var curOffset = editor.getCaretModel().getOffset();
+        var lineNumber = document.getLineNumber(curOffset);
+        var lineStartOffset = document.getLineStartOffset(lineNumber);
+        var lineEndOffset = document.getLineEndOffset(lineNumber);
+        var curLineText = document.getText(TextRange.create(lineStartOffset, lineEndOffset)).trim();
+
+        System.out.println(curLineText);
+        var needCompletion = MasoryUtil.isNeedCompletion(curLineText);
+        System.out.println(needCompletion);
+        if (needCompletion) {
+            var propertyList = MasoryUtil.getPropertyList(document.getText());
 
 //        if (isUppercase) {
 //            element = LookupElementBuilder.create(word.substring(0, 1).toUpperCase() + word.substring(1));
 //        } else {
 
-        for (String property : propertyList) {
-            ProgressManager.checkCanceled();
-            element = LookupElementBuilder.create(property);
-            dictResult.addElement(element);
+            for (String property : propertyList) {
+                ProgressManager.checkCanceled();
+                element = LookupElementBuilder.create(property);
+                dictResult.addElement(element);
+            }
         }
     }
 }
