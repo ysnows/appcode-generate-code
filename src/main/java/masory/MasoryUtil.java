@@ -92,40 +92,40 @@ class MasoryUtil {
 
 
     private static String processText(String text, String preText, boolean mas) {
+        var numeric = isNumeric(text);
 
-        if (text.length() >= 2) {
-            if (isViewText(text)) {
-                switch (text) {
-                    case "cont":
-                        text = "contentView";
-                        break;
-                    case "main":
-                        text = "mainView";
-                        break;
-                    case "table":
-                        text = "tableView";
-                        break;
+        if (isViewText(text)) {
+            switch (text) {
+                case "self":
+                    text = "self";
+                    break;
+                case "cont":
+                    text = "contentView";
+                    break;
+                case "main":
+                    text = "mainView";
+                    break;
+                case "table":
+                    text = "tableView";
+                    break;
+            }
+            return "equalTo(self." + text + "";
+        } else if (numeric != 0) {
+            if (mas) {
+                if (numeric == -1) {
+                    return "offset(-kNum(" + text.replace("-", "") + "))";
+                } else if (numeric == 1) {
+                    return "offset(kNum(" + text + "))";
                 }
-                return "equalTo(self." + text + "";
+            }
+
+            if ("h".equals(preText) || "w".equals(preText)) {
+                return "mas_equalTo(kNum(" + text + "))";
             } else {
-                var numeric = isNumeric(text);
-
-                if (mas) {
-                    if (numeric == -1) {
-                        return "offset(-kNum(" + text.replace("-", "") + "))";
-                    } else if (numeric == 1) {
-                        return "offset(kNum(" + text + "))";
-                    }
-                }
-
-                if ("h".equals(preText) || "w".equals(preText)) {
-                    return "mas_equalTo(kNum(" + text + "))";
-                } else {
-                    if (numeric == -1) {
-                        return "offset(-kNum(" + text.replace("-", "") + "))";
-                    } else if (numeric == 1) {
-                        return "offset(kNum(" + text + "))";
-                    }
+                if (numeric == -1) {
+                    return "offset(-kNum(" + text.replace("-", "") + "))";
+                } else if (numeric == 1) {
+                    return "offset(kNum(" + text + "))";
                 }
             }
         }
