@@ -134,7 +134,7 @@ public class CommonUtil {
     }
 
     public static String processFont(String font) {
-        if (font.indexOf("b") > 0) {
+        if (font.contains("b")) {
             font = String.format("BOLD_FONT(%s)", font.substring(1));
         } else {
             font = String.format("FONT(%s)", font);
