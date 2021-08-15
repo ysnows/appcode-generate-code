@@ -189,4 +189,16 @@ public class CommonUtil {
         return index;
     }
 
+
+    public static int isNumeric(String str) {
+        var matches = Pattern.matches("-\\d+", str);
+        if (matches) {
+            return -1;
+        }
+        matches = Pattern.matches("\\d+", str);
+        if (matches) {
+            return 1;
+        }
+        return 0;
+    }
 }

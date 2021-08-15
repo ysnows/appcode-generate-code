@@ -94,7 +94,6 @@ public class newUITextField extends AnAction {
                 document.insertString(index - 1, strBuilder.toString());
 
 
-
             });
         }
 

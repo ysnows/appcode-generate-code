@@ -89,12 +89,6 @@ public class newLineView extends AnAction {
                 strBuilder.append("\n\t[self.contentView addSubview:self.line").append(name).append("];");
                 document.insertString(index - 1, strBuilder.toString());
 
-
-                Project project = editor.getProject();
-                if (project == null) {
-                    resultMessage[0] = "当前工程不能为空！";
-                    return;
-                }
             });
         }
 
