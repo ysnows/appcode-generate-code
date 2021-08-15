@@ -52,8 +52,8 @@ public class masory extends AnAction {
 
             var masory = MasoryUtil.parseMasory(pureText);
 
-            document.insertString(lineEndOffset, masory);
             document.deleteString(lineStartOffset, lineEndOffset);
+            document.insertString(lineStartOffset, masory);
 
         });
     }

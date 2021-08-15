@@ -36,7 +36,8 @@ class MasoryUtil {
     public static String parseMasory(String str) {
         var groupList = str.split(";");
         var builder = new StringBuilder();
-        for (String group : groupList) {
+        for (int j = 0; j < groupList.length; j++) {
+            String group = groupList[j];
             var strList = group.split("\\.");
             String preText = "";
             for (int i = 0; i < strList.length; i++) {
@@ -45,7 +46,11 @@ class MasoryUtil {
 
                 //如果是第一个
                 if (i == 0) {
-                    builder.append("\n\t\tmake");
+                    if (j == 0) {
+                        builder.append("\t\tmake");
+                    } else {
+                        builder.append("\n\t\tmake");
+                    }
                 }
 
                 String processedText = processText(text, preText, mas);
