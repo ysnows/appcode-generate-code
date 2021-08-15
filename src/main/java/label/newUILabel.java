@@ -24,7 +24,7 @@ public class newUILabel extends AnAction {
 
 
         @Override
-        public void onGenerate(String name, String font, String color, String text, String numberOfLines, String radius, String bgcolor, String border, String border_color) {
+        public void onGenerate(String name, String font, String color, String text, String numberOfLines, String align, String radius, String bgcolor, String border, String border_color) {
             //获取当前编辑的文件
             PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
             if (psiFile == null) {
@@ -50,13 +50,13 @@ public class newUILabel extends AnAction {
 
                 strBuilder.append("\tif (!_label").append(name).append("){\n");
 
+
                 strBuilder.append("\t\t_label").append(name).append(" = [[BLabel alloc] initWithFrame:CGRectZero];\n");
-                strBuilder.append("\t\t_label").append(name).append(".textAlignment = NSTextAlignmentCenter;\n");
+                strBuilder.append("\t\t_label").append(name).append(".textAlignment = NSTextAlignment" + CommonUtil.toUpperCase4Index(align) + ";\n");
                 strBuilder.append("\t\t_label").append(name).append(".textColor = ").append(CommonUtil.processColor(color)).append(";\n");
                 strBuilder.append("\t\t_label").append(name).append(".font = ").append(CommonUtil.processFont(font)).append(";\n");
                 strBuilder.append("\t\t_label").append(name).append(".text = ").append(CommonUtil.processText(text)).append(";\n");
                 strBuilder.append("\t\t_label").append(name).append(".adjustsFontSizeToFitWidth = NO;\n");
-                strBuilder.append("\t\t_label").append(name).append(".numberOfLines = ").append(numberOfLines).append(";\n");
 
                 if ("1".equals(numberOfLines)) {
                     strBuilder.append("\t\t_label").append(name).append(".lineBreakMode = NSLineBreakByTruncatingTail").append(";\n");

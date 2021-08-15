@@ -28,6 +28,7 @@ public class UILabelDialog extends JDialog implements KeyListener {
     private JTextField tfBorder;
     private JTextField tfBorderColor;
     private JTextField tfNumberOfLines;
+    private JTextField tfAlign;
     private OnClickListener onClickListener;
     /**
      * 成员变量类型：private or public
@@ -40,7 +41,7 @@ public class UILabelDialog extends JDialog implements KeyListener {
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
                 String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfNumberOfLines.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
+                onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfNumberOfLines.getText(), tfAlign.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
             }
             dispose();
         });
@@ -72,7 +73,7 @@ public class UILabelDialog extends JDialog implements KeyListener {
             if (!TextUtils.isBlank(tfname.getText())) {
                 if (onClickListener != null) {
                     String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                    onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfNumberOfLines.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
+                    onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfNumberOfLines.getText(), tfAlign.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
                     dispose();
                 }
             } else {
@@ -94,7 +95,7 @@ public class UILabelDialog extends JDialog implements KeyListener {
     }
 
     public interface OnClickListener {
-        void onGenerate(String name, String font, String color, String text, String numberOfLines, String radius, String bgcolor, String border, String border_color);
+        void onGenerate(String name, String font, String color, String text, String numberOfLines, String align, String radius, String bgcolor, String border, String border_color);
 
         void onCancel();
     }
