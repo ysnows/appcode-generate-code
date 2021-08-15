@@ -73,7 +73,8 @@ public class newUIButton extends AnAction {
                 }
 
                 if (!TextUtils.isBlank(radius)) {
-                    strBuilder.append("\t\t[_btn").append(name).append(" corner_radius:kNum(").append(radius).append(")];\n");
+                    strBuilder.append("\t\t[_btn").append(name).append(".cornerRadius=kNum(").append(radius.equals("0") ? "QMUIButtonCornerRadiusAdjustsBounds" : radius).append(")];\n");
+//                    strBuilder.append("\t\t[_btn").append(name).append(" corner_radius:kNum(").append(radius).append(")];\n");
                 }
 
                 if (!TextUtils.isBlank(border) && !TextUtils.isBlank(border_color)) {

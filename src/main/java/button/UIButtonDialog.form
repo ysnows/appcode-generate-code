@@ -98,7 +98,7 @@
           <component id="f2093" class="javax.swing.JTextField" binding="tfColor">
             <constraints border-constraint="Center"/>
             <properties>
-              <text value=""/>
+              <text value="white"/>
             </properties>
           </component>
         </children>
@@ -138,7 +138,7 @@
           <component id="6ce28" class="javax.swing.JTextField" binding="tfRadius">
             <constraints border-constraint="Center"/>
             <properties>
-              <text value=""/>
+              <text value="0"/>
             </properties>
           </component>
         </children>
