@@ -26,7 +26,7 @@ class MasoryUtil {
 //        str = "h.w.12;";
 //        str = "y.viewTop.12;";
 //        str = "l.t.cont.12;r.cont.r.12;w.h.170";
-        str = "l.viewBottom.r.12;r.";
+        str = "l.t.viewTop.r.12;l.r.viewTop.12;r.";
 
 
         var needCompletion = isNeedCompletion(str);
@@ -183,7 +183,7 @@ class MasoryUtil {
     }
 
     public static boolean isNeedCompletion(String text) {
-        return Pattern.matches(".*(\\w\\.)+", text);
+        return Pattern.matches("(.*;)?(\\w\\.)+", text);
 //        return Pattern.matches("(\\w\\.)+", text);
 
     }
