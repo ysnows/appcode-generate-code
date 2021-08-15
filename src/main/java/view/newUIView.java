@@ -24,7 +24,7 @@ public class newUIView extends AnAction {
 
 
         @Override
-        public void onGenerate(String name, String radius, String bgcolor, String border, String border_color) {
+        public void onGenerate(String name, String radius, String height, String bgcolor, String border, String border_color) {
             //获取当前编辑的文件
             PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
             if (psiFile == null) {
@@ -77,6 +77,7 @@ public class newUIView extends AnAction {
 
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self.view").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
+                strBuilder.append("\n\t\tmake.height.mas_equalTo(kNum(").append(height).append("));");
                 strBuilder.append("\n\t}];\n");
                 document.insertString(index - 1, strBuilder.toString());
 
@@ -86,8 +87,6 @@ public class newUIView extends AnAction {
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self.contentView addSubview:self.view").append(name).append("];");
                 document.insertString(index - 1, strBuilder.toString());
-
-
 
 
                 Project project = editor.getProject();

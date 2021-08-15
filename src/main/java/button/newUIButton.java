@@ -7,7 +7,6 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.PsiFile;
 
@@ -24,7 +23,7 @@ public class newUIButton extends AnAction {
 
 
         @Override
-        public void onGenerate(String name, String font, String color, String text, String radius, String bgcolor, String border, String border_color) {
+        public void onGenerate(String name, String font, String color, String text, String radius, String bgcolor, String border, String border_color, String image, String imageHeight, String imageWidth, String imageSpacing, String imagePosition) {
             //获取当前编辑的文件
             PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
             if (psiFile == null) {
@@ -55,6 +54,20 @@ public class newUIButton extends AnAction {
                 strBuilder.append("\t\t[_btn").append(name).append(".titleLabel setFont:").append(CommonUtil.processFont(font)).append("];\n");
                 strBuilder.append("\t\t[_btn").append(name).append(" setTitle:").append(CommonUtil.processText(text)).append(" forState:UIControlStateNormal];\n");
 
+                if (!TextUtils.isBlank(image)) {
+                    strBuilder.append("UIImage *resizedImage = [[UIImage imageNamed:@\"").append(image).append("\"] qmui_imageResizedInLimitedSize:CGSizeMake(kNum(").append(imageWidth).append("), kNum(").append(imageHeight).append(")) resizingMode:QMUIImageResizingModeScaleAspectFill];\n");
+                    strBuilder.append("\t\t[_btn").append(name).append(" setImage:resizedImage").append(" forState:UIControlStateNormal];\n");
+                }
+
+                if (!TextUtils.isBlank(imageSpacing)) {
+                    strBuilder.append("\t\t[_btn").append(name).append("spacingBetweenImageAndTitle=kNum(").append(imageSpacing).append(");\n");
+                }
+
+                if (!TextUtils.isBlank(imagePosition)) {
+                    strBuilder.append("\t\t[_btn").append(name).append("imagePosition=QMUIButtonImagePosition").append(CommonUtil.toUpperCase4Index(imagePosition)).append(";\n");
+                }
+
+
                 if (!TextUtils.isBlank(bgcolor)) {
                     strBuilder.append("\t\t[_btn").append(name).append(" setBackgroundColor:").append(CommonUtil.processColor(bgcolor)).append("];\n");
                 } else {
@@ -76,7 +89,6 @@ public class newUIButton extends AnAction {
                 document.insertString(lastEndIndex - 1, strBuilder.toString());
 
 
-
                 strContent = document.getText();
                 int index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)updateConstraints");
 
@@ -91,7 +103,6 @@ public class newUIButton extends AnAction {
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self.contentView addSubview:self.btn").append(name).append("];");
                 document.insertString(index - 1, strBuilder.toString());
-
 
 
             });
