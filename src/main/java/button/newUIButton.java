@@ -57,14 +57,12 @@ public class newUIButton extends AnAction {
                 if (!TextUtils.isBlank(image)) {
                     strBuilder.append("UIImage *resizedImage = [[UIImage imageNamed:@\"").append(image).append("\"] qmui_imageResizedInLimitedSize:CGSizeMake(kNum(").append(imageWidth).append("), kNum(").append(imageHeight).append(")) resizingMode:QMUIImageResizingModeScaleAspectFill];\n");
                     strBuilder.append("\t\t[_btn").append(name).append(" setImage:resizedImage").append(" forState:UIControlStateNormal];\n");
-                }
-
-                if (!TextUtils.isBlank(imageSpacing)) {
-                    strBuilder.append("\t\t[_btn").append(name).append("spacingBetweenImageAndTitle=kNum(").append(imageSpacing).append(");\n");
-                }
-
-                if (!TextUtils.isBlank(imagePosition)) {
-                    strBuilder.append("\t\t[_btn").append(name).append("imagePosition=QMUIButtonImagePosition").append(CommonUtil.toUpperCase4Index(imagePosition)).append(";\n");
+                    if (!TextUtils.isBlank(imagePosition)) {
+                        strBuilder.append("\t\t[_btn").append(name).append(".imagePosition=QMUIButtonImagePosition").append(CommonUtil.toUpperCase4Index(imagePosition)).append(";\n");
+                    }
+                    if (!TextUtils.isBlank(imageSpacing)) {
+                        strBuilder.append("\t\t[_btn").append(name).append(".spacingBetweenImageAndTitle=kNum(").append(imageSpacing).append(");\n");
+                    }
                 }
 
 
