@@ -16,8 +16,10 @@ public class UIImageViewDialog extends JDialog implements KeyListener {
     private JPanel content;
     private JButton btnCancel, btnGenerate;
     private JTextField tfname;
-    private JTextField tfFont;
+    private JTextField tfImage;
     private JTextField tfRadius;
+    private JTextField tfHeight;
+    private JTextField tfWidth;
     private JTextField tfBgColor;
     private JTextField tfBorder;
     private JTextField tfBorderColor;
@@ -33,7 +35,7 @@ public class UIImageViewDialog extends JDialog implements KeyListener {
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
                 String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                onClickListener.onGenerate(name, tfFont.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
+                onClickListener.onGenerate(name, tfImage.getText(), tfHeight.getText(), tfWidth.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
             }
             dispose();
         });
@@ -45,7 +47,7 @@ public class UIImageViewDialog extends JDialog implements KeyListener {
         });
 
         tfname.addKeyListener(this);
-        tfFont.addKeyListener(this);
+        tfImage.addKeyListener(this);
         tfBgColor.addKeyListener(this);
         tfRadius.addKeyListener(this);
         tfBorder.addKeyListener(this);
@@ -62,7 +64,7 @@ public class UIImageViewDialog extends JDialog implements KeyListener {
             if (!TextUtils.isBlank(tfname.getText())) {
                 if (onClickListener != null) {
                     String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                    onClickListener.onGenerate(name, tfFont.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
+                    onClickListener.onGenerate(name, tfImage.getText(), tfHeight.getText(), tfWidth.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
                     dispose();
                 }
             } else {
@@ -84,7 +86,7 @@ public class UIImageViewDialog extends JDialog implements KeyListener {
     }
 
     public interface OnClickListener {
-        void onGenerate(String name, String font, String radius, String bgcolor, String border, String border_color);
+        void onGenerate(String name, String image, String height, String width, String radius, String bgcolor, String border, String border_color);
 
         void onCancel();
     }

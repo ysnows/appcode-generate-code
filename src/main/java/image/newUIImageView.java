@@ -24,7 +24,7 @@ public class newUIImageView extends AnAction {
 
 
         @Override
-        public void onGenerate(String name, String image, String radius, String bgcolor, String border, String border_color) {
+        public void onGenerate(String name, String image, String height, String width, String radius, String bgcolor, String border, String border_color) {
             //获取当前编辑的文件
             PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
             if (psiFile == null) {
@@ -74,12 +74,13 @@ public class newUIImageView extends AnAction {
                 document.insertString(lastEndIndex - 1, strBuilder.toString());
 
 
-
                 strContent = document.getText();
                 int index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)updateConstraints");
 
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self.img").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
+                strBuilder.append("\n\t\tmake.height.mas_equalTo(kNum(").append(height).append("));");
+                strBuilder.append("\n\t\tmake.width.mas_equalTo(kNum(").append(width).append("));");
                 strBuilder.append("\n\t}];\n");
                 document.insertString(index - 1, strBuilder.toString());
 
@@ -89,7 +90,6 @@ public class newUIImageView extends AnAction {
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self.contentView addSubview:self.img").append(name).append("];");
                 document.insertString(index - 1, strBuilder.toString());
-
 
 
             });
