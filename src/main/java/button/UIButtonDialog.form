@@ -97,7 +97,9 @@
           </component>
           <component id="f2093" class="javax.swing.JTextField" binding="tfColor">
             <constraints border-constraint="Center"/>
-            <properties/>
+            <properties>
+              <text value=""/>
+            </properties>
           </component>
         </children>
       </grid>

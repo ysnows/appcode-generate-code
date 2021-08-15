@@ -79,7 +79,7 @@
           <component id="6ce28" class="javax.swing.JTextField" binding="tfRadius">
             <constraints border-constraint="Center"/>
             <properties>
-              <text value=""/>
+              <text value="7.5"/>
             </properties>
           </component>
         </children>
@@ -99,7 +99,9 @@
           </component>
           <component id="4ca06" class="javax.swing.JTextField" binding="tfBgColor">
             <constraints border-constraint="Center"/>
-            <properties/>
+            <properties>
+              <text value="white"/>
+            </properties>
           </component>
         </children>
       </grid>
