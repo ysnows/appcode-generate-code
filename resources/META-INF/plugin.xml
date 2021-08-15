@@ -1,10 +1,10 @@
 <idea-plugin >
     <id >com.your.company.unique.plugin.id</id >
-    <name >plugin hello</name >
+    <name >ObjcCodeAutoGenerator</name >
     <version >1.0</version >
     <vendor email="ysnows@163.com" url="www.ysnows.top" >ysnows</vendor >
 
-    <description >desc</description >
+    <description >auto generate code for view</description >
 
     <change-notes >
 

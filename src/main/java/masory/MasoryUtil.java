@@ -15,7 +15,7 @@ class MasoryUtil {
 //    }
 
     public static void main(String[] args) {
-        var str = "t.viewTop.b.12;t.viewTop;t.viewTop.b;l.t.viewTop.t.12;";
+        var str = "t.viewTop.b.-12;t.viewTop;t.viewTop.b;l.t.viewTop.t.12;h.w.115";
 //        str = "t.viewTop;";
 //        str = "t.viewTop.b;";
 //        str = "l.t.viewTop.t.12;";
@@ -118,18 +118,14 @@ class MasoryUtil {
                     }
                 }
 
-                if ("l".equals(preText) || "t".equals(preText)) {
-                    return "offset(kNum(" + text + "))";
-                } else if ("r".equals(preText) || "b".equals(preText)) {
-                    return "offset(-kNum(" + text + "))";
-                } else if ("y".equals(preText) || "x".equals(preText)) {
+                if ("h".equals(preText) || "w".equals(preText)) {
+                    return "mas_equalTo(kNum(" + text + "))";
+                } else {
                     if (numeric == -1) {
                         return "offset(-kNum(" + text.replace("-", "") + "))";
                     } else if (numeric == 1) {
                         return "offset(kNum(" + text + "))";
                     }
-                } else if ("h".equals(preText) || "w".equals(preText)) {
-                    return "mas_equalTo(kNum(" + text + "))";
                 }
             }
         }
