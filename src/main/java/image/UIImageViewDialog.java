@@ -49,6 +49,8 @@ public class UIImageViewDialog extends JDialog implements KeyListener {
         tfname.addKeyListener(this);
         tfImage.addKeyListener(this);
         tfBgColor.addKeyListener(this);
+        tfHeight.addKeyListener(this);
+        tfWidth.addKeyListener(this);
         tfRadius.addKeyListener(this);
         tfBorder.addKeyListener(this);
         tfBorderColor.addKeyListener(this);
