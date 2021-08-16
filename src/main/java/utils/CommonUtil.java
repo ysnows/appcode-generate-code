@@ -17,6 +17,30 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class CommonUtil {
 
+    public static void main(String[] args) {
+        String text = "12|#2A2A2A,100%|136,12|联系电话：15098119021|0";
+
+        if (text.contains("|")) {
+
+            var strArr = text.split("\\|");
+
+            var font = strArr[0];
+            var colorStr = strArr[1];
+            var colorArr = colorStr.split(",");
+            var color = colorArr[0];
+            var content = strArr[3];
+            var radius = strArr[4];
+
+            System.out.println(font);
+
+        }else {
+            System.out.println("fail");
+
+        }
+
+    }
+
+
     /**
      * 从AndroidManifest.xml文件中获取当前app的包名
      *

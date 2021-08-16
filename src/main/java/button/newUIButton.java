@@ -23,7 +23,7 @@ public class newUIButton extends AnAction {
 
 
         @Override
-        public void onGenerate(String name, String font, String color, String text, String radius, String bgcolor, String border, String border_color, String image, String imageHeight, String imageWidth, String imageSpacing, String imagePosition) {
+        public void onGenerate(String name, String font, String color, String text, String radius, String bgcolor, String border, String border_color, String image, String imageHeight, String imageWidth, String imageSpacing, String imagePosition, String width, String height) {
             //获取当前编辑的文件
             PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
             if (psiFile == null) {
@@ -93,6 +93,12 @@ public class newUIButton extends AnAction {
 
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self.btn").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
+
+                if (!TextUtils.isBlank(width) && !TextUtils.isBlank(height)) {
+                    strBuilder.append("\n\t\tmake.height.mas_equalTo(kNum(").append(height).append("));");
+                    strBuilder.append("\n\t\tmake.width.mas_equalTo(kNum(").append(width).append("));");
+                }
+
                 strBuilder.append("\n\t}];\n");
                 document.insertString(index - 1, strBuilder.toString());
 
