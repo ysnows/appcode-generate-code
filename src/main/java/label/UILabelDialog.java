@@ -2,8 +2,14 @@ package main.java.label;
 
 import org.apache.http.util.TextUtils;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -13,8 +19,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 import main.java.utils.CommonUtil;
@@ -114,10 +122,16 @@ public class UILabelDialog extends JDialog implements KeyListener, DocumentListe
             if (!borderWidth.equals("0")) tfBorder.setText(borderWidth);
             if (!borderColor.equals("0")) tfBorderColor.setText(borderColor);
 
-            tfname.setText("");
-            tfname.requestFocus();
-        }
 
+            Timer timer = new Timer(100, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    tfname.setText("");
+                }
+            });
+            timer.setRepeats(false);
+            timer.start();
+        }
     }
 
     @Override
