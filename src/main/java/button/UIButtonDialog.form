@@ -159,7 +159,7 @@
           <component id="4ca06" class="javax.swing.JTextField" binding="tfBgColor">
             <constraints border-constraint="Center"/>
             <properties>
-              <text value="COLOR_PRIMARY_BUTTON"/>
+              <text value="pri"/>
             </properties>
           </component>
         </children>

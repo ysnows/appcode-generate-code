@@ -95,6 +95,66 @@ public class UIButtonDialog extends JDialog implements KeyListener, DocumentList
         //关键是下面这两行代码
         Document document = tfname.getDocument();
         document.addDocumentListener(this);
+
+        document = tfImage.getDocument();
+        document.addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent documentEvent) {
+
+                var text = tfImage.getText();
+                if (text.contains("|")) {
+
+                    var strArr = text.split("\\|");
+
+                    var font = strArr[0];
+                    var colorStr = strArr[1];
+                    var colorArr = colorStr.split(",");
+                    var color = colorArr[0];
+
+                    var whStr = strArr[2];
+                    var whArr = whStr.split(",");
+                    var width = whArr[0];
+                    var height = whArr[1];
+
+                    var content = strArr[3];
+                    var radius = strArr[4];
+                    var bgColorStr = strArr[5];
+                    var bgColorArr = bgColorStr.split(",");
+                    var bgColor = bgColorArr[0];
+
+                    var borderWidth = strArr[6];
+
+                    var borderColorStr = strArr[7];
+                    var borderColorArr = borderColorStr.split(",");
+                    var borderColor = borderColorArr[0];
+
+
+                    if (!width.equals("0")) tfImageWidth.setText(width);
+                    if (!height.equals("0")) tfImageHeight.setText(height);
+
+                    Timer timer = new Timer(100, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent actionEvent) {
+                            tfImage.setText("");
+                        }
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
+                }
+
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent documentEvent) {
+
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent documentEvent) {
+
+            }
+        });
+
     }
 
     @Override

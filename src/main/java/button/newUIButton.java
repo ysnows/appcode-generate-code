@@ -54,14 +54,14 @@ public class newUIButton extends AnAction {
                 strBuilder.append("\t\t[_btn").append(name).append(".titleLabel setFont:").append(CommonUtil.processFont(font)).append("];\n");
                 strBuilder.append("\t\t[_btn").append(name).append(" setTitle:").append(CommonUtil.processText(text)).append(" forState:UIControlStateNormal];\n");
 
-                if (!TextUtils.isBlank(image)) {
-                    strBuilder.append("UIImage *resizedImage = [[UIImage imageNamed:@\"").append(image).append("\"] qmui_imageResizedInLimitedSize:CGSizeMake(kNum(").append(imageWidth).append("), kNum(").append(imageHeight).append(")) resizingMode:QMUIImageResizingModeScaleAspectFill];\n");
+                if (!TextUtils.isBlank(image) || (!TextUtils.isBlank(imageWidth) && !TextUtils.isBlank(imageHeight))) {
+                    strBuilder.append("\t\tUIImage *resizedImage = [[UIImage imageNamed:@\"").append(image).append("\"] qmui_imageResizedInLimitedSize:CGSizeMake(kNum(").append(imageWidth).append("), kNum(").append(imageHeight).append(")) resizingMode:QMUIImageResizingModeScaleAspectFill];\n");
                     strBuilder.append("\t\t[_btn").append(name).append(" setImage:resizedImage").append(" forState:UIControlStateNormal];\n");
                     if (!TextUtils.isBlank(imagePosition)) {
-                        strBuilder.append("\t\t[_btn").append(name).append(".imagePosition=QMUIButtonImagePosition").append(CommonUtil.toUpperCase4Index(imagePosition)).append(";\n");
+                        strBuilder.append("\t\t_btn").append(name).append(".imagePosition=QMUIButtonImagePosition").append(CommonUtil.toUpperCase4Index(imagePosition)).append(";\n");
                     }
                     if (!TextUtils.isBlank(imageSpacing)) {
-                        strBuilder.append("\t\t[_btn").append(name).append(".spacingBetweenImageAndTitle=kNum(").append(imageSpacing).append(");\n");
+                        strBuilder.append("\t\t_btn").append(name).append(".spacingBetweenImageAndTitle=kNum(").append(imageSpacing).append(");\n");
                     }
                 }
 
@@ -69,11 +69,11 @@ public class newUIButton extends AnAction {
                 if (!TextUtils.isBlank(bgcolor)) {
                     strBuilder.append("\t\t[_btn").append(name).append(" setBackgroundColor:").append(CommonUtil.processColor(bgcolor)).append("];\n");
                 } else {
-                    strBuilder.append("\t\t[_btn").append(name).append(" setBackgroundColor:").append("COLOR_PRIMARY_BUTTON").append("];\n");
+                    strBuilder.append("\t\t[_btn").append(name).append(" setBackgroundColor:").append("UIColor.clearColor").append("];\n");
                 }
 
-                if (!TextUtils.isBlank(radius)) {
-                    strBuilder.append("\t\t[_btn").append(name).append(".cornerRadius=kNum(").append(radius.equals("0") ? "QMUIButtonCornerRadiusAdjustsBounds" : radius).append(")];\n");
+                if (!TextUtils.isBlank(radius) && !radius.equals("0")) {
+                    strBuilder.append("\t\t_btn").append(name).append(".cornerRadius=kNum(").append(radius.equals("00") ? "QMUIButtonCornerRadiusAdjustsBounds" : radius).append(");\n");
 //                    strBuilder.append("\t\t[_btn").append(name).append(" corner_radius:kNum(").append(radius).append(")];\n");
                 }
 
