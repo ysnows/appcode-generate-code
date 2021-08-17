@@ -57,7 +57,7 @@
               <text value="name"/>
             </properties>
           </component>
-          <component id="7293c" class="javax.swing.JTextField" binding="tfname">
+          <component id="7293c" class="main.java.base.BTextField" binding="tfname">
             <constraints border-constraint="Center"/>
             <properties/>
           </component>
@@ -76,7 +76,7 @@
               <text value="font"/>
             </properties>
           </component>
-          <component id="61c29" class="javax.swing.JTextField" binding="tfFont">
+          <component id="61c29" class="main.java.base.BTextField" binding="tfFont">
             <constraints border-constraint="Center"/>
             <properties>
               <text value=""/>
@@ -97,7 +97,7 @@
               <text value="color"/>
             </properties>
           </component>
-          <component id="f2093" class="javax.swing.JTextField" binding="tfColor">
+          <component id="f2093" class="main.java.base.BTextField" binding="tfColor">
             <constraints border-constraint="Center"/>
             <properties>
               <text value="title"/>
@@ -118,7 +118,7 @@
               <text value="text"/>
             </properties>
           </component>
-          <component id="798f3" class="javax.swing.JTextField" binding="tfText">
+          <component id="798f3" class="main.java.base.BTextField" binding="tfText">
             <constraints border-constraint="Center"/>
             <properties/>
           </component>
@@ -137,7 +137,7 @@
               <text value="radius"/>
             </properties>
           </component>
-          <component id="6ce28" class="javax.swing.JTextField" binding="tfRadius">
+          <component id="6ce28" class="main.java.base.BTextField" binding="tfRadius">
             <constraints border-constraint="Center"/>
             <properties>
               <text value=""/>
@@ -158,7 +158,7 @@
               <text value="bgcolor"/>
             </properties>
           </component>
-          <component id="4ca06" class="javax.swing.JTextField" binding="tfBgColor">
+          <component id="4ca06" class="main.java.base.BTextField" binding="tfBgColor">
             <constraints border-constraint="Center"/>
             <properties/>
           </component>
@@ -177,7 +177,7 @@
               <text value="border"/>
             </properties>
           </component>
-          <component id="20cbf" class="javax.swing.JTextField" binding="tfBorder">
+          <component id="20cbf" class="main.java.base.BTextField" binding="tfBorder">
             <constraints border-constraint="Center"/>
             <properties/>
           </component>
@@ -196,7 +196,7 @@
               <text value="border_color"/>
             </properties>
           </component>
-          <component id="c9c29" class="javax.swing.JTextField" binding="tfBorderColor">
+          <component id="c9c29" class="main.java.base.BTextField" binding="tfBorderColor">
             <constraints border-constraint="Center"/>
             <properties/>
           </component>
@@ -220,7 +220,7 @@
               <text value="number of lines"/>
             </properties>
           </component>
-          <component id="88465" class="javax.swing.JTextField" binding="tfNumberOfLines">
+          <component id="88465" class="main.java.base.BTextField" binding="tfNumberOfLines">
             <constraints border-constraint="Center"/>
             <properties>
               <text value="1"/>
@@ -241,7 +241,7 @@
               <text value="alignment"/>
             </properties>
           </component>
-          <component id="7b5c1" class="javax.swing.JTextField" binding="tfAlign">
+          <component id="7b5c1" class="main.java.base.BTextField" binding="tfAlign">
             <constraints border-constraint="Center"/>
             <properties>
               <text value="center"/>

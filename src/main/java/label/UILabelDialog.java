@@ -2,8 +2,12 @@ package main.java.label;
 
 import org.apache.http.util.TextUtils;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.TimerTask;
@@ -25,21 +29,22 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
+import main.java.base.BTextField;
 import main.java.utils.CommonUtil;
 
-public class UILabelDialog extends JDialog implements KeyListener, DocumentListener {
+public class UILabelDialog extends JDialog implements KeyListener, DocumentListener, FocusListener {
     private JPanel content;
     private JButton btnCancel, btnGenerate;
-    private JTextField tfname;
-    private JTextField tfFont;
-    private JTextField tfColor;
-    private JTextField tfText;
-    private JTextField tfRadius;
-    private JTextField tfBgColor;
-    private JTextField tfBorder;
-    private JTextField tfBorderColor;
-    private JTextField tfNumberOfLines;
-    private JTextField tfAlign;
+    private BTextField tfname;
+    private BTextField tfFont;
+    private BTextField tfColor;
+    private BTextField tfText;
+    private BTextField tfRadius;
+    private BTextField tfBgColor;
+    private BTextField tfBorder;
+    private BTextField tfBorderColor;
+    private BTextField tfNumberOfLines;
+    private BTextField tfAlign;
     private OnClickListener onClickListener;
     /**
      * 成员变量类型：private or public
@@ -72,7 +77,20 @@ public class UILabelDialog extends JDialog implements KeyListener, DocumentListe
         tfRadius.addKeyListener(this);
         tfBorder.addKeyListener(this);
         tfBorderColor.addKeyListener(this);
+        tfAlign.addKeyListener(this);
         btnGenerate.addKeyListener(this);
+
+        tfname.addFocusListener(this);
+        tfFont.addFocusListener(this);
+        tfColor.addFocusListener(this);
+        tfText.addFocusListener(this);
+        tfBgColor.addFocusListener(this);
+        tfNumberOfLines.addFocusListener(this);
+        tfRadius.addFocusListener(this);
+        tfBorder.addFocusListener(this);
+        tfBorderColor.addFocusListener(this);
+        tfAlign.addFocusListener(this);
+        btnGenerate.addFocusListener(this);
 
 
         //关键是下面这两行代码
@@ -122,7 +140,6 @@ public class UILabelDialog extends JDialog implements KeyListener, DocumentListe
             if (!borderWidth.equals("0")) tfBorder.setText(borderWidth);
             if (!borderColor.equals("0")) tfBorderColor.setText(borderColor);
 
-
             Timer timer = new Timer(100, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
@@ -143,6 +160,19 @@ public class UILabelDialog extends JDialog implements KeyListener, DocumentListe
     public void changedUpdate(DocumentEvent e) {
         System.out.println("change text");
     }
+
+
+    @Override
+    public void focusGained(FocusEvent focusEvent) {
+        JTextField component = (JTextField) focusEvent.getComponent();
+        component.selectAll();
+    }
+
+    @Override
+    public void focusLost(FocusEvent focusEvent) {
+
+    }
+
 
 
     @Override
@@ -172,7 +202,6 @@ public class UILabelDialog extends JDialog implements KeyListener, DocumentListe
     public void keyReleased(KeyEvent keyEvent) {
 
     }
-
 
     public interface OnClickListener {
         void onGenerate(String name, String font, String color, String text, String numberOfLines, String align, String radius, String bgcolor, String border, String border_color);

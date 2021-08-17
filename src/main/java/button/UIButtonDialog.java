@@ -2,6 +2,10 @@ package main.java.button;
 
 import org.apache.http.util.TextUtils;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -10,13 +14,14 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
 
 import main.java.utils.CommonUtil;
 
-public class UIButtonDialog extends JDialog implements KeyListener, DocumentListener {
+public class UIButtonDialog extends JDialog implements KeyListener, DocumentListener, FocusListener {
     private JPanel content;
     private JButton btnCancel, btnGenerate;
     private JTextField tfname;
@@ -46,7 +51,7 @@ public class UIButtonDialog extends JDialog implements KeyListener, DocumentList
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
                 String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(), tfImage.getText(), tfImageHeight.getText(), tfImageWidth.getText(), tfSpace.getText(), tfImagePosition.getText(),tfWidth.getText(),tfHeight.getText());
+                onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(), tfImage.getText(), tfImageHeight.getText(), tfImageWidth.getText(), tfSpace.getText(), tfImagePosition.getText(), tfWidth.getText(), tfHeight.getText());
             }
             dispose();
         });
@@ -71,6 +76,21 @@ public class UIButtonDialog extends JDialog implements KeyListener, DocumentList
         tfImageWidth.addKeyListener(this);
         tfImagePosition.addKeyListener(this);
         tfSpace.addKeyListener(this);
+
+        tfname.addFocusListener(this);
+        tfFont.addFocusListener(this);
+        tfColor.addFocusListener(this);
+        tfText.addFocusListener(this);
+        tfBgColor.addFocusListener(this);
+        tfRadius.addFocusListener(this);
+        tfBorder.addFocusListener(this);
+        tfBorderColor.addFocusListener(this);
+        btnGenerate.addFocusListener(this);
+        tfImage.addFocusListener(this);
+        tfImageHeight.addFocusListener(this);
+        tfImageWidth.addFocusListener(this);
+        tfImagePosition.addFocusListener(this);
+        tfSpace.addFocusListener(this);
 
         //关键是下面这两行代码
         Document document = tfname.getDocument();
@@ -112,7 +132,6 @@ public class UIButtonDialog extends JDialog implements KeyListener, DocumentList
 
             if (!font.equals("0")) tfFont.setText(font);
             if (!color.equals("0")) tfColor.setText(color);
-
             if (!width.equals("0")) tfWidth.setText(width);
             if (!height.equals("0")) tfHeight.setText(height);
 
@@ -122,10 +141,15 @@ public class UIButtonDialog extends JDialog implements KeyListener, DocumentList
             if (!borderWidth.equals("0")) tfBorder.setText(borderWidth);
             if (!borderColor.equals("0")) tfBorderColor.setText(borderColor);
 
-            tfname.setText("");
-            tfname.requestFocus();
+            Timer timer = new Timer(100, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    tfname.setText("");
+                }
+            });
+            timer.setRepeats(false);
+            timer.start();
         }
-
     }
 
     @Override
@@ -136,6 +160,18 @@ public class UIButtonDialog extends JDialog implements KeyListener, DocumentList
     @Override
     public void changedUpdate(DocumentEvent e) {
         System.out.println("change text");
+    }
+
+
+    @Override
+    public void focusGained(FocusEvent focusEvent) {
+        JTextField component = (JTextField) focusEvent.getComponent();
+        component.selectAll();
+    }
+
+    @Override
+    public void focusLost(FocusEvent focusEvent) {
+
     }
 
     @Override
