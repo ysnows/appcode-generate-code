@@ -2,7 +2,8 @@ package main.java.line;
 
 import org.apache.http.util.TextUtils;
 
-import java.awt.event.KeyAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -12,9 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import main.java.utils.CommonUtil;
-import main.java.utils.MyNotifier;
 
-public class LineViewDialog extends JDialog implements KeyListener {
+public class LineViewDialog extends JDialog implements KeyListener, FocusListener {
     private JPanel content;
     private JButton btnCancel, btnGenerate;
     private JTextField tfname;
@@ -22,6 +22,7 @@ public class LineViewDialog extends JDialog implements KeyListener {
     private JTextField tfBgColor;
     private JTextField tfBorder;
     private JTextField tfBorderColor;
+    private JTextField tfHeight;
     private OnClickListener onClickListener;
     /**
      * 成员变量类型：private or public
@@ -34,7 +35,7 @@ public class LineViewDialog extends JDialog implements KeyListener {
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
                 String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                onClickListener.onGenerate(name, tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
+                onClickListener.onGenerate(name, tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(), tfHeight.getText());
             }
             dispose();
         });
@@ -47,11 +48,20 @@ public class LineViewDialog extends JDialog implements KeyListener {
 
 
         tfname.addKeyListener(this);
+        tfHeight.addKeyListener(this);
         tfBgColor.addKeyListener(this);
         tfRadius.addKeyListener(this);
         tfBorder.addKeyListener(this);
         tfBorderColor.addKeyListener(this);
         btnGenerate.addKeyListener(this);
+
+        tfname.addFocusListener(this);
+        tfHeight.addFocusListener(this);
+        tfBgColor.addFocusListener(this);
+        tfRadius.addFocusListener(this);
+        tfBorder.addFocusListener(this);
+        tfBorderColor.addFocusListener(this);
+        btnGenerate.addFocusListener(this);
 
     }
 
@@ -62,7 +72,7 @@ public class LineViewDialog extends JDialog implements KeyListener {
             if (!TextUtils.isBlank(tfname.getText())) {
                 if (onClickListener != null) {
                     String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                    onClickListener.onGenerate(name, tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
+                    onClickListener.onGenerate(name, tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(), tfHeight.getText());
                     dispose();
                 }
             } else {
@@ -83,8 +93,19 @@ public class LineViewDialog extends JDialog implements KeyListener {
 
     }
 
+    @Override
+    public void focusGained(FocusEvent focusEvent) {
+        JTextField component = (JTextField) focusEvent.getComponent();
+        component.selectAll();
+    }
+
+    @Override
+    public void focusLost(FocusEvent focusEvent) {
+
+    }
+
     public interface OnClickListener {
-        void onGenerate(String name, String radius, String bgcolor, String border, String border_color);
+        void onGenerate(String name, String radius, String bgcolor, String border, String border_color, String height);
 
         void onCancel();
     }

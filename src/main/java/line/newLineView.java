@@ -7,14 +7,10 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.PsiFile;
 
 import org.apache.http.util.TextUtils;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import main.java.utils.CommonUtil;
 import main.java.utils.MyNotifier;
@@ -27,7 +23,7 @@ public class newLineView extends AnAction {
 
 
         @Override
-        public void onGenerate(String name, String radius, String bgcolor, String border, String border_color) {
+        public void onGenerate(String name, String radius, String bgcolor, String border, String border_color, String height) {
             //获取当前编辑的文件
             PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
             if (psiFile == null) {
@@ -79,6 +75,7 @@ public class newLineView extends AnAction {
 
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self.line").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
+                strBuilder.append("\n\t\tmake.height.mas_equalTo(kNum(").append(height).append("));");
                 strBuilder.append("\n\t}];\n");
                 document.insertString(index - 1, strBuilder.toString());
 
