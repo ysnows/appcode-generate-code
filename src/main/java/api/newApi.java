@@ -7,11 +7,22 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.openapi.wm.WindowManager;
+import com.intellij.psi.PsiElementFactory;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiFileFactory;
 
 import org.apache.http.util.TextUtils;
+import org.kohsuke.rngom.util.Uri;
+
+import java.io.File;
+import java.nio.file.Path;
+import java.util.ArrayList;
 
 import main.java.utils.CommonUtil;
 import main.java.utils.MyNotifier;
@@ -99,8 +110,37 @@ public class newApi extends AnAction {
 
         @Override
         public void onGenerate(String str, String member) {
+            WriteCommandAction.runWriteCommandAction(anActionEvent.getProject(), () -> {
+                Editor editor = anActionEvent.getData(PlatformDataKeys.EDITOR);
+                if (editor == null) {
+                    return;
+                }
+                var list = ApiUtil.apiParse(str);
 
+                Document document = editor.getDocument();
+                String strContent = document.getText();
 
+                strContent = document.getText();
+                int lastEndIndex = strContent.lastIndexOf("@end");
+
+                if (list != null) {
+                    if (list.size() == 2) {
+                        document.insertString(lastEndIndex - 1, list.get(1));
+                    }
+
+                    var project = anActionEvent.getProject();
+                    var projectFilePath = project.getBasePath();
+
+                    var file = new File(projectFilePath + "/aiyunji/Classes/Tools/Macros/ApiConfig.h");
+                    var vFile = LocalFileSystem.getInstance().findFileByIoFile(file);
+                    var documentFile = FileDocumentManager.getInstance().getDocument(vFile);
+                    var apiContent = documentFile.getText();
+                    if (!apiContent.contains(list.get(2))) {
+                        var lastIndex = apiContent.lastIndexOf("#endif");
+                        documentFile.insertString(lastIndex - 1, list.get(0));
+                    }
+                }
+            });
         }
 
         @Override

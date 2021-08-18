@@ -60,6 +60,13 @@
             <add-to-group group-id="GenerateGroup" anchor="first" />
             <keyboard-shortcut keymap="$default" first-keystroke="meta alt P" />
         </action >
+
+        <action id="newApi" class="main.java.api.newApi" text="newApi"
+                description="newApi" >
+            <add-to-group group-id="GenerateGroup" anchor="first" />
+            <keyboard-shortcut keymap="$default" first-keystroke="meta alt P" />
+        </action >
+
         <action id="masory" class="main.java.masory.masory" text="masory"
                 description="masory" >
             <add-to-group group-id="GenerateGroup" anchor="first" />
