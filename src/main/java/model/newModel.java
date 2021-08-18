@@ -22,15 +22,16 @@ public class newModel extends AnAction {
                 if (editor == null) {
                     return;
                 }
-                var list = ModelUtil.json(str);
 
                 Document document = editor.getDocument();
                 String strContent = document.getText();
 
+                var parsedStr = ModelUtil.json(str,strContent);
+
                 strContent = document.getText();
                 int lastEndIndex = strContent.lastIndexOf("@end");
 
-                document.insertString(lastEndIndex - 1, list.get(0));
+                document.insertString(lastEndIndex - 1, parsedStr);
             });
         }
 

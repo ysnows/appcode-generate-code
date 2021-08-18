@@ -5,9 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.regex.Pattern;
-
-import main.java.utils.CommonUtil;
 
 public class ModelUtil {
 
@@ -32,10 +29,10 @@ public class ModelUtil {
                 "    \"isSetPayPassword\": 0\n" +
                 "  }";
 
-        System.out.println(json(json).get(0));
+        System.out.println(json(json, ""));
     }
 
-    public static ArrayList<String> json(String str) {
+    public static String json(String str, String strContent) {
 
         var methodStrBuilder = new StringBuilder();
 
@@ -45,6 +42,9 @@ public class ModelUtil {
             public void accept(Map.Entry<String, Object> stringObjectEntry) {
                 var key = stringObjectEntry.getKey();
                 var value = stringObjectEntry.getValue();
+                if (strContent.contains(key)) {
+                    return;
+                }
 
                 if (value instanceof Boolean) {
                     methodStrBuilder.append("\n@property(nonatomic, assign) Boolean ").append(key).append(";");
@@ -57,9 +57,6 @@ public class ModelUtil {
             }
         });
 
-
-        var list = new ArrayList<String>();
-        list.add(methodStrBuilder.toString());
-        return list;
+        return methodStrBuilder.toString();
     }
 }
