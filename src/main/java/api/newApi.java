@@ -124,20 +124,21 @@ public class newApi extends AnAction {
                 int lastEndIndex = strContent.lastIndexOf("@end");
 
                 if (list != null) {
-                    if (list.size() == 2) {
-                        document.insertString(lastEndIndex - 1, list.get(1));
-                    }
+                    document.insertString(lastEndIndex - 1, list.get(1));
 
                     var project = anActionEvent.getProject();
                     var projectFilePath = project.getBasePath();
 
                     var file = new File(projectFilePath + "/aiyunji/Classes/Tools/Macros/ApiConfig.h");
-                    var vFile = LocalFileSystem.getInstance().findFileByIoFile(file);
-                    var documentFile = FileDocumentManager.getInstance().getDocument(vFile);
-                    var apiContent = documentFile.getText();
-                    if (!apiContent.contains(list.get(2))) {
-                        var lastIndex = apiContent.lastIndexOf("#endif");
-                        documentFile.insertString(lastIndex - 1, list.get(0));
+                    if (file.exists()) {
+
+                        var vFile = LocalFileSystem.getInstance().findFileByIoFile(file);
+                        var documentFile = FileDocumentManager.getInstance().getDocument(vFile);
+                        var apiContent = documentFile.getText();
+                        if (!apiContent.contains(list.get(2))) {
+                            var lastIndex = apiContent.lastIndexOf("#endif");
+                            documentFile.insertString(lastIndex - 1, list.get(0));
+                        }
                     }
                 }
             });
