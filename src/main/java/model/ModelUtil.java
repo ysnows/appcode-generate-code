@@ -13,91 +13,53 @@ public class ModelUtil {
 
     public static void main(String[] args) {
 
+        var json = "{\n" +
+                "    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqaWFuZyIsImV4cCI6MTYzMDU1MjQyNSwiaWF0IjoxNjI5MjU2NDI1LCJ1c2VySWQiOiIyNDE0In0.GJH96f5VyA-XT5T16R-WzLBYoZzRHxgoJFNn4zUsg7o\",\n" +
+                "    \"tokenType\": null,\n" +
+                "    \"refreshToken\": \"5fb3293fbfa546e4b377f9612e352ce8\",\n" +
+                "    \"name\": \"小全速1\",\n" +
+                "    \"account\": null,\n" +
+                "    \"avatar\": \"https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTL5QXw1TpubcCFhvpXicAQvBLGny0DcIjRGksFibRW5hzK3ibbaVM08Xc09zUeKVTqqKPgJd1tjSUIqA/132\",\n" +
+                "    \"workDescribe\": null,\n" +
+                "    \"userId\": null,\n" +
+                "    \"expire\": null,\n" +
+                "    \"expiration\": null,\n" +
+                "    \"mobile\": null,\n" +
+                "    \"tenantCode\": null,\n" +
+                "    \"hasNewUser\": false,\n" +
+                "    \"openid\": \"oret550EU-IOK9WONq4-zsjornD4\",\n" +
+                "    \"memberId\": 2414,\n" +
+                "    \"isSetPayPassword\": 0\n" +
+                "  }";
+
+        System.out.println(json(json).get(0));
     }
 
-    public static ArrayList<String> apiParse(String str) {
-//        String str = "curl -X GET \"https://mini.aotulive.com:81/api/member/member/verificationPhone?phone=17686941213&code=125457&invitationCode=123\" -H \"host: 7gw0sclkcp.xuduan.vip\" -H \"authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqaWFuZyIsImV4cCI6MTYzMDU0OTU2MywiaWF0IjoxNjI5MjUzNTYzLCJ1c2VySWQiOiIyNDE0In0.-vt5itSwAF9PLt4DCqsR8ci1oOdU1A5NVmP9--3OlfQ\" -H \"user-agent: okhttp/3.12.0\" -H \"Connection: close\"";
-//        str = "curl -X POST \"https://mini.aotulive.com:81/api/member/wx/login?phone=17686941213&code=125457&invitationCode=123\" -H \"host: 7gw0sclkcp.xuduan.vip\" -H \"authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqaWFuZyIsImV4cCI6MTYzMDU0ODU2NCwiaWF0IjoxNjI5MjUyNTY0LCJ1c2VySWQiOiIyNDE0In0.O5fBKlOBOMSQGBicAx-tvmHBCxUVUKeuJ79qHjq217Q\" -H \"content-type: application/json; charset=UTF-8\" -H \"user-agent: okhttp/3.12.0\" -H \"Connection: close\" -d \"{\\\"android0rIos\\\":1,\\\"city\\\":\\\"\\\",\\\"country\\\":\\\"\\\",\\\"deviceToken\\\":\\\"Au19UIa6JhkM0LIK8NQGKWjQRe1rRLWQB5k1gQxygekj\\\",\\\"headimgurl\\\":\\\"https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTL5QXw1TpubcCFhvpXicAQvBLGny0DcIjRGksFibRW5hzK3ibbaVM08Xc09zUeKVTqqKPgJd1tjSUIqA/132\\\",\\\"language\\\":\\\"zh_CN\\\",\\\"nickname\\\":\\\"小全速\\\",\\\"openid\\\":\\\"oret550EU-IOK9WONq4-zsjornD4\\\",\\\"province\\\":\\\"\\\",\\\"sex\\\":1,\\\"unionid\\\":\\\"oyx1M5637x_1Dq9YHAZmvR-sxTLY\\\"}\"";
+    public static ArrayList<String> json(String str) {
 
-        var pattern = Pattern.compile("curl\\s+-X\\s+(?<method>(GET|POST))\\s\"(?<url>http|https://((?<host>\\w+\\.\\w+\\.\\w+)(:(?<port>\\d+))?)(?<path>(/\\w+)+)(\\?(?<query>(&?\\w+=(\\w+|\\d+)+)*))?)\"(?<header>(\\s-H\\s\"(\\w+|\\.|-|/|\\s|=|\\d|;)+:\\s(\\w+|\\.|-|/|\\s|=|\\d|;)+\")*)(\\s-d\\s\"(?<post>.*)\")?");
-        var matcher = pattern.matcher(str);
-        if (matcher.find()) {
-            var method = matcher.group("method");
-            var url = matcher.group("host");
-            var port = matcher.group("port");
-            var path = matcher.group("path");
-            var query = matcher.group("query");
-            var header = matcher.group("header");
-            var post = matcher.group("post");
-            System.out.println(method);
-            System.out.println(url);
-            System.out.println(port);
-            System.out.println(path);
-            System.out.println(query);
-            System.out.println(header);
-            System.out.println(post);
+        var methodStrBuilder = new StringBuilder();
 
+        JSONObject postJsonArr = (JSONObject) JSONObject.parse(str);
+        postJsonArr.entrySet().forEach(new Consumer<Map.Entry<String, Object>>() {
+            @Override
+            public void accept(Map.Entry<String, Object> stringObjectEntry) {
+                var key = stringObjectEntry.getKey();
+                var value = stringObjectEntry.getValue();
 
-            //生成api
-            var pathArr = path.split("/");
-            var lastName = pathArr[pathArr.length - 1];
-            var preLastName = pathArr[pathArr.length - 2];
+                if (value instanceof Boolean) {
+                    methodStrBuilder.append("\n@property(nonatomic, assign) Boolean ").append(key).append(";");
 
-            String apiName = preLastName + CommonUtil.toUpperCase4Index(lastName);
-
-            var methodStrBuilder = new StringBuilder();
-            methodStrBuilder.append("\n- (RACSignal<id <RespProtocol>> *)").append(apiName).append(" {");
-            methodStrBuilder.append("\n\tNSDictionary *params = @{");
-
-            if (method.equals("GET")) {
-                if (query != null) {
-                    var queryArr = query.split("&");
-                    for (String querykv : queryArr) {
-                        var kvArr = querykv.split("=");
-                        var paramName = kvArr[0];
-                        methodStrBuilder.append("\n\t\t@\"").append(paramName).append("\": self.").append(paramName).append(",");
-                    }
+                } else if (value instanceof Integer) {
+                    methodStrBuilder.append("\n@property(nonatomic, assign) NSInteger ").append(key).append(";");
+                } else {
+                    methodStrBuilder.append("\n@property(nonatomic, assign) NSString *").append(key).append(";");
                 }
             }
-
-            if (method.equals("POST")) {
-                if (post != null) {
-                    post = post.replace("\\", "");
-                    JSONObject postJsonArr = (JSONObject) JSONObject.parse(post);
-                    postJsonArr.entrySet().forEach(new Consumer<Map.Entry<String, Object>>() {
-                        @Override
-                        public void accept(Map.Entry<String, Object> stringObjectEntry) {
-                            methodStrBuilder.append("\n\t\t@\"").append(stringObjectEntry.getKey()).append("\": self.").append(stringObjectEntry.getKey()).append(",");
-                        }
-                    });
-                }
-            }
-
-            methodStrBuilder.append("\n\t};");
-            methodStrBuilder.append("\n\treturn [RACSignal createSignal:^RACDisposable *(id <RACSubscriber> subscriber) {");
-            methodStrBuilder.append("\n\t\t[[self getUrl:API_").append(apiName).append(" withParams:params modelClass:nil loading:YES] subscribeNext:^(id <RespProtocol> x) {");
-            methodStrBuilder.append("\n\t\t\tif (x.ok) {");
-            methodStrBuilder.append("\n\t\t\t\t[subscriber sendNext:[x data]];");
-            methodStrBuilder.append("\n\t\t\t\t[subscriber sendCompleted];");
-            methodStrBuilder.append("\n\t\t\t}");
-            methodStrBuilder.append("\n\t\t}];");
-            methodStrBuilder.append("\n\t\treturn nil;");
-            methodStrBuilder.append("\n\t}];");
-            methodStrBuilder.append("\n}");
+        });
 
 
-            String apiStr = "\n#define API_" + apiName + "           NEW_API_APPEND_(@\"" + path.replaceFirst("/", "") + "\") \n";
-            System.out.println(apiStr);
-
-            System.out.println(methodStrBuilder.toString());
-
-            var list = new ArrayList<String>();
-            list.add(apiStr);
-            list.add(methodStrBuilder.toString());
-            list.add(apiName);
-            return list;
-
-        }
-        return null;
+        var list = new ArrayList<String>();
+        list.add(methodStrBuilder.toString());
+        return list;
     }
 }

@@ -66,6 +66,11 @@
             <add-to-group group-id="GenerateGroup" anchor="first" />
             <keyboard-shortcut keymap="$default" first-keystroke="meta alt P" />
         </action >
+        <action id="newModel" class="main.java.model.newModel" text="newModel"
+                description="newModel" >
+            <add-to-group group-id="GenerateGroup" anchor="first" />
+            <keyboard-shortcut keymap="$default" first-keystroke="meta alt P" />
+        </action >
 
         <action id="masory" class="main.java.masory.masory" text="masory"
                 description="masory" >

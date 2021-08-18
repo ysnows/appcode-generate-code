@@ -1,12 +1,19 @@
 package main.java.model;
 
+import org.apache.http.util.TextUtils;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 
-public class NewModelDialog extends JDialog {
+import main.java.utils.CommonUtil;
+
+public class NewModelDialog extends JDialog implements KeyListener {
     private JPanel content;
     private JTextArea txtPasteStr;
     private JButton btnCancel, btnGenerate;
@@ -46,6 +53,36 @@ public class NewModelDialog extends JDialog {
                 memberType = "private";
             }
         });
+
+
+        txtPasteStr.addKeyListener(this);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
+        char keyChar = keyEvent.getKeyChar();
+        if (keyChar == KeyEvent.VK_ENTER) {
+            if (!TextUtils.isBlank(txtPasteStr.getText())) {
+                if (onClickListener != null) {
+                    onClickListener.onGenerate(txtPasteStr.getText(), memberType);
+                    dispose();
+                }
+            } else {
+
+            }
+        } else if (keyChar == KeyEvent.VK_ESCAPE) {
+            dispose();
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
+
     }
 
     public interface OnClickListener {
