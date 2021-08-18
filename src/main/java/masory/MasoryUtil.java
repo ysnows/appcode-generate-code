@@ -109,7 +109,8 @@ class MasoryUtil {
                     text = "tableView";
                     break;
             }
-            return "equalTo(self." + text + "";
+            return text.equals("self") ? "equalTo(self" : "equalTo(self." + text + "";
+
         } else if (numeric != 0) {
             if (mas) {
                 if (numeric == -1) {
@@ -149,6 +150,8 @@ class MasoryUtil {
                 return mas ? "mas_centerX" : "centerX";
             case "c":
                 return mas ? "mas_center" : "center";
+            case "e":
+                return mas ? "mas_edges" : "edges";
             default:
                 return "";
         }
