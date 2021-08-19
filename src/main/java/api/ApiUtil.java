@@ -67,7 +67,7 @@ public class ApiUtil {
                     postJsonArr.entrySet().forEach(new Consumer<Map.Entry<String, Object>>() {
                         @Override
                         public void accept(Map.Entry<String, Object> stringObjectEntry) {
-                            methodStrBuilder.append("\n\t\t@\"").append(stringObjectEntry.getKey()).append("\": self.").append(stringObjectEntry.getKey()).append(",");
+                            methodStrBuilder.append("\n\t\t\t@\"").append(stringObjectEntry.getKey()).append("\": self.").append(stringObjectEntry.getKey()).append(",");
                         }
                     });
                 }

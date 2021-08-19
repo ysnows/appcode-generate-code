@@ -144,7 +144,7 @@ public class newApi extends AnAction {
                         var apiContent = hDocumentFile.getText();
                         if (!apiContent.contains(list.get(2))) {
                             var lastIndex = apiContent.lastIndexOf("@end");
-                            hDocumentFile.insertString(lastIndex - 1, "- (void)" + list.get(2) + ";");
+                            hDocumentFile.insertString(lastIndex - 1, "\n- (void)" + list.get(2) + ";");
                         }
                     }
 
