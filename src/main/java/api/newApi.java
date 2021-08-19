@@ -111,6 +111,13 @@ public class newApi extends AnAction {
         @Override
         public void onGenerate(String str, String member) {
             WriteCommandAction.runWriteCommandAction(anActionEvent.getProject(), () -> {
+                //获取当前编辑的文件
+                PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
+                if (psiFile == null) {
+                    MyNotifier.notifyError(anActionEvent.getProject(), "当前编辑文件不能为空！");
+                    return;
+                }
+
                 Editor editor = anActionEvent.getData(PlatformDataKeys.EDITOR);
                 if (editor == null) {
                     return;
@@ -125,6 +132,22 @@ public class newApi extends AnAction {
 
                 if (list != null) {
                     document.insertString(lastEndIndex - 1, list.get(1));
+
+                    var path = psiFile.getVirtualFile().getPath();
+                    var hPath = path.replaceFirst("\\.m", "\\.h");
+                    var hFile = new File(hPath);
+
+                    if (hFile.exists()) {
+
+                        var hVFile = LocalFileSystem.getInstance().findFileByIoFile(hFile);
+                        var hDocumentFile = FileDocumentManager.getInstance().getDocument(hVFile);
+                        var apiContent = hDocumentFile.getText();
+                        if (!apiContent.contains(list.get(2))) {
+                            var lastIndex = apiContent.lastIndexOf("@end");
+                            hDocumentFile.insertString(lastIndex - 1, "- (void)" + list.get(2) + ";");
+                        }
+                    }
+
 
                     var project = anActionEvent.getProject();
                     var projectFilePath = project.getBasePath();
