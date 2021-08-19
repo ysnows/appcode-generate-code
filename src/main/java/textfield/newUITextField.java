@@ -14,6 +14,7 @@ import com.intellij.psi.PsiFile;
 import org.apache.http.util.TextUtils;
 
 import main.java.utils.CommonUtil;
+import main.java.utils.MasoryUtil;
 import main.java.utils.MyNotifier;
 
 public class newUITextField extends AnAction {
@@ -24,7 +25,7 @@ public class newUITextField extends AnAction {
 
 
         @Override
-        public void onGenerate(String name, String font, String color, String text, String radius, String bgcolor, String border, String border_color) {
+        public void onGenerate(String nameStr, String font, String color, String text, String radius, String bgcolor, String border, String border_color) {
             //获取当前编辑的文件
             PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
             if (psiFile == null) {
@@ -39,6 +40,16 @@ public class newUITextField extends AnAction {
                 }
                 Document document = editor.getDocument();
                 String strContent = document.getText();
+
+
+                String name = "";
+                String superView = "contentView";
+                if (nameStr.contains(".")) {
+                    var nameArr = nameStr.split("\\.");
+                    name = nameArr[0];
+                    superView = MasoryUtil.getSuperViewTest(nameArr[1]);
+                }
+
                 int firstEndIndex = strContent.indexOf("@end");
 
                 document.insertString(firstEndIndex - 1, "\n@property(nonatomic, strong) BTextField *tf" + name + ";");
@@ -90,7 +101,7 @@ public class newUITextField extends AnAction {
                 index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)loadView");
 
                 strBuilder = new StringBuilder();
-                strBuilder.append("\n\t[self.contentView addSubview:self.tf").append(name).append("];");
+                strBuilder.append("\n\t[self." + superView + " addSubview:self.tf").append(name).append("];");
                 document.insertString(index - 1, strBuilder.toString());
 
 

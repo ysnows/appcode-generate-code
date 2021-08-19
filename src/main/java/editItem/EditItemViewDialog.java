@@ -1,38 +1,27 @@
-package main.java.label;
+package main.java.editItem;
 
 import org.apache.http.util.TextUtils;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JEditorPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 import main.java.base.BTextField;
 import main.java.utils.CommonUtil;
 
-public class UILabelDialog extends JDialog implements KeyListener, DocumentListener, FocusListener {
+public class EditItemViewDialog extends JDialog implements KeyListener, DocumentListener, FocusListener {
     private JPanel content;
     private JButton btnCancel, btnGenerate;
     private BTextField tfname;
@@ -51,7 +40,7 @@ public class UILabelDialog extends JDialog implements KeyListener, DocumentListe
      */
     private String memberType = "private";
 
-    public UILabelDialog() {
+    public EditItemViewDialog() {
         setContentPane(content);
         setModal(true);
         btnGenerate.addActionListener(e -> {

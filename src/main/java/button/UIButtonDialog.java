@@ -264,7 +264,7 @@ public class UIButtonDialog extends JDialog implements KeyListener, DocumentList
 
 
     public interface OnClickListener {
-        void onGenerate(String name, String font, String color, String text, String radius, String bgcolor, String border, String border_color, String image, String imageHeight, String imageWidth, String imageSpacing, String imagePosition, String width, String height);
+        void onGenerate(String nameStr, String font, String color, String text, String radius, String bgcolor, String border, String border_color, String image, String imageHeight, String imageWidth, String imageSpacing, String imagePosition, String width, String height);
 
         void onCancel();
     }

@@ -35,7 +35,7 @@ public class newApi extends AnAction {
 
 
 //        @Override
-//        public void onGenerate(String name, String radius, String height, String bgcolor, String border, String border_color) {
+//        public void onGenerate(String nameStr, String radius, String height, String bgcolor, String border, String border_color) {
 //            //获取当前编辑的文件
 //            PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
 //            if (psiFile == null) {

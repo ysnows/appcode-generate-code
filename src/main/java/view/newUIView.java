@@ -25,7 +25,7 @@ public class newUIView extends AnAction {
 
 
         @Override
-        public void onGenerate(String name, String radius, String height, String bgcolor, String border, String border_color, String masory) {
+        public void onGenerate(String nameStr, String radius, String height, String bgcolor, String border, String border_color, String masory) {
             //获取当前编辑的文件
             PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
             if (psiFile == null) {
@@ -40,6 +40,16 @@ public class newUIView extends AnAction {
                 }
                 Document document = editor.getDocument();
                 String strContent = document.getText();
+
+                String name = "";
+                String superView = "contentView";
+                if (nameStr.contains(".")) {
+                    var nameArr = nameStr.split("\\.");
+                    name = nameArr[0];
+                    superView = MasoryUtil.getSuperViewTest(nameArr[1]);
+                }
+
+
                 int firstEndIndex = strContent.indexOf("@end");
 
                 document.insertString(firstEndIndex - 1, "\n@property(nonatomic, strong) BView *view" + name + ";");
@@ -75,7 +85,6 @@ public class newUIView extends AnAction {
 
                 strContent = document.getText();
                 int index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)updateConstraints");
-
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self.view").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
                 strBuilder.append("\n\t\tmake.height.mas_equalTo(kNum(").append(height).append("));");
@@ -90,7 +99,7 @@ public class newUIView extends AnAction {
                 index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)loadView");
 
                 strBuilder = new StringBuilder();
-                strBuilder.append("\n\t[self.contentView addSubview:self.view").append(name).append("];");
+                strBuilder.append("\n\t[self.").append(superView).append(" addSubview:self.view").append(name).append("];");
                 document.insertString(index - 1, strBuilder.toString());
 
 

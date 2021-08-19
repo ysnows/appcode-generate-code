@@ -182,7 +182,7 @@ public class UIImageViewDialog extends JDialog implements KeyListener, DocumentL
     }
 
     public interface OnClickListener {
-        void onGenerate(String name, String image, String height, String width, String radius, String bgcolor, String border, String border_color);
+        void onGenerate(String nameStr, String image, String height, String width, String radius, String bgcolor, String border, String border_color);
 
         void onCancel();
     }

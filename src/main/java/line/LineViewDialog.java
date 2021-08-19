@@ -105,7 +105,7 @@ public class LineViewDialog extends JDialog implements KeyListener, FocusListene
     }
 
     public interface OnClickListener {
-        void onGenerate(String name, String radius, String bgcolor, String border, String border_color, String height);
+        void onGenerate(String nameStr, String radius, String bgcolor, String border, String border_color, String height);
 
         void onCancel();
     }

@@ -95,23 +95,7 @@ public class MasoryUtil {
         var numeric = isNumeric(text);
 
         if (isViewText(text)) {
-            switch (text) {
-                case "self":
-                    text = "self";
-                    break;
-                case "cont":
-                    text = "contentView";
-                    break;
-                case "head":
-                    text = "headerView";
-                    break;
-                case "main":
-                    text = "mainView";
-                    break;
-                case "table":
-                    text = "tableView";
-                    break;
-            }
+            text = getSuperViewTest(text);
             return text.equals("self") ? "equalTo(self" : "equalTo(self." + text + "";
 
         } else if (numeric != 0) {
@@ -158,6 +142,28 @@ public class MasoryUtil {
             default:
                 return "";
         }
+    }
+
+    @NotNull
+    public static String getSuperViewTest(String text) {
+        switch (text) {
+            case "self":
+                text = "self";
+                break;
+            case "cont":
+                text = "contentView";
+                break;
+            case "head":
+                text = "headerView";
+                break;
+            case "main":
+                text = "mainView";
+                break;
+            case "table":
+                text = "tableView";
+                break;
+        }
+        return text;
     }
 
     public static int isNumeric(String str) {

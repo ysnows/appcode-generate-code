@@ -184,7 +184,7 @@ public class UITextFieldDialog extends JDialog implements KeyListener, DocumentL
     }
 
     public interface OnClickListener {
-        void onGenerate(String name, String font, String color, String text, String radius, String bgcolor, String border, String border_color);
+        void onGenerate(String nameStr, String font, String color, String text, String radius, String bgcolor, String border, String border_color);
 
         void onCancel();
     }

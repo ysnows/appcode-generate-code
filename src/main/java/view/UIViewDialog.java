@@ -179,7 +179,7 @@ public class UIViewDialog extends JDialog implements KeyListener, DocumentListen
     }
 
     public interface OnClickListener {
-        void onGenerate(String name, String radius, String height, String bgcolor, String border, String border_color, String masory);
+        void onGenerate(String nameStr, String radius, String height, String bgcolor, String border, String border_color, String masory);
 
         void onCancel();
     }

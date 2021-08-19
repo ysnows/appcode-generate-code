@@ -1,4 +1,4 @@
-package main.java.image;
+package main.java.editItem;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -7,7 +7,6 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.PsiFile;
 
@@ -17,15 +16,15 @@ import main.java.utils.CommonUtil;
 import main.java.utils.MasoryUtil;
 import main.java.utils.MyNotifier;
 
-public class newUIImageView extends AnAction {
+public class newEditItemView extends AnAction {
 
     private AnActionEvent anActionEvent;
 
-    private final UIImageViewDialog.OnClickListener mClickListener = new UIImageViewDialog.OnClickListener() {
+    private final EditItemViewDialog.OnClickListener mClickListener = new EditItemViewDialog.OnClickListener() {
 
 
         @Override
-        public void onGenerate(String nameStr, String image, String height, String width, String radius, String bgcolor, String border, String border_color) {
+        public void onGenerate(String nameStr, String font, String color, String text, String numberOfLines, String align, String radius, String bgcolor, String border, String border_color) {
             //获取当前编辑的文件
             PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
             if (psiFile == null) {
@@ -52,34 +51,48 @@ public class newUIImageView extends AnAction {
 
                 int firstEndIndex = strContent.indexOf("@end");
 
-                document.insertString(firstEndIndex - 1, "\n@property(nonatomic, strong) BImageView *img" + name + ";");
-
+                document.insertString(firstEndIndex - 1, "\n@property(nonatomic, strong) BLabel *label" + name + ";");
 
                 strContent = document.getText();
                 int lastEndIndex = strContent.lastIndexOf("@end");
                 StringBuilder strBuilder = new StringBuilder();
-                strBuilder.append("\n- (BImageView *)img").append(name).append(" {\n");
+                strBuilder.append("\n- (BLabel *)label").append(name).append(" {\n");
 
-                strBuilder.append("\tif (!_img").append(name).append("){\n");
+                strBuilder.append("\tif (!_label").append(name).append("){\n");
 
-                strBuilder.append("\t\t_img").append(name).append(" = [[BImageView alloc] initWithImage:[UIImage imageNamed:").append(CommonUtil.processImage(image)).append("]];\n");
+
+                strBuilder.append("\t\t_label").append(name).append(" = [[BLabel alloc] initWithFrame:CGRectZero];\n");
+                strBuilder.append("\t\t_label").append(name).append(".textAlignment = NSTextAlignment" + CommonUtil.toUpperCase4Index(align) + ";\n");
+                strBuilder.append("\t\t_label").append(name).append(".textColor = ").append(CommonUtil.processColor(color)).append(";\n");
+                strBuilder.append("\t\t_label").append(name).append(".font = ").append(CommonUtil.processFont(font)).append(";\n");
+                strBuilder.append("\t\t_label").append(name).append(".text = ").append(CommonUtil.processText(text)).append(";\n");
+                strBuilder.append("\t\t_label").append(name).append(".adjustsFontSizeToFitWidth = NO;\n");
+
+                if ("1".equals(numberOfLines)) {
+                    strBuilder.append("\t\t_label").append(name).append(".lineBreakMode = NSLineBreakByTruncatingTail").append(";\n");
+                } else {
+                    strBuilder.append("\t\t_label").append(name).append(".lineBreakMode = NSLineBreakByWordWrapping").append(";\n");
+                }
+
+                strBuilder.append("\t\t_label").append(name).append(".numberOfLines = ").append(numberOfLines).append(";\n");
+
 
                 if (!TextUtils.isBlank(bgcolor)) {
-                    strBuilder.append("\t\t_img").append(name).append(".backgroundColor = ").append(CommonUtil.processColor(bgcolor)).append(";\n");
+                    strBuilder.append("\t\t_label").append(name).append(".backgroundColor = ").append(CommonUtil.processColor(bgcolor)).append(";\n");
                 } else {
-//                    strBuilder.append("\t\t_img").append(name).append(".backgroundColor = ").append("UIColor.clearColor").append(";\n");
+                    strBuilder.append("\t\t_label").append(name).append(".backgroundColor = ").append("UIColor.clearColor").append(";\n");
                 }
 
                 if (!TextUtils.isBlank(radius)) {
-                    strBuilder.append("\t\t[_img").append(name).append(" corner_radius:kNum(").append(radius).append(")];\n");
+                    strBuilder.append("\t\t[_label").append(name).append(" corner_radius:kNum(").append(radius).append(")];\n");
                 }
 
                 if (!TextUtils.isBlank(border) && !TextUtils.isBlank(border_color)) {
-                    strBuilder.append("\t\t[_img").append(name).append(" border:kNum(").append(border).append(") color:").append(CommonUtil.processColor(border_color)).append("];\n");
+                    strBuilder.append("\t\t[_label").append(name).append(" border:kNum(").append(border).append(") color:").append(CommonUtil.processColor(border_color)).append("];\n");
                 }
 
                 strBuilder.append("\t}\n");
-                strBuilder.append("\treturn _img").append(name).append(";\n");
+                strBuilder.append("\treturn _label").append(name).append(";\n");
                 strBuilder.append("}\n");
 
                 document.insertString(lastEndIndex - 1, strBuilder.toString());
@@ -89,9 +102,7 @@ public class newUIImageView extends AnAction {
                 int index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)updateConstraints");
 
                 strBuilder = new StringBuilder();
-                strBuilder.append("\n\t[self.img").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
-                strBuilder.append("\n\t\tmake.height.mas_equalTo(kNum(").append(height).append("));");
-                strBuilder.append("\n\t\tmake.width.mas_equalTo(kNum(").append(width).append("));");
+                strBuilder.append("\n\t[self.label").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
                 strBuilder.append("\n\t}];\n");
                 document.insertString(index - 1, strBuilder.toString());
 
@@ -99,13 +110,12 @@ public class newUIImageView extends AnAction {
                 index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)loadView");
 
                 strBuilder = new StringBuilder();
-                strBuilder.append("\n\t[self."+superView+" addSubview:self.img").append(name).append("];");
+                strBuilder.append("\n\t[self." + superView + " addSubview:self.label").append(name).append("];");
                 document.insertString(index - 1, strBuilder.toString());
 
 
             });
         }
-
 
         @Override
         public void onCancel() {
@@ -121,7 +131,7 @@ public class newUIImageView extends AnAction {
 //        Messages.showMessageDialog("hello", "Error", Messages.getInformationIcon());
 //        MyNotifier.notifyError(e.getProject(),"Hello");
 
-        UIImageViewDialog generateDialog = new UIImageViewDialog();
+        EditItemViewDialog generateDialog = new EditItemViewDialog();
         generateDialog.setOnClickListener(mClickListener);
         generateDialog.setTitle("Generate Field By String");
         //自动调整对话框大小
