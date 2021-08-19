@@ -4,15 +4,13 @@ import com.intellij.codeInsight.completion.CompletionParameters;
 import com.intellij.codeInsight.completion.CompletionProvider;
 import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.util.ProcessingContext;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import main.java.utils.MasoryUtil;
 
 /**
  * @author jansorg

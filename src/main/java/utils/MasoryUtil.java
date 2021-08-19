@@ -1,4 +1,4 @@
-package main.java.masory;
+package main.java.utils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 
-class MasoryUtil {
+public class MasoryUtil {
 
 
 //    public static void main(String[] args) {
@@ -101,6 +101,9 @@ class MasoryUtil {
                     break;
                 case "cont":
                     text = "contentView";
+                    break;
+                case "head":
+                    text = "headerView";
                     break;
                 case "main":
                     text = "mainView";

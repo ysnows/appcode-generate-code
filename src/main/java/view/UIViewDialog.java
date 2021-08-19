@@ -10,9 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
@@ -31,6 +29,7 @@ public class UIViewDialog extends JDialog implements KeyListener, DocumentListen
     private JTextField tfBorder;
     private JTextField tfBorderColor;
     private JTextField tfHeight;
+    private JTextField tfMasory;
     private OnClickListener onClickListener;
     /**
      * 成员变量类型：private or public
@@ -43,7 +42,7 @@ public class UIViewDialog extends JDialog implements KeyListener, DocumentListen
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
                 String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                onClickListener.onGenerate(name, tfRadius.getText(), tfBgColor.getText(), tfHeight.getText(), tfBorder.getText(), tfBorderColor.getText());
+                onClickListener.onGenerate(name, tfRadius.getText(), tfBgColor.getText(), tfHeight.getText(), tfBorder.getText(), tfBorderColor.getText(),tfMasory.getText());
             }
             dispose();
         });
@@ -61,7 +60,9 @@ public class UIViewDialog extends JDialog implements KeyListener, DocumentListen
         tfBorder.addKeyListener(this);
         tfBorderColor.addKeyListener(this);
         btnGenerate.addKeyListener(this);
+        tfMasory.addKeyListener(this);
 
+        tfMasory.addFocusListener(this);
         tfname.addFocusListener(this);
         tfBgColor.addFocusListener(this);
         tfRadius.addFocusListener(this);
@@ -155,7 +156,7 @@ public class UIViewDialog extends JDialog implements KeyListener, DocumentListen
             if (!TextUtils.isBlank(tfname.getText())) {
                 if (onClickListener != null) {
                     String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                    onClickListener.onGenerate(name, tfRadius.getText(), tfHeight.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
+                    onClickListener.onGenerate(name, tfRadius.getText(), tfHeight.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(), tfMasory.getText());
                     dispose();
                 }
             } else {
@@ -178,7 +179,7 @@ public class UIViewDialog extends JDialog implements KeyListener, DocumentListen
     }
 
     public interface OnClickListener {
-        void onGenerate(String name, String radius, String height, String bgcolor, String border, String border_color);
+        void onGenerate(String name, String radius, String height, String bgcolor, String border, String border_color, String masory);
 
         void onCancel();
     }

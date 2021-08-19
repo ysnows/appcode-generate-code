@@ -9,14 +9,10 @@ import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.PsiFile;
 
-import org.apache.http.util.TextUtils;
-
-import main.java.utils.CommonUtil;
+import main.java.utils.MasoryUtil;
 import main.java.utils.MyNotifier;
 
 public class masory extends AnAction {
