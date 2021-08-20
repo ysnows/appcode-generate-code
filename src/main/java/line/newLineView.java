@@ -101,6 +101,10 @@ public class newLineView extends AnAction {
                 strBuilder.append("\n\t[self." + superView + " addSubview:self.line").append(name).append("];");
                 document.insertString(index - 1, strBuilder.toString());
 
+
+                MasoryUtil.moveCaretToMasoryLine(editor, document, name);
+
+
             });
         }
 

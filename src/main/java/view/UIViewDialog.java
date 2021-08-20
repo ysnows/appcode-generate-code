@@ -2,14 +2,19 @@ package main.java.view;
 
 import org.apache.http.util.TextUtils;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -71,6 +76,71 @@ public class UIViewDialog extends JDialog implements KeyListener, DocumentListen
         tfBorderColor.addFocusListener(this);
         btnGenerate.addFocusListener(this);
 
+
+//        var model = new DefaultComboBoxModel<String>();
+//        JComboBox<String> cbInput = new JComboBox<>(model) {
+//            public Dimension getPreferredSize() {
+//                return new Dimension(super.getPreferredSize().width, 0);
+//            }
+//        };
+//        tfMasory.setLayout(new BorderLayout());
+//        tfMasory.add(cbInput, BorderLayout.SOUTH);
+
+//        tfMasory.getDocument().addDocumentListener(new DocumentListener() {
+//            public void insertUpdate(DocumentEvent e) {
+//                updateList();
+//            }
+//
+//            public void removeUpdate(DocumentEvent e) {
+//                updateList();
+//            }
+//
+//            public void changedUpdate(DocumentEvent e) {
+//                updateList();
+//            }
+//
+//            private void updateList() {
+////                setAdjusting(cbInput, true);
+//                model.removeAllElements();
+//                String input = tfMasory.getText();
+////                if (!input.isEmpty()) {
+////                    for (String item : items) {
+////                        if (item.toLowerCase().startsWith(input.toLowerCase())) {
+////                            model.addElement(item);
+////                        }
+////                    }
+////                }
+//                cbInput.setPopupVisible(model.getSize() > 0);
+////                setAdjusting(cbInput, false);
+//            }
+//        });
+
+
+//        tfMasory.addKeyListener(new KeyAdapter() {
+//
+//            @Override
+//            public void keyPressed(KeyEvent e) {
+////                setAdjusting(cbInput, true);
+//                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+//                    if (cbInput.isPopupVisible()) {
+//                        e.setKeyCode(KeyEvent.VK_ENTER);
+//                    }
+//                }
+//
+//                if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN) {
+//                    e.setSource(cbInput);
+//                    cbInput.dispatchEvent(e);
+//                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+//                        tfMasory.setText(cbInput.getSelectedItem().toString());
+//                        cbInput.setPopupVisible(false);
+//                    }
+//                }
+//                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+//                    cbInput.setPopupVisible(false);
+//                }
+////                setAdjusting(cbInput, false);
+//            }
+//        });
 
         //关键是下面这两行代码
         Document document = tfname.getDocument();

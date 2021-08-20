@@ -1,5 +1,8 @@
 package main.java.utils;
 
+import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.editor.Editor;
+
 import org.apache.http.util.TextUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,6 +39,16 @@ public class MasoryUtil {
 
         System.out.println(needCompletion);
     }
+
+    public static void moveCaretToMasoryLine(Editor editor, Document document, String name) {
+        var masoryIndex = document.getText().indexOf("[self.view" + name + " mas_makeConstraints:");
+        var lineNumber = document.getLineNumber(masoryIndex);
+        var lineEndOffset = document.getLineEndOffset(lineNumber);
+
+        int offset = lineEndOffset + 1 + 6;
+        editor.getCaretModel().getCurrentCaret().moveToOffset(offset);
+    }
+
 
     @NotNull
     public static String parseMasory(String str) {

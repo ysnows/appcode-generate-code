@@ -102,6 +102,9 @@ public class newUIView extends AnAction {
                 document.insertString(index - 1, strBuilder.toString());
 
 
+                MasoryUtil.moveCaretToMasoryLine(editor, document, name);
+
+
                 Project project = editor.getProject();
                 if (project == null) {
                     resultMessage[0] = "当前工程不能为空！";
