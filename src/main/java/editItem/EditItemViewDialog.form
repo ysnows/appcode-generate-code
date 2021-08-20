@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="main.java.editItem.EditItemViewDialog">
-  <grid id="cbd77" binding="content" layout-manager="GridLayoutManager" row-count="12" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="cbd77" binding="content" layout-manager="GridLayoutManager" row-count="13" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="5" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="48" y="54" width="555" height="516"/>
+      <xy x="48" y="54" width="555" height="559"/>
     </constraints>
     <properties>
       <foreground color="-4488533"/>
@@ -21,7 +21,7 @@
       <grid id="82b9a" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="11" column="1" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="4" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="12" column="1" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="4" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
@@ -134,10 +134,10 @@
           <component id="2d287" class="javax.swing.JLabel">
             <constraints border-constraint="West"/>
             <properties>
-              <text value="radius"/>
+              <text value="sub_text"/>
             </properties>
           </component>
-          <component id="6ce28" class="main.java.base.BTextField" binding="tfRadius">
+          <component id="6ce28" class="main.java.base.BTextField" binding="tfSubText">
             <constraints border-constraint="Center"/>
             <properties>
               <text value=""/>
@@ -155,12 +155,14 @@
           <component id="4aeef" class="javax.swing.JLabel">
             <constraints border-constraint="West"/>
             <properties>
-              <text value="bgcolor"/>
+              <text value="editable"/>
             </properties>
           </component>
-          <component id="4ca06" class="main.java.base.BTextField" binding="tfBgColor">
+          <component id="4ca06" class="main.java.base.BTextField" binding="tftfEditable">
             <constraints border-constraint="Center"/>
-            <properties/>
+            <properties>
+              <text value="yes"/>
+            </properties>
           </component>
         </children>
       </grid>
@@ -174,12 +176,14 @@
           <component id="b45b0" class="javax.swing.JLabel">
             <constraints border-constraint="West"/>
             <properties>
-              <text value="border"/>
+              <text value="arrow"/>
             </properties>
           </component>
-          <component id="20cbf" class="main.java.base.BTextField" binding="tfBorder">
+          <component id="20cbf" class="main.java.base.BTextField" binding="tfArrow">
             <constraints border-constraint="Center"/>
-            <properties/>
+            <properties>
+              <text value="yes"/>
+            </properties>
           </component>
         </children>
       </grid>
@@ -193,18 +197,20 @@
           <component id="f53d" class="javax.swing.JLabel">
             <constraints border-constraint="West"/>
             <properties>
-              <text value="border_color"/>
+              <text value="line"/>
             </properties>
           </component>
-          <component id="c9c29" class="main.java.base.BTextField" binding="tfBorderColor">
+          <component id="c9c29" class="main.java.base.BTextField" binding="tfLine">
             <constraints border-constraint="Center"/>
-            <properties/>
+            <properties>
+              <text value="yes"/>
+            </properties>
           </component>
         </children>
       </grid>
       <hspacer id="7cf88">
         <constraints>
-          <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
       </hspacer>
       <grid id="9ffab" layout-manager="BorderLayout" hgap="0" vgap="0">
@@ -217,10 +223,10 @@
           <component id="ed6cd" class="javax.swing.JLabel">
             <constraints border-constraint="West"/>
             <properties>
-              <text value="number of lines"/>
+              <text value="sub_font"/>
             </properties>
           </component>
-          <component id="88465" class="main.java.base.BTextField" binding="tfNumberOfLines">
+          <component id="88465" class="main.java.base.BTextField" binding="tfSubFont">
             <constraints border-constraint="Center"/>
             <properties>
               <text value="1"/>
@@ -238,14 +244,33 @@
           <component id="981e3" class="javax.swing.JLabel">
             <constraints border-constraint="West"/>
             <properties>
-              <text value="alignment"/>
+              <text value="sub_color"/>
             </properties>
           </component>
-          <component id="7b5c1" class="main.java.base.BTextField" binding="tfAlign">
+          <component id="7b5c1" class="main.java.base.BTextField" binding="tfSubColor">
             <constraints border-constraint="Center"/>
             <properties>
               <text value="center"/>
             </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="d4928" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="11" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="720f6" class="javax.swing.JLabel">
+            <constraints border-constraint="West"/>
+            <properties>
+              <text value="height"/>
+            </properties>
+          </component>
+          <component id="66937" class="main.java.base.BTextField" binding="tfHeight">
+            <constraints border-constraint="Center"/>
+            <properties/>
           </component>
         </children>
       </grid>

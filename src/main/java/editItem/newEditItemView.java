@@ -24,7 +24,7 @@ public class newEditItemView extends AnAction {
 
 
         @Override
-        public void onGenerate(String nameStr, String font, String color, String text, String numberOfLines, String align, String radius, String bgcolor, String border, String border_color) {
+        public void onGenerate(String nameStr, String font, String color, String text, String subFont, String subColor, String subText, String editable, String arrow, String line, String height) {
             //获取当前编辑的文件
             PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
             if (psiFile == null) {
@@ -51,66 +51,40 @@ public class newEditItemView extends AnAction {
 
                 int firstEndIndex = strContent.indexOf("@end");
 
-                document.insertString(firstEndIndex - 1, "\n@property(nonatomic, strong) BLabel *label" + name + ";");
+                document.insertString(firstEndIndex - 1, "\n@property(nonatomic, strong) EditItemView *edit" + name + ";");
 
                 strContent = document.getText();
                 int lastEndIndex = strContent.lastIndexOf("@end");
                 StringBuilder strBuilder = new StringBuilder();
-                strBuilder.append("\n- (BLabel *)label").append(name).append(" {\n");
+                strBuilder.append("\n- (EditItemView *)edit").append(name).append(" {\n");
 
-                strBuilder.append("\tif (!_label").append(name).append("){\n");
+                strBuilder.append("\tif (!_edit").append(name).append("){\n");
 
-
-                strBuilder.append("\t\t_label").append(name).append(" = [[BLabel alloc] initWithFrame:CGRectZero];\n");
-                strBuilder.append("\t\t_label").append(name).append(".textAlignment = NSTextAlignment" + CommonUtil.toUpperCase4Index(align) + ";\n");
-                strBuilder.append("\t\t_label").append(name).append(".textColor = ").append(CommonUtil.processColor(color)).append(";\n");
-                strBuilder.append("\t\t_label").append(name).append(".font = ").append(CommonUtil.processFont(font)).append(";\n");
-                strBuilder.append("\t\t_label").append(name).append(".text = ").append(CommonUtil.processText(text)).append(";\n");
-                strBuilder.append("\t\t_label").append(name).append(".adjustsFontSizeToFitWidth = NO;\n");
-
-                if ("1".equals(numberOfLines)) {
-                    strBuilder.append("\t\t_label").append(name).append(".lineBreakMode = NSLineBreakByTruncatingTail").append(";\n");
-                } else {
-                    strBuilder.append("\t\t_label").append(name).append(".lineBreakMode = NSLineBreakByWordWrapping").append(";\n");
-                }
-
-                strBuilder.append("\t\t_label").append(name).append(".numberOfLines = ").append(numberOfLines).append(";\n");
-
-
-                if (!TextUtils.isBlank(bgcolor)) {
-                    strBuilder.append("\t\t_label").append(name).append(".backgroundColor = ").append(CommonUtil.processColor(bgcolor)).append(";\n");
-                } else {
-                    strBuilder.append("\t\t_label").append(name).append(".backgroundColor = ").append("UIColor.clearColor").append(";\n");
-                }
-
-                if (!TextUtils.isBlank(radius)) {
-                    strBuilder.append("\t\t[_label").append(name).append(" corner_radius:kNum(").append(radius).append(")];\n");
-                }
-
-                if (!TextUtils.isBlank(border) && !TextUtils.isBlank(border_color)) {
-                    strBuilder.append("\t\t[_label").append(name).append(" border:kNum(").append(border).append(") color:").append(CommonUtil.processColor(border_color)).append("];\n");
-                }
+                strBuilder.append("\t\t_edit").append(name).append(" = [[EditItemView alloc] initWithViewModel:self.viewModel title:@\"").append(text).append("\" titleFont:").append(CommonUtil.processFont(font)).append(" titleColor:").append(CommonUtil.processColor(color)).append(" placeholder:@\"").append(subText).append("\" subTitleFont:").append(CommonUtil.processFont(subFont)).append(" subTitleColor:").append(CommonUtil.processColor(subColor)).append(" desc:@\"\" arrow:").append(CommonUtil.processBoolean(arrow)).append(" editable:").append(CommonUtil.processBoolean(editable)).append(" line:").append(CommonUtil.processBoolean(line)).append("];\n");
 
                 strBuilder.append("\t}\n");
-                strBuilder.append("\treturn _label").append(name).append(";\n");
+                strBuilder.append("\treturn _edit").append(name).append(";\n");
                 strBuilder.append("}\n");
 
                 document.insertString(lastEndIndex - 1, strBuilder.toString());
 
 
                 strContent = document.getText();
-                int index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)updateConstraints");
+                int index = CommonUtil.getEndIndexOfMethod(strContent, "\\(void\\)updateConstraints");
 
                 strBuilder = new StringBuilder();
-                strBuilder.append("\n\t[self.label").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
+                strBuilder.append("\n\t[self.edit").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
+                strBuilder.append("\n\t\tmake.height.mas_equalTo(kNum(");
+                strBuilder.append(height).append("));");
                 strBuilder.append("\n\t}];\n");
+
                 document.insertString(index - 1, strBuilder.toString());
 
                 strContent = document.getText();
-                index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)loadView");
+                index = CommonUtil.getEndIndexOfMethod(strContent, "\\(void\\)loadView");
 
                 strBuilder = new StringBuilder();
-                strBuilder.append("\n\t[self." + superView + " addSubview:self.label").append(name).append("];");
+                strBuilder.append("\n\t[self." + superView + " addSubview:self.edit").append(name).append("];");
                 document.insertString(index - 1, strBuilder.toString());
 
 

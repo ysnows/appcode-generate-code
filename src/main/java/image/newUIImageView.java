@@ -7,7 +7,6 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.PsiFile;
 
@@ -86,7 +85,7 @@ public class newUIImageView extends AnAction {
 
 
                 strContent = document.getText();
-                int index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)updateConstraints");
+                int index = CommonUtil.getEndIndexOfMethod(strContent, "\\(void\\)updateConstraints");
 
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self.img").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
@@ -96,7 +95,7 @@ public class newUIImageView extends AnAction {
                 document.insertString(index - 1, strBuilder.toString());
 
                 strContent = document.getText();
-                index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)loadView");
+                index = CommonUtil.getEndIndexOfMethod(strContent, "\\(void\\)loadView");
 
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self."+superView+" addSubview:self.img").append(name).append("];");

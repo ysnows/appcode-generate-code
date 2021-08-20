@@ -84,19 +84,18 @@ public class newUIView extends AnAction {
                 document.insertString(lastEndIndex - 1, strBuilder.toString());
 
                 strContent = document.getText();
-                int index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)updateConstraints");
+                int index = CommonUtil.getEndIndexOfMethod(strContent, "\\(void\\)updateConstraints");
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self.view").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
-                strBuilder.append("\n\t\tmake.height.mas_equalTo(kNum(").append(height).append("));");
-
-
+                strBuilder.append("\n\t\tmake.height.mas_equalTo(kNum(");
+                strBuilder.append(height).append("));");
                 var parsedMasory = MasoryUtil.parseMasory(masory);
                 strBuilder.append(parsedMasory);
                 strBuilder.append("\n\t}];\n");
                 document.insertString(index - 1, strBuilder.toString());
 
                 strContent = document.getText();
-                index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)loadView");
+                index = CommonUtil.getEndIndexOfMethod(strContent, "\\(void\\)loadView");
 
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self.").append(superView).append(" addSubview:self.view").append(name).append("];");

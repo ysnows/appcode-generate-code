@@ -28,12 +28,13 @@ public class EditItemViewDialog extends JDialog implements KeyListener, Document
     private BTextField tfFont;
     private BTextField tfColor;
     private BTextField tfText;
-    private BTextField tfRadius;
-    private BTextField tfBgColor;
-    private BTextField tfBorder;
-    private BTextField tfBorderColor;
-    private BTextField tfNumberOfLines;
-    private BTextField tfAlign;
+    private BTextField tfSubText;
+    private BTextField tftfEditable;
+    private BTextField tfArrow;
+    private BTextField tfLine;
+    private BTextField tfSubFont;
+    private BTextField tfSubColor;
+    private BTextField tfHeight;
     private OnClickListener onClickListener;
     /**
      * 成员变量类型：private or public
@@ -46,7 +47,7 @@ public class EditItemViewDialog extends JDialog implements KeyListener, Document
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
                 String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfNumberOfLines.getText(), tfAlign.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
+                onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfSubFont.getText(), tfSubColor.getText(), tfSubText.getText(), tftfEditable.getText(), tfArrow.getText(), tfLine.getText(), tfHeight.getText());
             }
             dispose();
         });
@@ -61,24 +62,26 @@ public class EditItemViewDialog extends JDialog implements KeyListener, Document
         tfFont.addKeyListener(this);
         tfColor.addKeyListener(this);
         tfText.addKeyListener(this);
-        tfBgColor.addKeyListener(this);
-        tfNumberOfLines.addKeyListener(this);
-        tfRadius.addKeyListener(this);
-        tfBorder.addKeyListener(this);
-        tfBorderColor.addKeyListener(this);
-        tfAlign.addKeyListener(this);
+        tftfEditable.addKeyListener(this);
+        tfSubFont.addKeyListener(this);
+        tfSubText.addKeyListener(this);
+        tfArrow.addKeyListener(this);
+        tfLine.addKeyListener(this);
+        tfSubColor.addKeyListener(this);
         btnGenerate.addKeyListener(this);
+        tfHeight.addKeyListener(this);
 
+        tfHeight.addFocusListener(this);
         tfname.addFocusListener(this);
         tfFont.addFocusListener(this);
         tfColor.addFocusListener(this);
         tfText.addFocusListener(this);
-        tfBgColor.addFocusListener(this);
-        tfNumberOfLines.addFocusListener(this);
-        tfRadius.addFocusListener(this);
-        tfBorder.addFocusListener(this);
-        tfBorderColor.addFocusListener(this);
-        tfAlign.addFocusListener(this);
+        tftfEditable.addFocusListener(this);
+        tfSubFont.addFocusListener(this);
+        tfSubText.addFocusListener(this);
+        tfArrow.addFocusListener(this);
+        tfLine.addFocusListener(this);
+        tfSubColor.addFocusListener(this);
         btnGenerate.addFocusListener(this);
 
 
@@ -122,17 +125,55 @@ public class EditItemViewDialog extends JDialog implements KeyListener, Document
 
             if (!font.equals("0")) tfFont.setText(font);
             if (!color.equals("0")) tfColor.setText(color);
-
             if (!content.equals("0")) tfText.setText(content);
-            if (!radius.equals("0")) tfRadius.setText(radius);
-            if (!bgColor.equals("0")) tfBgColor.setText(bgColor);
-            if (!borderWidth.equals("0")) tfBorder.setText(borderWidth);
-            if (!borderColor.equals("0")) tfBorderColor.setText(borderColor);
+            if (!height.equals("0")) tfHeight.setText(height);
 
             Timer timer = new Timer(100, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     tfname.setText("");
+                }
+            });
+            timer.setRepeats(false);
+            timer.start();
+        }
+        text = tfSubFont.getText();
+        if (text.contains("|")) {
+
+            var strArr = text.split("\\|");
+
+            var font = strArr[0];
+            var colorStr = strArr[1];
+            var colorArr = colorStr.split(",");
+            var color = colorArr[0];
+
+            var whStr = strArr[2];
+            var whArr = whStr.split(",");
+            var width = whArr[0];
+            var height = whArr[1];
+
+            var content = strArr[3];
+            var radius = strArr[4];
+            var bgColorStr = strArr[5];
+            var bgColorArr = bgColorStr.split(",");
+            var bgColor = bgColorArr[0];
+
+            var borderWidth = strArr[6];
+
+            var borderColorStr = strArr[7];
+            var borderColorArr = borderColorStr.split(",");
+            var borderColor = borderColorArr[0];
+
+
+            if (!font.equals("0")) tfSubFont.setText(font);
+            if (!color.equals("0")) tfSubColor.setText(color);
+            if (!content.equals("0")) tfSubText.setText(content);
+
+            Timer timer = new Timer(100, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    tfFont.setText("");
+                    tftfEditable.requestFocus();
                 }
             });
             timer.setRepeats(false);
@@ -163,7 +204,6 @@ public class EditItemViewDialog extends JDialog implements KeyListener, Document
     }
 
 
-
     @Override
     public void keyTyped(KeyEvent keyEvent) {
         char keyChar = keyEvent.getKeyChar();
@@ -171,7 +211,7 @@ public class EditItemViewDialog extends JDialog implements KeyListener, Document
             if (!TextUtils.isBlank(tfname.getText())) {
                 if (onClickListener != null) {
                     String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                    onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfNumberOfLines.getText(), tfAlign.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
+                    onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfSubFont.getText(), tfSubColor.getText(), tfSubText.getText(), tftfEditable.getText(), tfArrow.getText(), tfLine.getText(), tfHeight.getText());
                     dispose();
                 }
             } else {
@@ -193,7 +233,7 @@ public class EditItemViewDialog extends JDialog implements KeyListener, Document
     }
 
     public interface OnClickListener {
-        void onGenerate(String nameStr, String font, String color, String text, String numberOfLines, String align, String radius, String bgcolor, String border, String border_color);
+        void onGenerate(String nameStr, String font, String color, String text, String subFont, String subColor, String subText, String editable, String arrow, String line, String height);
 
         void onCancel();
     }

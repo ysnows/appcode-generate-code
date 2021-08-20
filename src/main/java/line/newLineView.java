@@ -82,7 +82,7 @@ public class newLineView extends AnAction {
 
 
                 strContent = document.getText();
-                int index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)updateConstraints");
+                int index = CommonUtil.getEndIndexOfMethod(strContent, "\\(void\\)updateConstraints");
 
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self.line").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
@@ -91,7 +91,7 @@ public class newLineView extends AnAction {
                 document.insertString(index - 1, strBuilder.toString());
 
                 strContent = document.getText();
-                index = CommonUtil.getIndexOfMethod(strContent, "\\(void\\)loadView");
+                index = CommonUtil.getEndIndexOfMethod(strContent, "\\(void\\)loadView");
 
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self."+superView+" addSubview:self.line").append(name).append("];");

@@ -33,7 +33,7 @@ public class CommonUtil {
 
             System.out.println(font);
 
-        }else {
+        } else {
             System.out.println("fail");
 
         }
@@ -181,8 +181,17 @@ public class CommonUtil {
         return text;
     }
 
+    public static String processBoolean(String string) {
+        if ("yes".equals(string) || "y".equals(string)) {
+            return "YES";
+        } else if ("no".equals(string) || "n".equals(string)) {
+            return "NO";
+        }
+        return string;
+    }
 
-    public static int getIndexOfMethod(String input, String methodStrPattern) {
+
+    public static int getEndIndexOfMethod(String input, String methodStrPattern) {
         Pattern pattern = Pattern.compile(methodStrPattern, Pattern.DOTALL);
 
         Matcher matcher = pattern.matcher(input);
