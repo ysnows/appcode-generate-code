@@ -1,12 +1,15 @@
 package main.java.view;
 
+import com.intellij.json.JsonLanguage;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.PsiFile;
@@ -28,6 +31,8 @@ public class newUIView extends AnAction {
         public void onGenerate(String nameStr, String radius, String height, String bgcolor, String border, String border_color, String masory) {
             //获取当前编辑的文件
             PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
+
+
             if (psiFile == null) {
                 MyNotifier.notifyError(anActionEvent.getProject(), "当前编辑文件不能为空！");
             }
@@ -137,6 +142,7 @@ public class newUIView extends AnAction {
         generateDialog.setVisible(true);
 
     }
+
 
 
 }
