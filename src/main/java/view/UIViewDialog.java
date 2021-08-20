@@ -42,7 +42,7 @@ public class UIViewDialog extends JDialog implements KeyListener, DocumentListen
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
                 String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                onClickListener.onGenerate(name, tfRadius.getText(), tfBgColor.getText(), tfHeight.getText(), tfBorder.getText(), tfBorderColor.getText(),tfMasory.getText());
+                onClickListener.onGenerate(name, tfRadius.getText(), tfHeight.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(), tfMasory.getText());
             }
             dispose();
         });

@@ -10,10 +10,11 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class NewVmFieldDialog extends JDialog implements KeyListener {
     private JPanel content;
-    private JTextArea txtPasteStr;
+    private JTextField txtPasteStr;
     private JButton btnCancel, btnGenerate;
     private OnClickListener onClickListener;
     private JRadioButton rbPublic, rbPrivate;
