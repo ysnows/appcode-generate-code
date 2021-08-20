@@ -190,6 +190,15 @@ public class CommonUtil {
         return string;
     }
 
+    public static int getNextLineIndexOfString(String input, String pattern, com.intellij.openapi.editor.Document document) {
+        int index = input.indexOf(pattern);
+
+        int lineNumber = document.getLineNumber(index);
+        int lineStartOffset = document.getLineStartOffset(lineNumber);
+        int lineEndOffset = document.getLineEndOffset(lineNumber);
+
+        return lineEndOffset;
+    }
 
     public static int getEndIndexOfMethod(String input, String methodStrPattern) {
         Pattern pattern = Pattern.compile(methodStrPattern, Pattern.DOTALL);

@@ -26,7 +26,7 @@ public class newModel extends AnAction {
                 Document document = editor.getDocument();
                 String strContent = document.getText();
 
-                var parsedStr = ModelUtil.json(str,strContent);
+                var parsedStr = ModelUtil.json(str, strContent);
 
                 strContent = document.getText();
                 int lastEndIndex = strContent.lastIndexOf("@end");

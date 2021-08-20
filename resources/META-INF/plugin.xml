@@ -61,6 +61,13 @@
             <keyboard-shortcut keymap="$default" first-keystroke="meta alt P" />
         </action >
 
+        <action id="newEditItemView" class="main.java.editItem.newEditItemView"
+                text="newEditItemView"
+                description="newEditItemView" >
+            <add-to-group group-id="GenerateGroup" anchor="first" />
+            <keyboard-shortcut keymap="$default" first-keystroke="meta alt P" />
+        </action >
+
         <action id="newApi" class="main.java.api.newApi" text="newApi"
                 description="newApi" >
             <add-to-group group-id="GenerateGroup" anchor="first" />
