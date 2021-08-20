@@ -23,6 +23,7 @@ public class LineViewDialog extends JDialog implements KeyListener, FocusListene
     private JTextField tfBorder;
     private JTextField tfBorderColor;
     private JTextField tfHeight;
+    private JTextField tfMasory;
     private OnClickListener onClickListener;
     /**
      * 成员变量类型：private or public
@@ -35,7 +36,7 @@ public class LineViewDialog extends JDialog implements KeyListener, FocusListene
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
                 String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                onClickListener.onGenerate(name, tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(), tfHeight.getText());
+                onClickListener.onGenerate(name, tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(), tfHeight.getText(),tfMasory.getText());
             }
             dispose();
         });
@@ -54,7 +55,9 @@ public class LineViewDialog extends JDialog implements KeyListener, FocusListene
         tfBorder.addKeyListener(this);
         tfBorderColor.addKeyListener(this);
         btnGenerate.addKeyListener(this);
+        tfMasory.addKeyListener(this);
 
+        tfMasory.addFocusListener(this);
         tfname.addFocusListener(this);
         tfHeight.addFocusListener(this);
         tfBgColor.addFocusListener(this);
@@ -72,7 +75,7 @@ public class LineViewDialog extends JDialog implements KeyListener, FocusListene
             if (!TextUtils.isBlank(tfname.getText())) {
                 if (onClickListener != null) {
                     String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                    onClickListener.onGenerate(name, tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(), tfHeight.getText());
+                    onClickListener.onGenerate(name, tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(), tfHeight.getText(), tfMasory.getText());
                     dispose();
                 }
             } else {
@@ -105,7 +108,7 @@ public class LineViewDialog extends JDialog implements KeyListener, FocusListene
     }
 
     public interface OnClickListener {
-        void onGenerate(String nameStr, String radius, String bgcolor, String border, String border_color, String height);
+        void onGenerate(String nameStr, String radius, String bgcolor, String border, String border_color, String height, String masory);
 
         void onCancel();
     }

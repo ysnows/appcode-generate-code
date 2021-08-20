@@ -24,7 +24,7 @@ public class newUIButton extends AnAction {
 
 
         @Override
-        public void onGenerate(String nameStr, String font, String color, String text, String radius, String bgcolor, String border, String border_color, String image, String imageHeight, String imageWidth, String imageSpacing, String imagePosition, String width, String height) {
+        public void onGenerate(String nameStr, String font, String color, String text, String radius, String bgcolor, String border, String border_color, String image, String imageHeight, String imageWidth, String imageSpacing, String imagePosition, String width, String height, String masory) {
             //获取当前编辑的文件
             PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
             if (psiFile == null) {
@@ -110,6 +110,8 @@ public class newUIButton extends AnAction {
                     strBuilder.append("\n\t\tmake.height.mas_equalTo(kNum(").append(height).append("));");
                     strBuilder.append("\n\t\tmake.width.mas_equalTo(kNum(").append(width).append("));");
                 }
+                var parsedMasory = MasoryUtil.parseMasory(masory);
+                strBuilder.append(parsedMasory);
 
                 strBuilder.append("\n\t}];\n");
                 document.insertString(index - 1, strBuilder.toString());

@@ -24,7 +24,7 @@ public class newLineView extends AnAction {
 
 
         @Override
-        public void onGenerate(String nameStr, String radius, String bgcolor, String border, String border_color, String height) {
+        public void onGenerate(String nameStr, String radius, String bgcolor, String border, String border_color, String height, String masory) {
             //获取当前编辑的文件
             PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
             if (psiFile == null) {
@@ -87,6 +87,10 @@ public class newLineView extends AnAction {
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self.line").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
                 strBuilder.append("\n\t\tmake.height.mas_equalTo(kNum(").append(height).append("));");
+
+                var parsedMasory = MasoryUtil.parseMasory(masory);
+                strBuilder.append(parsedMasory);
+
                 strBuilder.append("\n\t}];\n");
                 document.insertString(index - 1, strBuilder.toString());
 
@@ -94,7 +98,7 @@ public class newLineView extends AnAction {
                 index = CommonUtil.getEndIndexOfMethod(strContent, "\\(void\\)loadView");
 
                 strBuilder = new StringBuilder();
-                strBuilder.append("\n\t[self."+superView+" addSubview:self.line").append(name).append("];");
+                strBuilder.append("\n\t[self." + superView + " addSubview:self.line").append(name).append("];");
                 document.insertString(index - 1, strBuilder.toString());
 
             });

@@ -2,31 +2,20 @@ package main.java.label;
 
 import org.apache.http.util.TextUtils;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JEditorPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 import main.java.base.BTextField;
@@ -45,6 +34,7 @@ public class UILabelDialog extends JDialog implements KeyListener, DocumentListe
     private BTextField tfBorderColor;
     private BTextField tfNumberOfLines;
     private BTextField tfAlign;
+    private JTextField tfMasory;
     private OnClickListener onClickListener;
     /**
      * 成员变量类型：private or public
@@ -57,7 +47,7 @@ public class UILabelDialog extends JDialog implements KeyListener, DocumentListe
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
                 String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfNumberOfLines.getText(), tfAlign.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
+                onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfNumberOfLines.getText(), tfAlign.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(),tfMasory.getText());
             }
             dispose();
         });
@@ -79,7 +69,9 @@ public class UILabelDialog extends JDialog implements KeyListener, DocumentListe
         tfBorderColor.addKeyListener(this);
         tfAlign.addKeyListener(this);
         btnGenerate.addKeyListener(this);
+        tfMasory.addKeyListener(this);
 
+        tfMasory.addFocusListener(this);
         tfname.addFocusListener(this);
         tfFont.addFocusListener(this);
         tfColor.addFocusListener(this);
@@ -182,7 +174,7 @@ public class UILabelDialog extends JDialog implements KeyListener, DocumentListe
             if (!TextUtils.isBlank(tfname.getText())) {
                 if (onClickListener != null) {
                     String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                    onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfNumberOfLines.getText(), tfAlign.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
+                    onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfNumberOfLines.getText(), tfAlign.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(), tfMasory.getText());
                     dispose();
                 }
             } else {
@@ -204,7 +196,7 @@ public class UILabelDialog extends JDialog implements KeyListener, DocumentListe
     }
 
     public interface OnClickListener {
-        void onGenerate(String nameStr, String font, String color, String text, String numberOfLines, String align, String radius, String bgcolor, String border, String border_color);
+        void onGenerate(String nameStr, String font, String color, String text, String numberOfLines, String align, String radius, String bgcolor, String border, String border_color, String masory);
 
         void onCancel();
     }

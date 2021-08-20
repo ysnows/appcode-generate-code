@@ -24,7 +24,7 @@ public class newUITextField extends AnAction {
 
 
         @Override
-        public void onGenerate(String nameStr, String font, String color, String text, String radius, String bgcolor, String border, String border_color) {
+        public void onGenerate(String nameStr, String font, String color, String text, String radius, String bgcolor, String border, String border_color, String masory) {
             //获取当前编辑的文件
             PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
             if (psiFile == null) {
@@ -93,6 +93,10 @@ public class newUITextField extends AnAction {
 
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self.tf").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
+
+                var parsedMasory = MasoryUtil.parseMasory(masory);
+                strBuilder.append(parsedMasory);
+
                 strBuilder.append("\n\t}];\n");
                 document.insertString(index - 1, strBuilder.toString());
 

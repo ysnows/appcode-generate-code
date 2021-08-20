@@ -35,6 +35,7 @@ public class EditItemViewDialog extends JDialog implements KeyListener, Document
     private BTextField tfSubFont;
     private BTextField tfSubColor;
     private BTextField tfHeight;
+    private JTextField tfMasory;
     private OnClickListener onClickListener;
     /**
      * 成员变量类型：private or public
@@ -47,7 +48,7 @@ public class EditItemViewDialog extends JDialog implements KeyListener, Document
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
                 String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfSubFont.getText(), tfSubColor.getText(), tfSubText.getText(), tftfEditable.getText(), tfArrow.getText(), tfLine.getText(), tfHeight.getText());
+                onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfSubFont.getText(), tfSubColor.getText(), tfSubText.getText(), tftfEditable.getText(), tfArrow.getText(), tfLine.getText(), tfHeight.getText(),tfMasory.getText());
             }
             dispose();
         });
@@ -70,7 +71,9 @@ public class EditItemViewDialog extends JDialog implements KeyListener, Document
         tfSubColor.addKeyListener(this);
         btnGenerate.addKeyListener(this);
         tfHeight.addKeyListener(this);
+        tfMasory.addKeyListener(this);
 
+        tfMasory.addFocusListener(this);
         tfHeight.addFocusListener(this);
         tfname.addFocusListener(this);
         tfFont.addFocusListener(this);
@@ -211,7 +214,7 @@ public class EditItemViewDialog extends JDialog implements KeyListener, Document
             if (!TextUtils.isBlank(tfname.getText())) {
                 if (onClickListener != null) {
                     String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                    onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfSubFont.getText(), tfSubColor.getText(), tfSubText.getText(), tftfEditable.getText(), tfArrow.getText(), tfLine.getText(), tfHeight.getText());
+                    onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfSubFont.getText(), tfSubColor.getText(), tfSubText.getText(), tftfEditable.getText(), tfArrow.getText(), tfLine.getText(), tfHeight.getText(), tfMasory.getText());
                     dispose();
                 }
             } else {
@@ -233,7 +236,7 @@ public class EditItemViewDialog extends JDialog implements KeyListener, Document
     }
 
     public interface OnClickListener {
-        void onGenerate(String nameStr, String font, String color, String text, String subFont, String subColor, String subText, String editable, String arrow, String line, String height);
+        void onGenerate(String nameStr, String font, String color, String text, String subFont, String subColor, String subText, String editable, String arrow, String line, String height, String masory);
 
         void onCancel();
     }

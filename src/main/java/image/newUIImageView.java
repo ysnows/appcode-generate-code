@@ -24,7 +24,7 @@ public class newUIImageView extends AnAction {
 
 
         @Override
-        public void onGenerate(String nameStr, String image, String height, String width, String radius, String bgcolor, String border, String border_color) {
+        public void onGenerate(String nameStr, String image, String height, String width, String radius, String bgcolor, String border, String border_color, String masory) {
             //获取当前编辑的文件
             PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
             if (psiFile == null) {
@@ -91,6 +91,9 @@ public class newUIImageView extends AnAction {
                 strBuilder.append("\n\t[self.img").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
                 strBuilder.append("\n\t\tmake.height.mas_equalTo(kNum(").append(height).append("));");
                 strBuilder.append("\n\t\tmake.width.mas_equalTo(kNum(").append(width).append("));");
+                var parsedMasory = MasoryUtil.parseMasory(masory);
+                strBuilder.append(parsedMasory);
+
                 strBuilder.append("\n\t}];\n");
                 document.insertString(index - 1, strBuilder.toString());
 
@@ -98,7 +101,7 @@ public class newUIImageView extends AnAction {
                 index = CommonUtil.getEndIndexOfMethod(strContent, "\\(void\\)loadView");
 
                 strBuilder = new StringBuilder();
-                strBuilder.append("\n\t[self."+superView+" addSubview:self.img").append(name).append("];");
+                strBuilder.append("\n\t[self." + superView + " addSubview:self.img").append(name).append("];");
                 document.insertString(index - 1, strBuilder.toString());
 
 

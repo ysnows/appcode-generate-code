@@ -31,6 +31,7 @@ public class UITextFieldDialog extends JDialog implements KeyListener, DocumentL
     private JTextField tfBgColor;
     private JTextField tfBorder;
     private JTextField tfBorderColor;
+    private JTextField tfMasory;
     private OnClickListener onClickListener;
     /**
      * 成员变量类型：private or public
@@ -43,7 +44,7 @@ public class UITextFieldDialog extends JDialog implements KeyListener, DocumentL
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
                 String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
+                onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(),tfMasory.getText());
             }
             dispose();
         });
@@ -63,7 +64,9 @@ public class UITextFieldDialog extends JDialog implements KeyListener, DocumentL
         tfBorder.addKeyListener(this);
         tfBorderColor.addKeyListener(this);
         btnGenerate.addKeyListener(this);
+        tfMasory.addKeyListener(this);
 
+        tfMasory.addFocusListener(this);
         tfname.addFocusListener(this);
         tfFont.addFocusListener(this);
         tfColor.addFocusListener(this);
@@ -162,7 +165,7 @@ public class UITextFieldDialog extends JDialog implements KeyListener, DocumentL
             if (!TextUtils.isBlank(tfname.getText())) {
                 if (onClickListener != null) {
                     String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                    onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText());
+                    onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(), tfMasory.getText());
                     dispose();
                 }
             } else {
@@ -184,7 +187,7 @@ public class UITextFieldDialog extends JDialog implements KeyListener, DocumentL
     }
 
     public interface OnClickListener {
-        void onGenerate(String nameStr, String font, String color, String text, String radius, String bgcolor, String border, String border_color);
+        void onGenerate(String nameStr, String font, String color, String text, String radius, String bgcolor, String border, String border_color, String masory);
 
         void onCancel();
     }

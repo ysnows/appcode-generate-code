@@ -11,7 +11,6 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
@@ -39,6 +38,7 @@ public class UIButtonDialog extends JDialog implements KeyListener, DocumentList
     private JTextField tfImagePosition;
     private JTextField tfHeight;
     private JTextField tfWidth;
+    private JTextField tfMasory;
     private OnClickListener onClickListener;
     /**
      * 成员变量类型：private or public
@@ -51,7 +51,7 @@ public class UIButtonDialog extends JDialog implements KeyListener, DocumentList
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
                 String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(), tfImage.getText(), tfImageHeight.getText(), tfImageWidth.getText(), tfSpace.getText(), tfImagePosition.getText(), tfWidth.getText(), tfHeight.getText());
+                onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(), tfImage.getText(), tfImageHeight.getText(), tfImageWidth.getText(), tfSpace.getText(), tfImagePosition.getText(), tfWidth.getText(), tfHeight.getText(), tfMasory.getText());
             }
             dispose();
         });
@@ -76,7 +76,9 @@ public class UIButtonDialog extends JDialog implements KeyListener, DocumentList
         tfImageWidth.addKeyListener(this);
         tfImagePosition.addKeyListener(this);
         tfSpace.addKeyListener(this);
+        tfMasory.addKeyListener(this);
 
+        tfMasory.addFocusListener(this);
         tfname.addFocusListener(this);
         tfFont.addFocusListener(this);
         tfColor.addFocusListener(this);
@@ -241,7 +243,7 @@ public class UIButtonDialog extends JDialog implements KeyListener, DocumentList
             if (!TextUtils.isBlank(tfname.getText())) {
                 if (onClickListener != null) {
                     String name = CommonUtil.toUpperCase4Index(tfname.getText());
-                    onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(), tfImage.getText(), tfImageHeight.getText(), tfImageWidth.getText(), tfSpace.getText(), tfImagePosition.getText(), tfWidth.getText(), tfHeight.getText());
+                    onClickListener.onGenerate(name, tfFont.getText(), tfColor.getText(), tfText.getText(), tfRadius.getText(), tfBgColor.getText(), tfBorder.getText(), tfBorderColor.getText(), tfImage.getText(), tfImageHeight.getText(), tfImageWidth.getText(), tfSpace.getText(), tfImagePosition.getText(), tfWidth.getText(), tfHeight.getText(), tfMasory.getText());
                     dispose();
                 }
             } else {
@@ -264,7 +266,7 @@ public class UIButtonDialog extends JDialog implements KeyListener, DocumentList
 
 
     public interface OnClickListener {
-        void onGenerate(String nameStr, String font, String color, String text, String radius, String bgcolor, String border, String border_color, String image, String imageHeight, String imageWidth, String imageSpacing, String imagePosition, String width, String height);
+        void onGenerate(String nameStr, String font, String color, String text, String radius, String bgcolor, String border, String border_color, String image, String imageHeight, String imageWidth, String imageSpacing, String imagePosition, String width, String height, String masory);
 
         void onCancel();
     }

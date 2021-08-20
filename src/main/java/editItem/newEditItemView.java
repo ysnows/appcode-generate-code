@@ -10,8 +10,6 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.PsiFile;
 
-import org.apache.http.util.TextUtils;
-
 import main.java.utils.CommonUtil;
 import main.java.utils.MasoryUtil;
 import main.java.utils.MyNotifier;
@@ -24,7 +22,7 @@ public class newEditItemView extends AnAction {
 
 
         @Override
-        public void onGenerate(String nameStr, String font, String color, String text, String subFont, String subColor, String subText, String editable, String arrow, String line, String height) {
+        public void onGenerate(String nameStr, String font, String color, String text, String subFont, String subColor, String subText, String editable, String arrow, String line, String height, String masory) {
             //获取当前编辑的文件
             PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
             if (psiFile == null) {
@@ -68,7 +66,6 @@ public class newEditItemView extends AnAction {
 
                 document.insertString(lastEndIndex - 1, strBuilder.toString());
 
-
                 strContent = document.getText();
                 int index = CommonUtil.getEndIndexOfMethod(strContent, "\\(void\\)updateConstraints");
 
@@ -76,6 +73,10 @@ public class newEditItemView extends AnAction {
                 strBuilder.append("\n\t[self.edit").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
                 strBuilder.append("\n\t\tmake.height.mas_equalTo(kNum(");
                 strBuilder.append(height).append("));");
+
+                var parsedMasory = MasoryUtil.parseMasory(masory);
+                strBuilder.append(parsedMasory);
+
                 strBuilder.append("\n\t}];\n");
 
                 document.insertString(index - 1, strBuilder.toString());
