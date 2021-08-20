@@ -68,6 +68,11 @@
             <keyboard-shortcut keymap="$default" first-keystroke="meta alt P" />
         </action >
 
+        <action id="newVmField" class="main.java.vmfield.newVmField" text="newVmField"
+                description="newVmField" >
+            <add-to-group group-id="GenerateGroup" anchor="first" />
+            <keyboard-shortcut keymap="$default" first-keystroke="meta alt P" />
+        </action >
         <action id="newApi" class="main.java.api.newApi" text="newApi"
                 description="newApi" >
             <add-to-group group-id="GenerateGroup" anchor="first" />
