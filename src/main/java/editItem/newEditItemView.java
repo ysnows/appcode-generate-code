@@ -38,14 +38,13 @@ public class newEditItemView extends AnAction {
                 Document document = editor.getDocument();
                 String strContent = document.getText();
 
-                String name = "";
+                String name = nameStr;
                 String superView = "contentView";
                 if (nameStr.contains(".")) {
                     var nameArr = nameStr.split("\\.");
                     name = nameArr[0];
                     superView = MasoryUtil.getSuperViewTest(nameArr[1]);
                 }
-
 
                 int firstEndIndex = strContent.indexOf("@end");
 
@@ -87,8 +86,6 @@ public class newEditItemView extends AnAction {
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self." + superView + " addSubview:self.edit").append(name).append("];");
                 document.insertString(index - 1, strBuilder.toString());
-
-
             });
         }
 

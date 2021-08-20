@@ -41,7 +41,7 @@ public class newUIButton extends AnAction {
                 String strContent = document.getText();
 
 
-                String name = "";
+                String name = nameStr;
                 String superView = "contentView";
                 if (nameStr.contains(".")) {
                     var nameArr = nameStr.split("\\.");

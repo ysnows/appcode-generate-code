@@ -20,7 +20,7 @@ public class FieldParseUtil {
             var fieldName = arrFieldInfo[0];
             var fieldType = getFieldType(arrFieldInfo.length > 1 ? arrFieldInfo[1] : "str");
 
-            propertyBuilder.append("\n@property(nonatomic, ");
+            propertyBuilder.append("\n@property(nonatomic, assign) ");
             propertyBuilder.append(fieldType);
             propertyBuilder.append(fieldName);
             propertyBuilder.append(";");
@@ -41,15 +41,16 @@ public class FieldParseUtil {
 
     private static String getFieldType(String text) {
 
+
         switch (text) {
             case "int":
-                return "assign) NSInteger\t";
+                return "NSInteger\t";
             case "bool":
-                return "assign) Boolean\t";
+                return "Boolean\t";
             case "str":
-                return "copy) NSString\t*";
+                return "NSString\t*";
             default:
-                return "";
+                return "" + text + "\t*";
         }
     }
 }

@@ -1,9 +1,12 @@
 package main.java.utils;
 
+import org.apache.http.util.TextUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
+
+import javax.swing.plaf.TextUI;
 
 
 public class MasoryUtil {
@@ -36,6 +39,9 @@ public class MasoryUtil {
 
     @NotNull
     public static String parseMasory(String str) {
+        if (TextUtils.isBlank(str)) {
+            return "";
+        }
         var groupList = str.split(";");
         var builder = new StringBuilder();
         for (int j = 0; j < groupList.length; j++) {

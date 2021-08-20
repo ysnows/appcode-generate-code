@@ -40,7 +40,7 @@ public class newUIImageView extends AnAction {
                 Document document = editor.getDocument();
                 String strContent = document.getText();
 
-                String name = "";
+                String name = nameStr;
                 String superView = "contentView";
                 if (nameStr.contains(".")) {
                     var nameArr = nameStr.split("\\.");
