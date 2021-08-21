@@ -48,6 +48,10 @@ public class NewVmFieldDialog extends JDialog implements KeyListener {
         });
 
         txtPasteStr.addKeyListener(this);
+        rbBind.addKeyListener(this);
+        rbObserve.addKeyListener(this);
+        btnGenerate.addKeyListener(this);
+
 
     }
 
