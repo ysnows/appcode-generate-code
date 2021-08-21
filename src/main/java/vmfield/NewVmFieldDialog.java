@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class NewVmFieldDialog extends JDialog implements KeyListener {
@@ -17,18 +16,18 @@ public class NewVmFieldDialog extends JDialog implements KeyListener {
     private JTextField txtPasteStr;
     private JButton btnCancel, btnGenerate;
     private OnClickListener onClickListener;
-    private JRadioButton rbPublic, rbPrivate;
+    private JRadioButton rbPublic, rbObserve;
     /**
      * 成员变量类型：private or public
      */
-    private String memberType = "private";
+    private String observe = "yes";
 
     public NewVmFieldDialog() {
         setContentPane(content);
         setModal(true);
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
-                onClickListener.onGenerate(txtPasteStr.getText(), memberType);
+                onClickListener.onGenerate(txtPasteStr.getText(), observe);
             }
             dispose();
         });
@@ -41,16 +40,13 @@ public class NewVmFieldDialog extends JDialog implements KeyListener {
 
         rbPublic.addChangeListener(e -> {
             if (rbPublic.isSelected()) {
-                memberType = "public";
-                rbPrivate.setSelected(!rbPublic.isSelected());
+                observe = "public";
+                rbObserve.setSelected(!rbPublic.isSelected());
             }
         });
 
-        rbPrivate.addChangeListener(e -> {
-            if (rbPrivate.isSelected()) {
-                rbPublic.setSelected(!rbPrivate.isSelected());
-                memberType = "private";
-            }
+        rbObserve.addChangeListener(e -> {
+            observe = rbObserve.isSelected() ? "yes" : "no";
         });
 
         txtPasteStr.addKeyListener(this);
@@ -63,7 +59,7 @@ public class NewVmFieldDialog extends JDialog implements KeyListener {
         if (keyChar == KeyEvent.VK_ENTER) {
             if (!TextUtils.isBlank(txtPasteStr.getText())) {
                 if (onClickListener != null) {
-                    onClickListener.onGenerate(txtPasteStr.getText(), memberType);
+                    onClickListener.onGenerate(txtPasteStr.getText(), observe);
                     dispose();
                 }
             } else {

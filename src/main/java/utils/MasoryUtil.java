@@ -41,11 +41,11 @@ public class MasoryUtil {
     }
 
     public static void moveCaretToMasoryLine(Editor editor, Document document, String name) {
-        var masoryIndex = document.getText().indexOf("[self.view" + name + " mas_makeConstraints:");
+        var masoryIndex = document.getText().indexOf("" + name + " mas_makeConstraints:");
         var lineNumber = document.getLineNumber(masoryIndex);
         var lineEndOffset = document.getLineEndOffset(lineNumber);
 
-        int offset = lineEndOffset + 1 + 6;
+        int offset = lineEndOffset + 1;
         editor.getCaretModel().getCurrentCaret().moveToOffset(offset);
     }
 

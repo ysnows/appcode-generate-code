@@ -25,7 +25,7 @@ public class newVmField extends AnAction {
 
 
         @Override
-        public void onGenerate(String str, String member) {
+        public void onGenerate(String str, String observe) {
             WriteCommandAction.runWriteCommandAction(anActionEvent.getProject(), () -> {
                 //获取当前编辑的文件
                 PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
@@ -46,7 +46,7 @@ public class newVmField extends AnAction {
                 //头文件添加属性
                 Document headerContent = null;
                 var path = psiFile.getVirtualFile().getPath();
-                if (path.endsWith(".m")) {
+                if (path.endsWith("VM.m")) {
                     var hPath = path.replaceFirst("\\.m", "\\.h");
                     var hFile = new File(hPath);
                     if (hFile.exists()) {
@@ -54,8 +54,16 @@ public class newVmField extends AnAction {
                         var hDocumentFile = FileDocumentManager.getInstance().getDocument(hVFile);
                         headerContent = hDocumentFile;
                     }
-                } else {
+                } else if (path.endsWith("VM.h")) {
                     headerContent = editor.getDocument();
+                } else if (path.endsWith("View.m")) {
+                    var hPath = path.replaceFirst("View\\.m", "VM\\.h");
+                    var hFile = new File(hPath);
+                    if (hFile.exists()) {
+                        var hVFile = LocalFileSystem.getInstance().findFileByIoFile(hFile);
+                        var hDocumentFile = FileDocumentManager.getInstance().getDocument(hVFile);
+                        headerContent = hDocumentFile;
+                    }
                 }
 
                 if (headerContent != null) {
@@ -67,16 +75,25 @@ public class newVmField extends AnAction {
 
                 //View文件添加监听方法
 
-                var viewPath = path.replaceFirst(path.endsWith(".m") ? "VM\\.m" : "VM\\.h", "View\\.m");
-
-                var viewFile = new File(viewPath);
-                if (viewFile.exists()) {
-                    var viewVFile = LocalFileSystem.getInstance().findFileByIoFile(viewFile);
-                    var viewDocument = FileDocumentManager.getInstance().getDocument(viewVFile);
-
-                    var endIndexOfMethod = CommonUtil.getEndIndexOfMethod(viewDocument.getText(), "\\(void\\)setupViewModel");
-                    viewDocument.insertString(endIndexOfMethod - 1, parsedTextList.get(1));
+                if (observe.equals("no")) {
+                    return;
                 }
+                Document viewDocument = null;
+                if (path.endsWith("View.m")) {
+                    viewDocument = editor.getDocument();
+                } else {
+                    var viewPath = path.replaceFirst(path.endsWith(".m") ? "VM\\.m" : "VM\\.h", "View\\.m");
+
+                    var viewFile = new File(viewPath);
+                    if (viewFile.exists()) {
+                        var viewVFile = LocalFileSystem.getInstance().findFileByIoFile(viewFile);
+                        viewDocument = FileDocumentManager.getInstance().getDocument(viewVFile);
+                    }
+                }
+
+                var endIndexOfMethod = CommonUtil.getEndIndexOfMethod(viewDocument.getText(), "\\(void\\)setupViewModel");
+                viewDocument.insertString(endIndexOfMethod - 1, parsedTextList.get(1));
+
             });
         }
 
