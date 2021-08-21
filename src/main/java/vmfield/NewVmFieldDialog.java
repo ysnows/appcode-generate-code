@@ -16,18 +16,19 @@ public class NewVmFieldDialog extends JDialog implements KeyListener {
     private JTextField txtPasteStr;
     private JButton btnCancel, btnGenerate;
     private OnClickListener onClickListener;
-    private JRadioButton rbPublic, rbObserve;
+    private JRadioButton rbBind, rbObserve;
     /**
      * 成员变量类型：private or public
      */
     private String observe = "yes";
+    private String bind = "no";
 
     public NewVmFieldDialog() {
         setContentPane(content);
         setModal(true);
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
-                onClickListener.onGenerate(txtPasteStr.getText(), observe);
+                onClickListener.onGenerate(txtPasteStr.getText(), observe,bind);
             }
             dispose();
         });
@@ -38,11 +39,8 @@ public class NewVmFieldDialog extends JDialog implements KeyListener {
             dispose();
         });
 
-        rbPublic.addChangeListener(e -> {
-            if (rbPublic.isSelected()) {
-                observe = "public";
-                rbObserve.setSelected(!rbPublic.isSelected());
-            }
+        rbBind.addChangeListener(e -> {
+            bind = rbBind.isSelected() ? "yes" : "no";
         });
 
         rbObserve.addChangeListener(e -> {
@@ -59,7 +57,7 @@ public class NewVmFieldDialog extends JDialog implements KeyListener {
         if (keyChar == KeyEvent.VK_ENTER) {
             if (!TextUtils.isBlank(txtPasteStr.getText())) {
                 if (onClickListener != null) {
-                    onClickListener.onGenerate(txtPasteStr.getText(), observe);
+                    onClickListener.onGenerate(txtPasteStr.getText(), observe, bind);
                     dispose();
                 }
             } else {
@@ -81,7 +79,7 @@ public class NewVmFieldDialog extends JDialog implements KeyListener {
     }
 
     public interface OnClickListener {
-        void onGenerate(String str, String member);
+        void onGenerate(String str, String member, String bind);
 
         void onCancel();
     }

@@ -15,10 +15,12 @@ public class FieldParseUtil {
 
         var propertyBuilder = new StringBuilder();
         var observerBuilder = new StringBuilder();
+        var bindBuilder = new StringBuilder();
         for (String str : arrField) {
             var arrFieldInfo = str.split(":");
             var fieldName = arrFieldInfo[0];
             var fieldType = getFieldType(arrFieldInfo.length > 1 ? arrFieldInfo[1] : "str");
+            var bindView = arrFieldInfo.length > 2 ? arrFieldInfo[2] : "<#(NSString *)view#>";
 
             propertyBuilder.append("\n@property(nonatomic, assign) ");
             propertyBuilder.append(fieldType);
@@ -30,10 +32,13 @@ public class FieldParseUtil {
             observerBuilder.append("\n\n\t\t}");
             observerBuilder.append("\n\t}];");
 
+            bindBuilder.append("\n\tRAC(self.viewModel, ").append(fieldName).append(") = self.").append(bindView).append(".rac_textSignal;");
+
         }
 
         list.add(propertyBuilder.toString());
         list.add(observerBuilder.toString());
+        list.add(bindBuilder.toString());
 
         return list;
 

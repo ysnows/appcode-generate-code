@@ -25,7 +25,7 @@ public class newVmField extends AnAction {
 
 
         @Override
-        public void onGenerate(String str, String observe) {
+        public void onGenerate(String str, String observe, String bind) {
             WriteCommandAction.runWriteCommandAction(anActionEvent.getProject(), () -> {
                 //获取当前编辑的文件
                 PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
@@ -39,7 +39,7 @@ public class newVmField extends AnAction {
                     return;
                 }
                 var parsedTextList = FieldParseUtil.parse(str);
-                if (parsedTextList == null || parsedTextList.size() < 2) {
+                if (parsedTextList == null || parsedTextList.size() < 3) {
                     return;
                 }
 
@@ -75,9 +75,6 @@ public class newVmField extends AnAction {
 
                 //View文件添加监听方法
 
-                if (observe.equals("no")) {
-                    return;
-                }
                 Document viewDocument = null;
                 if (path.endsWith("View.m")) {
                     viewDocument = editor.getDocument();
@@ -91,8 +88,19 @@ public class newVmField extends AnAction {
                     }
                 }
 
-                var endIndexOfMethod = CommonUtil.getEndIndexOfMethod(viewDocument.getText(), "\\(void\\)setupViewModel");
-                viewDocument.insertString(endIndexOfMethod - 1, parsedTextList.get(1));
+                if (observe.equals("yes")) {
+
+                    var endIndexOfMethod = CommonUtil.getEndIndexOfMethod(viewDocument.getText(), "\\(void\\)setupViewModel");
+                    viewDocument.insertString(endIndexOfMethod - 1, parsedTextList.get(1));
+
+                }
+                if (bind.equals("yes")) {
+
+                    var endIndexOfMethod = CommonUtil.getEndIndexOfMethod(viewDocument.getText(), "\\(void\\)setupViewModel");
+                    viewDocument.insertString(endIndexOfMethod - 1, parsedTextList.get(2));
+
+                }
+
 
             });
         }
