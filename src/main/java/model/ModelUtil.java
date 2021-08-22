@@ -52,7 +52,7 @@ public class ModelUtil {
                 } else if (value instanceof Integer) {
                     methodStrBuilder.append("\n@property(nonatomic, assign) NSInteger ").append(key).append(";");
                 } else {
-                    methodStrBuilder.append("\n@property(nonatomic, assign) NSString *").append(key).append(";");
+                    methodStrBuilder.append("\n@property(nonatomic, strong) NSString *").append(key).append(";");
                 }
             }
         });

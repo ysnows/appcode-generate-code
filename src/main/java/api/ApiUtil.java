@@ -2,6 +2,8 @@ package main.java.api;
 
 import com.alibaba.fastjson.JSONObject;
 
+import org.apache.http.util.TextUtils;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -15,7 +17,7 @@ public class ApiUtil {
 
     }
 
-    public static ArrayList<String> apiParse(String str) {
+    public static ArrayList<String> apiParse(String str, String model) {
 //        String str = "curl -X GET \"https://mini.aotulive.com:81/api/member/member/verificationPhone?phone=17686941213&code=125457&invitationCode=123\" -H \"host: 7gw0sclkcp.xuduan.vip\" -H \"authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqaWFuZyIsImV4cCI6MTYzMDU0OTU2MywiaWF0IjoxNjI5MjUzNTYzLCJ1c2VySWQiOiIyNDE0In0.-vt5itSwAF9PLt4DCqsR8ci1oOdU1A5NVmP9--3OlfQ\" -H \"user-agent: okhttp/3.12.0\" -H \"Connection: close\"";
 //        str = "curl -X POST \"https://mini.aotulive.com:81/api/member/wx/login?phone=17686941213&code=125457&invitationCode=123\" -H \"host: 7gw0sclkcp.xuduan.vip\" -H \"authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqaWFuZyIsImV4cCI6MTYzMDU0ODU2NCwiaWF0IjoxNjI5MjUyNTY0LCJ1c2VySWQiOiIyNDE0In0.O5fBKlOBOMSQGBicAx-tvmHBCxUVUKeuJ79qHjq217Q\" -H \"content-type: application/json; charset=UTF-8\" -H \"user-agent: okhttp/3.12.0\" -H \"Connection: close\" -d \"{\\\"android0rIos\\\":1,\\\"city\\\":\\\"\\\",\\\"country\\\":\\\"\\\",\\\"deviceToken\\\":\\\"Au19UIa6JhkM0LIK8NQGKWjQRe1rRLWQB5k1gQxygekj\\\",\\\"headimgurl\\\":\\\"https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTL5QXw1TpubcCFhvpXicAQvBLGny0DcIjRGksFibRW5hzK3ibbaVM08Xc09zUeKVTqqKPgJd1tjSUIqA/132\\\",\\\"language\\\":\\\"zh_CN\\\",\\\"nickname\\\":\\\"小全速\\\",\\\"openid\\\":\\\"oret550EU-IOK9WONq4-zsjornD4\\\",\\\"province\\\":\\\"\\\",\\\"sex\\\":1,\\\"unionid\\\":\\\"oyx1M5637x_1Dq9YHAZmvR-sxTLY\\\"}\"";
 
@@ -74,8 +76,8 @@ public class ApiUtil {
             }
 
             methodStrBuilder.append("\n\t};");
-            methodStrBuilder.append("\n\t[[self ").append(method.toLowerCase()).append("Url:API_").append(apiName).append(" withParams:params modelClass:nil loading:YES] subscribeNext:^(id <RespProtocol> x) {");
-            methodStrBuilder.append("\n\t\tif (x.ok) {");
+            methodStrBuilder.append("\n\t[[self ").append(method.toLowerCase()).append("Url:API_").append(apiName).append(" withParams:params modelClass:").append(TextUtils.isBlank(model) ? "nil" : "["+model+" class]").append(" loading:YES] subscribeNext:^(Resp").append(TextUtils.isBlank(model) ? "" : "<" + model + ">").append(" *resp) {");
+            methodStrBuilder.append("\n\t\tif (resp.ok) {");
             methodStrBuilder.append("\n\n\t\t}");
             methodStrBuilder.append("\n\t}];");
             methodStrBuilder.append("\n}");

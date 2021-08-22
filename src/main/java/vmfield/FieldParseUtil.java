@@ -20,7 +20,7 @@ public class FieldParseUtil {
             var arrFieldInfo = str.split(":");
             var fieldName = arrFieldInfo[0];
             var fieldType = getFieldType(arrFieldInfo.length > 1 ? arrFieldInfo[1] : "str");
-            var propertyType = getFieldType(arrFieldInfo.length > 1 ? arrFieldInfo[1] : "str");
+            var propertyType = getPropertyType(arrFieldInfo.length > 1 ? arrFieldInfo[1] : "str");
             var bindView = arrFieldInfo.length > 2 ? arrFieldInfo[2] : "<#(NSString *)view#>";
 
             propertyBuilder.append("\n@property(nonatomic, ").append(propertyType).append(") ");

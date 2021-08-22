@@ -10,13 +10,15 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class NewApiDialog extends JDialog implements KeyListener {
     private JPanel content;
-    private JTextArea txtPasteStr;
     private JButton btnCancel, btnGenerate;
     private OnClickListener onClickListener;
     private JRadioButton rbPublic, rbPrivate;
+    private JTextField tfModel;
+    private JTextField tfCurl;
     /**
      * 成员变量类型：private or public
      */
@@ -27,7 +29,7 @@ public class NewApiDialog extends JDialog implements KeyListener {
         setModal(true);
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
-                onClickListener.onGenerate(txtPasteStr.getText(), memberType);
+                onClickListener.onGenerate(tfCurl.getText(), memberType, tfModel.getText());
             }
             dispose();
         });
@@ -52,16 +54,17 @@ public class NewApiDialog extends JDialog implements KeyListener {
             }
         });
 
-        txtPasteStr.addKeyListener(this);
+        tfCurl.addKeyListener(this);
+        tfModel.addKeyListener(this);
     }
 
     @Override
     public void keyTyped(KeyEvent keyEvent) {
         char keyChar = keyEvent.getKeyChar();
         if (keyChar == KeyEvent.VK_ENTER) {
-            if (!TextUtils.isBlank(txtPasteStr.getText())) {
+            if (!TextUtils.isBlank(tfCurl.getText())) {
                 if (onClickListener != null) {
-                    onClickListener.onGenerate(txtPasteStr.getText(), memberType);
+                    onClickListener.onGenerate(tfCurl.getText(), memberType, tfModel.getText());
                     dispose();
                 }
             } else {
@@ -83,7 +86,7 @@ public class NewApiDialog extends JDialog implements KeyListener {
     }
 
     public interface OnClickListener {
-        void onGenerate(String str, String member);
+        void onGenerate(String str, String member, String model);
 
         void onCancel();
     }
