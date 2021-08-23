@@ -32,13 +32,13 @@
               <text value="Member Type:"/>
             </properties>
           </component>
-          <component id="1829" class="javax.swing.JRadioButton" binding="rbPrivate">
+          <component id="1829" class="javax.swing.JRadioButton" binding="rbList">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <selected value="true"/>
-              <text value="private"/>
+              <selected value="false"/>
+              <text value="list"/>
             </properties>
           </component>
           <component id="cfdf2" class="javax.swing.JRadioButton" binding="rbPublic">

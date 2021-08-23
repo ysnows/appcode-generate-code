@@ -24,7 +24,7 @@ public class newApi extends AnAction {
 
 
         @Override
-        public void onGenerate(String str, String member, String model) {
+        public void onGenerate(String str, String apiType, String model) {
             WriteCommandAction.runWriteCommandAction(anActionEvent.getProject(), () -> {
                 //获取当前编辑的文件
                 PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
@@ -37,18 +37,20 @@ public class newApi extends AnAction {
                 if (editor == null) {
                     return;
                 }
-                var list = ApiUtil.apiParse(str, model);
+
+                //1. 接口定义 2. 接口返回 3. modelClass 4. 请求参数
+                var list = ApiUtil.apiParse(str, model, apiType);
 
                 Document document = editor.getDocument();
                 String strContent = document.getText();
 
-                strContent = document.getText();
-                int lastEndIndex = strContent.lastIndexOf("@end");
 
                 if (list != null) {
+                    //当前文件添加方法实现
+                    int lastEndIndex = strContent.lastIndexOf("@end");
                     document.insertString(lastEndIndex - 1, list.get(1));
 
-                    //添加请求方法
+                    //头文件添加请求方法
                     var path = psiFile.getVirtualFile().getPath();
                     var hPath = path.replaceFirst("\\.m", "\\.h");
                     var hFile = new File(hPath);
@@ -59,13 +61,20 @@ public class newApi extends AnAction {
                         var hDocumentFile = FileDocumentManager.getInstance().getDocument(hVFile);
                         var apiContent = hDocumentFile.getText();
                         if (!apiContent.contains(list.get(2))) {
-                            var lastIndex = apiContent.lastIndexOf("@end");
-                            hDocumentFile.insertString(lastIndex - 1, "\n- (void)" + list.get(2) + ";");
+                            if (apiType.equals("normal")) {
+                                var lastIndex = apiContent.lastIndexOf("@end");
+                                hDocumentFile.insertString(lastIndex - 1, "\n- (void)" + list.get(2) + ";");
+                            } else if (apiType.equals("list")) {
+                                var lastIndex = apiContent.indexOf("@interface");
+                                var lineNumber = document.getLineNumber(lastIndex);
+                                var endOffset = document.getLineEndOffset(lineNumber);
+                                hDocumentFile.insertString(endOffset + 1, list.get(3));
+                            }
                         }
                     }
 
 
-                    //添加接口
+                    //文件添加接口
                     var project = anActionEvent.getProject();
                     var projectFilePath = project.getBasePath();
 

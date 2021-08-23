@@ -9,27 +9,26 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class NewApiDialog extends JDialog implements KeyListener {
     private JPanel content;
     private JButton btnCancel, btnGenerate;
     private OnClickListener onClickListener;
-    private JRadioButton rbPublic, rbPrivate;
+    private JRadioButton rbPublic, rbList;
     private JTextField tfModel;
     private JTextField tfCurl;
     /**
      * 成员变量类型：private or public
      */
-    private String memberType = "private";
+    private String apiType = "normal";
 
     public NewApiDialog() {
         setContentPane(content);
         setModal(true);
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
-                onClickListener.onGenerate(tfCurl.getText(), memberType, tfModel.getText());
+                onClickListener.onGenerate(tfCurl.getText(), apiType, tfModel.getText());
             }
             dispose();
         });
@@ -42,20 +41,23 @@ public class NewApiDialog extends JDialog implements KeyListener {
 
         rbPublic.addChangeListener(e -> {
             if (rbPublic.isSelected()) {
-                memberType = "public";
-                rbPrivate.setSelected(!rbPublic.isSelected());
+                apiType = "public";
+                rbList.setSelected(!rbPublic.isSelected());
             }
         });
 
-        rbPrivate.addChangeListener(e -> {
-            if (rbPrivate.isSelected()) {
-                rbPublic.setSelected(!rbPrivate.isSelected());
-                memberType = "private";
+        rbList.addChangeListener(e -> {
+            if (rbList.isSelected()) {
+                apiType = "list";
+            } else {
+                apiType = "normal";
             }
         });
 
         tfCurl.addKeyListener(this);
         tfModel.addKeyListener(this);
+        rbList.addKeyListener(this);
+
     }
 
     @Override
@@ -64,7 +66,7 @@ public class NewApiDialog extends JDialog implements KeyListener {
         if (keyChar == KeyEvent.VK_ENTER) {
             if (!TextUtils.isBlank(tfCurl.getText())) {
                 if (onClickListener != null) {
-                    onClickListener.onGenerate(tfCurl.getText(), memberType, tfModel.getText());
+                    onClickListener.onGenerate(tfCurl.getText(), apiType, tfModel.getText());
                     dispose();
                 }
             } else {
