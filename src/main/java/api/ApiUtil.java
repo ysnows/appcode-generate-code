@@ -107,7 +107,9 @@ public class ApiUtil {
                             methodStrBuilder.append("\n\t\tparams[@\"").append(paramName).append("\"] = self.").append(paramName).append(";");
                             methodStrBuilder.append("\n\t}");
 
-                            fieldStrBuilder.append("\n@property(nonatomic, strong) NSString *").append(paramName).append(";");
+                            if (!paramName.equals("page") && !paramName.equals("limit")) {
+                                fieldStrBuilder.append("\n@property(nonatomic, strong) NSString *").append(paramName).append(";");
+                            }
                         }
                     }
                 }
@@ -125,7 +127,9 @@ public class ApiUtil {
                                 methodStrBuilder.append("\n\t\tparams[@\"").append(paramName).append("\"] = self.").append(paramName).append(";");
                                 methodStrBuilder.append("\n\t}");
 
-                                fieldStrBuilder.append("\n@property(nonatomic, strong) NSString *").append(paramName).append(";");
+                                if (!paramName.equals("page") && !paramName.equals("limit")) {
+                                    fieldStrBuilder.append("\n@property(nonatomic, strong) NSString *").append(paramName).append(";");
+                                }
                             }
                         });
                     }

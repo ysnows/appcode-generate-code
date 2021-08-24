@@ -65,8 +65,9 @@ public class newApi extends AnAction {
                                 var lastIndex = apiContent.lastIndexOf("@end");
                                 hDocumentFile.insertString(lastIndex - 1, "\n- (void)" + list.get(2) + ";");
                             } else if (apiType.equals("list")) {
-                                var lastIndex = apiContent.indexOf("@interface");
-                                var lineNumber = document.getLineNumber(lastIndex);
+                                apiContent = hDocumentFile.getText();
+                                var index = apiContent.indexOf("@interface");
+                                var lineNumber = document.getLineNumber(index);
                                 var endOffset = document.getLineEndOffset(lineNumber);
                                 hDocumentFile.insertString(endOffset + 1, list.get(3));
                             }
