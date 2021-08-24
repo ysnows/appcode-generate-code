@@ -56,7 +56,7 @@ public class FieldParseUtil {
             case "str":
                 return "NSString\t*";
             default:
-                return "" + text + "\t*";
+                return "" + text + " *";
         }
     }
 

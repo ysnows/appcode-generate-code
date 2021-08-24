@@ -28,7 +28,7 @@ public class NewVmFieldDialog extends JDialog implements KeyListener {
         setModal(true);
         btnGenerate.addActionListener(e -> {
             if (onClickListener != null) {
-                onClickListener.onGenerate(txtPasteStr.getText(), observe,bind);
+                onClickListener.onGenerate(txtPasteStr.getText(), observe, bind);
             }
             dispose();
         });
@@ -51,7 +51,6 @@ public class NewVmFieldDialog extends JDialog implements KeyListener {
         rbBind.addKeyListener(this);
         rbObserve.addKeyListener(this);
         btnGenerate.addKeyListener(this);
-
 
     }
 
