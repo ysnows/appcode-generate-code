@@ -90,7 +90,7 @@ public class ApiUtil {
                 methodStrBuilder.append("\n}");
 
                 methodStrBuilder.append("\n\n- (NSString *)apiUrl  {");
-                methodStrBuilder.append("\n\treturn ").append(apiName).append(";");
+                methodStrBuilder.append("\n\treturn API_").append(apiName).append(";");
                 methodStrBuilder.append("\n}");
 
                 methodStrBuilder.append("\n\n- (NSMutableDictionary *)parameters {");
