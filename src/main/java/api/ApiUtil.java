@@ -78,7 +78,7 @@ public class ApiUtil {
                 }
 
                 methodStrBuilder.append("\n\t};");
-                methodStrBuilder.append("\n\t[[self ").append(method.toLowerCase()).append("Url:API_").append(apiName).append(" withParams:params modelClass:").append(TextUtils.isBlank(model) ? "nil" : "[" + model + " class]").append(" loading:YES] subscribeNext:^(Resp").append(TextUtils.isBlank(model) ? "" : "<" + model + ">").append(" *resp) {");
+                methodStrBuilder.append("\n\t[[self ").append(method.toLowerCase()).append("Url:API_").append(apiName).append(" withParams:params modelClass:").append(TextUtils.isBlank(model) ? "nil" : "[" + model + " class]").append(" loading:YES] subscribeNext:^(Resp").append(TextUtils.isBlank(model) ? "" : "<" + model + " *>").append(" *resp) {");
                 methodStrBuilder.append("\n\t\tif (resp.ok) {");
                 methodStrBuilder.append("\n\n\t\t}");
                 methodStrBuilder.append("\n\t}];");
