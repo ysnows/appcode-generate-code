@@ -95,7 +95,7 @@ public class newLineView extends AnAction {
                 document.insertString(index - 1, strBuilder.toString());
 
                 strContent = document.getText();
-                index = CommonUtil.getEndIndexOfMethod(strContent, "\\(void\\)loadView");
+                index = CommonUtil.getEndIndexOfMethod(strContent, "\\(void\\)addView");
 
                 strBuilder = new StringBuilder();
                 strBuilder.append("\n\t[self." + superView + " addSubview:self.line").append(name).append("];");

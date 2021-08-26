@@ -90,13 +90,13 @@ public class newVmField extends AnAction {
 
                 if (observe.equals("yes")) {
 
-                    var endIndexOfMethod = CommonUtil.getEndIndexOfMethod(viewDocument.getText(), "\\(void\\)setupViewModel");
+                    var endIndexOfMethod = CommonUtil.getEndIndexOfMethod(viewDocument.getText(), "\\(void\\)setupVm");
                     viewDocument.insertString(endIndexOfMethod - 1, parsedTextList.get(1));
 
                 }
                 if (bind.equals("yes")) {
 
-                    var endIndexOfMethod = CommonUtil.getEndIndexOfMethod(viewDocument.getText(), "\\(void\\)setupViewModel");
+                    var endIndexOfMethod = CommonUtil.getEndIndexOfMethod(viewDocument.getText(), "\\(void\\)setupVm");
                     viewDocument.insertString(endIndexOfMethod - 1, parsedTextList.get(2));
 
                 }
