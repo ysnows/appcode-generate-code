@@ -28,12 +28,12 @@ public class FieldParseUtil {
             propertyBuilder.append(fieldName);
             propertyBuilder.append(";");
 
-            observerBuilder.append("\n\t[RACObserve(self.viewModel, ").append(fieldName).append(") subscribeNext:^(").append(fieldType).append(fieldName).append(") {");
+            observerBuilder.append("\n\t[RACObserve(self.vm, ").append(fieldName).append(") subscribeNext:^(").append(fieldType).append(fieldName).append(") {");
             observerBuilder.append("\n\t\tif (").append(fieldName).append(" != nil) {");
             observerBuilder.append("\n\n\t\t}");
             observerBuilder.append("\n\t}];");
 
-            bindBuilder.append("\n\tRAC(self.viewModel, ").append(fieldName).append(") = self.").append(bindView).append(".rac_textSignal;");
+            bindBuilder.append("\n\tRAC(self.vm, ").append(fieldName).append(") = self.").append(bindView).append(".rac_textSignal;");
 
         }
 

@@ -48,25 +48,44 @@ public class newUIView extends AnAction {
 
                 String name = nameStr;
                 String superView = "contentView";
+                String viewType = "BView";
                 if (nameStr.contains(".")) {
                     var nameArr = nameStr.split("\\.");
                     name = nameArr[0];
                     superView = MasoryUtil.getSuperViewTest(nameArr[1]);
+
+                    if (name.contains(":")) {
+                        nameArr = name.split(":");
+                        name = nameArr[0];
+                        viewType = nameArr[1];
+                    }
+                } else {
+                    if (nameStr.contains(":")) {
+                        var nameArr = nameStr.split(":");
+                        name = nameArr[0];
+                        viewType = nameArr[1];
+                    }
                 }
 
 
                 int firstEndIndex = strContent.indexOf("@end");
 
-                document.insertString(firstEndIndex - 1, "\n@property(nonatomic, strong) BView *view" + name + ";");
+                document.insertString(firstEndIndex - 1, "\n@property(nonatomic, strong) " + viewType + " *view" + name + ";");
 
                 strContent = document.getText();
                 int lastEndIndex = strContent.lastIndexOf("@end");
                 StringBuilder strBuilder = new StringBuilder();
-                strBuilder.append("\n- (BView *)view").append(name).append(" {\n");
+                strBuilder.append("\n- (").append(viewType).append(" *)view").append(name).append(" {\n");
 
                 strBuilder.append("\tif (!_view").append(name).append("){\n");
 
-                strBuilder.append("\t\t_view").append(name).append(" = [[BView alloc] initWithFrame:CGRectZero];\n");
+                strBuilder.append("\t\t_view").append(name).append(" = [[").append(viewType).append(" alloc] ");
+                if (viewType.equals("BView")) {
+                    strBuilder.append("initWithFrame:CGRectZero");
+                } else {
+                    strBuilder.append("initWithViewModel:self.vm");
+                }
+                strBuilder.append("];\n");
 
                 if (!TextUtils.isBlank(bgcolor)) {
                     strBuilder.append("\t\t_view").append(name).append(".backgroundColor = ").append(CommonUtil.processColor(bgcolor)).append(";\n");
@@ -142,7 +161,6 @@ public class newUIView extends AnAction {
         generateDialog.setVisible(true);
 
     }
-
 
 
 }

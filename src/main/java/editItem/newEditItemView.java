@@ -57,7 +57,7 @@ public class newEditItemView extends AnAction {
 
                 strBuilder.append("\tif (!_edit").append(name).append("){\n");
 
-                strBuilder.append("\t\t_edit").append(name).append(" = [[EditItemView alloc] initWithViewModel:self.viewModel title:@\"").append(text).append("\" titleFont:").append(CommonUtil.processFont(font)).append(" titleColor:").append(CommonUtil.processColor(color)).append(" placeholder:@\"").append(subText).append("\" subTitleFont:").append(CommonUtil.processFont(subFont)).append(" subTitleColor:").append(CommonUtil.processColor(subColor)).append(" desc:@\"\" arrow:").append(CommonUtil.processBoolean(arrow)).append(" editable:").append(CommonUtil.processBoolean(editable)).append(" line:").append(CommonUtil.processBoolean(line)).append("];\n");
+                strBuilder.append("\t\t_edit").append(name).append(" = [[EditItemView alloc] initWithViewModel:self.vm title:@\"").append(text).append("\" titleFont:").append(CommonUtil.processFont(font)).append(" titleColor:").append(CommonUtil.processColor(color)).append(" placeholder:@\"").append(subText).append("\" subTitleFont:").append(CommonUtil.processFont(subFont)).append(" subTitleColor:").append(CommonUtil.processColor(subColor)).append(" desc:@\"\" arrow:").append(CommonUtil.processBoolean(arrow)).append(" editable:").append(CommonUtil.processBoolean(editable)).append(" line:").append(CommonUtil.processBoolean(line)).append("];\n");
 
                 strBuilder.append("\t}\n");
                 strBuilder.append("\treturn _edit").append(name).append(";\n");
