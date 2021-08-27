@@ -14,6 +14,9 @@ import main.java.utils.CommonUtil;
 public class ApiUtil {
 
     public static void main(String[] args) {
+        String str = "curl -X GET \"https://mini.aotulive.com:81/api/member/tenant/findAllTenant?typeId=3&hasFocus=0&meter=0&latitude=35.04907&longitude=118.359436&limit=10&page=1\" -H \"host: 7gw0sclkcp.xuduan.vip\" -H \"authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqaWFuZyIsImV4cCI6MTYzMTM2MjYyNCwiaWF0IjoxNjMwMDY2NjI0LCJ1c2VySWQiOiIyNDE0In0.z18IUYrCgVdyfDcK6UsiBNhPY_Wy77bm2Chlmn5ipas\" -H \"user-agent: okhttp/3.12.0\" -H \"Connection: close\"";
+
+        apiParse(str, "", "normal");
 
     }
 
@@ -21,7 +24,7 @@ public class ApiUtil {
 //        String str = "curl -X GET \"https://mini.aotulive.com:81/api/member/member/verificationPhone?phone=17686941213&code=125457&invitationCode=123\" -H \"host: 7gw0sclkcp.xuduan.vip\" -H \"authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqaWFuZyIsImV4cCI6MTYzMDU0OTU2MywiaWF0IjoxNjI5MjUzNTYzLCJ1c2VySWQiOiIyNDE0In0.-vt5itSwAF9PLt4DCqsR8ci1oOdU1A5NVmP9--3OlfQ\" -H \"user-agent: okhttp/3.12.0\" -H \"Connection: close\"";
 //        str = "curl -X POST \"https://mini.aotulive.com:81/api/member/wx/login?phone=17686941213&code=125457&invitationCode=123\" -H \"host: 7gw0sclkcp.xuduan.vip\" -H \"authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJqaWFuZyIsImV4cCI6MTYzMDU0ODU2NCwiaWF0IjoxNjI5MjUyNTY0LCJ1c2VySWQiOiIyNDE0In0.O5fBKlOBOMSQGBicAx-tvmHBCxUVUKeuJ79qHjq217Q\" -H \"content-type: application/json; charset=UTF-8\" -H \"user-agent: okhttp/3.12.0\" -H \"Connection: close\" -d \"{\\\"android0rIos\\\":1,\\\"city\\\":\\\"\\\",\\\"country\\\":\\\"\\\",\\\"deviceToken\\\":\\\"Au19UIa6JhkM0LIK8NQGKWjQRe1rRLWQB5k1gQxygekj\\\",\\\"headimgurl\\\":\\\"https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTL5QXw1TpubcCFhvpXicAQvBLGny0DcIjRGksFibRW5hzK3ibbaVM08Xc09zUeKVTqqKPgJd1tjSUIqA/132\\\",\\\"language\\\":\\\"zh_CN\\\",\\\"nickname\\\":\\\"小全速\\\",\\\"openid\\\":\\\"oret550EU-IOK9WONq4-zsjornD4\\\",\\\"province\\\":\\\"\\\",\\\"sex\\\":1,\\\"unionid\\\":\\\"oyx1M5637x_1Dq9YHAZmvR-sxTLY\\\"}\"";
 
-        var pattern = Pattern.compile("curl\\s+-X\\s+(?<method>(GET|POST))\\s\"(?<url>http|https://((?<host>\\w+\\.\\w+\\.\\w+)(:(?<port>\\d+))?)(?<path>(/\\w+)+)(\\?(?<query>(&?\\w+=(\\w+|\\d+)+)*))?)\"(?<header>(\\s-H\\s\"(\\w+|\\.|-|/|\\s|=|\\d|;)+:\\s(\\w+|\\.|-|/|\\s|=|\\d|;)+\")*)(\\s-d\\s\"(?<post>.*)\")?");
+        var pattern = Pattern.compile("curl\\s+-X\\s+(?<method>(GET|POST))\\s\"(?<url>http|https://((?<host>\\w+\\.\\w+\\.\\w+)(:(?<port>\\d+))?)(?<path>(/\\w+)+)(\\?(?<query>(&?\\w+=(\\w|\\d|\\.|:|/|\\?|&|_|-)+)*))?)\"(?<header>(\\s-H\\s\"(\\w+|\\.|-|/|\\s|=|\\d|;)+:\\s(\\w+|\\.|-|/|\\s|=|\\d|;)+\")*)(\\s-d\\s\"(?<post>.*)\")?");
         var matcher = pattern.matcher(str);
         if (matcher.find()) {
             var method = matcher.group("method");

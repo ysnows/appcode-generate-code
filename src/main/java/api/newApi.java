@@ -41,6 +41,11 @@ public class newApi extends AnAction {
                 //1. 接口定义 2. 接口返回 3. modelClass 4. 请求参数
                 var list = ApiUtil.apiParse(str, model, apiType);
 
+                if (list == null) {
+                    MyNotifier.notifyError(anActionEvent.getProject(), "解析失败");
+                    return;
+                }
+
                 Document document = editor.getDocument();
                 String strContent = document.getText();
 
