@@ -50,50 +50,48 @@ public class newApi extends AnAction {
                 String strContent = document.getText();
 
 
-                if (list != null) {
-                    //当前文件添加方法实现
-                    int lastEndIndex = strContent.lastIndexOf("@end");
-                    document.insertString(lastEndIndex - 1, list.get(1));
+                //当前文件添加方法实现
+                int lastEndIndex = strContent.lastIndexOf("@end");
+                document.insertString(lastEndIndex - 1, list.get(1));
 
-                    //头文件添加请求方法
-                    var path = psiFile.getVirtualFile().getPath();
-                    var hPath = path.replaceFirst("\\.m", "\\.h");
-                    var hFile = new File(hPath);
+                //头文件添加请求方法
+                var path = psiFile.getVirtualFile().getPath();
+                var hPath = path.replaceFirst("\\.m", "\\.h");
+                var hFile = new File(hPath);
 
-                    if (hFile.exists()) {
+                if (hFile.exists()) {
 
-                        var hVFile = LocalFileSystem.getInstance().findFileByIoFile(hFile);
-                        var hDocumentFile = FileDocumentManager.getInstance().getDocument(hVFile);
-                        var apiContent = hDocumentFile.getText();
-                        if (!apiContent.contains(list.get(2))) {
-                            if (apiType.equals("normal")) {
-                                var lastIndex = apiContent.lastIndexOf("@end");
-                                hDocumentFile.insertString(lastIndex - 1, "\n- (void)" + list.get(2) + ";");
-                            } else if (apiType.equals("list")) {
-                                apiContent = hDocumentFile.getText();
-                                var index = apiContent.indexOf("@interface");
-                                var lineNumber = document.getLineNumber(index);
-                                var endOffset = document.getLineEndOffset(lineNumber);
-                                hDocumentFile.insertString(endOffset + 1, list.get(3));
-                            }
+                    var hVFile = LocalFileSystem.getInstance().findFileByIoFile(hFile);
+                    var hDocumentFile = FileDocumentManager.getInstance().getDocument(hVFile);
+                    var apiContent = hDocumentFile.getText();
+                    if (!apiContent.contains(list.get(2))) {
+                        if (apiType.equals("normal")) {
+                            var lastIndex = apiContent.lastIndexOf("@end");
+                            hDocumentFile.insertString(lastIndex - 1, "\n- (void)" + list.get(2) + ";");
+                        } else if (apiType.equals("list")) {
+                            apiContent = hDocumentFile.getText();
+                            var index = apiContent.indexOf("@interface");
+                            var lineNumber = document.getLineNumber(index);
+                            var endOffset = document.getLineEndOffset(lineNumber + 1);
+                            hDocumentFile.insertString(endOffset + 1, list.get(3));
                         }
                     }
+                }
 
 
-                    //文件添加接口
-                    var project = anActionEvent.getProject();
-                    var projectFilePath = project.getBasePath();
+                //文件添加接口
+                var project = anActionEvent.getProject();
+                var projectFilePath = project.getBasePath();
 
-                    var file = new File(projectFilePath + "/aiyunji/Classes/Tools/Macros/ApiConfig.h");
-                    if (file.exists()) {
+                var file = new File(projectFilePath + "/aiyunji/Classes/Tools/Macros/ApiConfig.h");
+                if (file.exists()) {
 
-                        var vFile = LocalFileSystem.getInstance().findFileByIoFile(file);
-                        var documentFile = FileDocumentManager.getInstance().getDocument(vFile);
-                        var apiContent = documentFile.getText();
-                        if (!apiContent.contains(list.get(2))) {
-                            var lastIndex = apiContent.lastIndexOf("#endif");
-                            documentFile.insertString(lastIndex - 1, list.get(0));
-                        }
+                    var vFile = LocalFileSystem.getInstance().findFileByIoFile(file);
+                    var documentFile = FileDocumentManager.getInstance().getDocument(vFile);
+                    var apiContent = documentFile.getText();
+                    if (!apiContent.contains(list.get(2))) {
+                        var lastIndex = apiContent.lastIndexOf("#endif");
+                        documentFile.insertString(lastIndex - 1, list.get(0));
                     }
                 }
             });

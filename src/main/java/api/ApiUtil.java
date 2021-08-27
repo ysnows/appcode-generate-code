@@ -106,11 +106,11 @@ public class ApiUtil {
 
                             var kvArr = querykv.split("=");
                             var paramName = kvArr[0];
-                            methodStrBuilder.append("\n\tif (self.").append(paramName).append(") {");
-                            methodStrBuilder.append("\n\t\tparams[@\"").append(paramName).append("\"] = self.").append(paramName).append(";");
-                            methodStrBuilder.append("\n\t}");
-
                             if (!paramName.equals("page") && !paramName.equals("limit")) {
+                                methodStrBuilder.append("\n\tif (self.").append(paramName).append(") {");
+                                methodStrBuilder.append("\n\t\tparams[@\"").append(paramName).append("\"] = self.").append(paramName).append(";");
+                                methodStrBuilder.append("\n\t}");
+
                                 fieldStrBuilder.append("\n@property(nonatomic, strong) NSString *").append(paramName).append(";");
                             }
                         }
@@ -126,11 +126,12 @@ public class ApiUtil {
                             @Override
                             public void accept(Map.Entry<String, Object> stringObjectEntry) {
                                 String paramName = stringObjectEntry.getKey();
-                                methodStrBuilder.append("\n\tif (self.").append(paramName).append(") {");
-                                methodStrBuilder.append("\n\t\tparams[@\"").append(paramName).append("\"] = self.").append(paramName).append(";");
-                                methodStrBuilder.append("\n\t}");
 
                                 if (!paramName.equals("page") && !paramName.equals("limit")) {
+                                    methodStrBuilder.append("\n\tif (self.").append(paramName).append(") {");
+                                    methodStrBuilder.append("\n\t\tparams[@\"").append(paramName).append("\"] = self.").append(paramName).append(";");
+                                    methodStrBuilder.append("\n\t}");
+
                                     fieldStrBuilder.append("\n@property(nonatomic, strong) NSString *").append(paramName).append(";");
                                 }
                             }
