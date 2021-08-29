@@ -185,6 +185,23 @@ public class MasoryUtil {
         return text;
     }
 
+    public static String getSuperView(Document document) {
+        var superClass = DocUtil.getSuperClass(document);
+        switch (superClass) {
+            case "BView":
+                superClass = "self";
+                break;
+            case "BPageView":
+            case "BListPageView":
+            case "BCollectionPageView":
+            case "BCollectionCell":
+            case "BTableViewCell":
+                superClass = "contentView";
+                break;
+        }
+        return superClass;
+    }
+
     public static int isNumeric(String str) {
         var matches = Pattern.matches("-\\d+", str);
         if (matches) {

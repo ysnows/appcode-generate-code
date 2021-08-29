@@ -47,7 +47,10 @@ public class newUIView extends AnAction {
                 String strContent = document.getText();
 
                 String name = nameStr;
-                String superView = "contentView";
+                
+                
+
+                String superView = MasoryUtil.getSuperView(document);
                 String viewType = "BView";
                 if (nameStr.contains(".")) {
                     var nameArr = nameStr.split("\\.");

@@ -71,6 +71,10 @@ public class newVmField extends AnAction {
 
                     int lineEndIndex = CommonUtil.getNextLineIndexOfString(strContent, "@interface", headerContent);
                     headerContent.insertString(lineEndIndex + 1, parsedTextList.get(0));
+
+                    strContent = headerContent.getText();
+                    int importLineEndIndex = CommonUtil.getNextLineIndexOfString(strContent, "#import", headerContent);
+                    headerContent.insertString(lineEndIndex + 1, parsedTextList.get(3));
                 }
 
                 //View文件添加监听方法

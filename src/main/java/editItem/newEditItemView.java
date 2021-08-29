@@ -39,7 +39,7 @@ public class newEditItemView extends AnAction {
                 String strContent = document.getText();
 
                 String name = nameStr;
-                String superView = "contentView";
+                String superView = MasoryUtil.getSuperView(document);
                 if (nameStr.contains(".")) {
                     var nameArr = nameStr.split("\\.");
                     name = nameArr[0];

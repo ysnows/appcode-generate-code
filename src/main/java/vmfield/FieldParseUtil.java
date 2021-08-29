@@ -16,12 +16,18 @@ public class FieldParseUtil {
         var propertyBuilder = new StringBuilder();
         var observerBuilder = new StringBuilder();
         var bindBuilder = new StringBuilder();
+        var importBuilder = new StringBuilder();
         for (String str : arrField) {
             var arrFieldInfo = str.split(":");
             var fieldName = arrFieldInfo[0];
             var fieldType = getFieldType(arrFieldInfo.length > 1 ? arrFieldInfo[1] : "str");
+            var pureFieldType = getPureFieldType(arrFieldInfo.length > 1 ? arrFieldInfo[1] : "str");
             var propertyType = getPropertyType(arrFieldInfo.length > 1 ? arrFieldInfo[1] : "str");
             var bindView = arrFieldInfo.length > 2 ? arrFieldInfo[2] : "<#(NSString *)view#>";
+
+            if (!isNormalField(arrFieldInfo.length > 1 ? arrFieldInfo[1] : "str")) {
+                importBuilder.append("\n#import \"").append(pureFieldType).append(".h\"");
+            }
 
             propertyBuilder.append("\n@property(nonatomic, ").append(propertyType).append(") ");
             propertyBuilder.append(fieldType);
@@ -40,6 +46,7 @@ public class FieldParseUtil {
         list.add(propertyBuilder.toString());
         list.add(observerBuilder.toString());
         list.add(bindBuilder.toString());
+        list.add(bindBuilder.toString());
 
         return list;
 
@@ -57,6 +64,24 @@ public class FieldParseUtil {
                 return "NSString\t*";
             default:
                 return "" + text + " *";
+        }
+    }
+
+    private static boolean isNormalField(String text) {
+        return "int".equals(text) || "bool".equals(text) || "str".equals(text);
+    }
+
+    private static String getPureFieldType(String text) {
+
+        switch (text) {
+            case "int":
+                return "NSInteger";
+            case "bool":
+                return "Boolean";
+            case "str":
+                return "NSString";
+            default:
+                return "" + text + "";
         }
     }
 
