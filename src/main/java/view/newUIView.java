@@ -47,8 +47,8 @@ public class newUIView extends AnAction {
                 String strContent = document.getText();
 
                 String name = nameStr;
-                
-                
+                String typePrefix = "view";
+
 
                 String superView = MasoryUtil.getSuperView(document);
                 String viewType = "BView";
@@ -129,7 +129,7 @@ public class newUIView extends AnAction {
                 document.insertString(index - 1, strBuilder.toString());
 
 
-                MasoryUtil.moveCaretToMasoryLine(editor, document, name);
+                MasoryUtil.moveCaretToMasoryLine(editor, document, typePrefix + name);
 
 
                 Project project = editor.getProject();

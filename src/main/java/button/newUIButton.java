@@ -42,6 +42,8 @@ public class newUIButton extends AnAction {
 
 
                 String name = nameStr;
+                String typePrefix = "btn";
+
                 String superView = MasoryUtil.getSuperView(document);
                 if (nameStr.contains(".")) {
                     var nameArr = nameStr.split("\\.");
@@ -124,7 +126,7 @@ public class newUIButton extends AnAction {
                 document.insertString(index - 1, strBuilder.toString());
 
 
-                MasoryUtil.moveCaretToMasoryLine(editor, document, name);
+                MasoryUtil.moveCaretToMasoryLine(editor, document, typePrefix + name);
 
 
             });

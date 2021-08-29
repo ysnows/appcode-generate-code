@@ -25,7 +25,7 @@ public class DocUtil {
         VirtualFile curVirtualFile = FileDocumentManager.getInstance().getFile(curDocument);
 
         var curFileExtension = curVirtualFile.getExtension();
-        if ("m".equals(curFileExtension)) {
+        if ("h".equals(curFileExtension)) {
             headerDocument = curDocument;
         } else {
             var headerPath = curVirtualFile.getPath().replaceFirst("\\.m", "\\.h");
@@ -49,7 +49,7 @@ public class DocUtil {
         var arrTwo = arrOne[1].split("<");
         var superClass = arrTwo[0];
 
-        return superClass;
+        return superClass.trim();
 
     }
 }

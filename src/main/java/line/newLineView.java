@@ -42,6 +42,8 @@ public class newLineView extends AnAction {
 
 
                 String name = nameStr;
+                String typePrefix = "line";
+
                 String superView = MasoryUtil.getSuperView(document);
                 if (nameStr.contains(".")) {
                     var nameArr = nameStr.split("\\.");
@@ -102,7 +104,7 @@ public class newLineView extends AnAction {
                 document.insertString(index - 1, strBuilder.toString());
 
 
-                MasoryUtil.moveCaretToMasoryLine(editor, document, name);
+                MasoryUtil.moveCaretToMasoryLine(editor, document, typePrefix + name);
 
 
             });

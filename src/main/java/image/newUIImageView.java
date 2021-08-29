@@ -41,6 +41,7 @@ public class newUIImageView extends AnAction {
                 String strContent = document.getText();
 
                 String name = nameStr;
+                String typePrefix = "img";
                 String superView = MasoryUtil.getSuperView(document);
                 if (nameStr.contains(".")) {
                     var nameArr = nameStr.split("\\.");
@@ -51,34 +52,34 @@ public class newUIImageView extends AnAction {
 
                 int firstEndIndex = strContent.indexOf("@end");
 
-                document.insertString(firstEndIndex - 1, "\n@property(nonatomic, strong) BImageView *img" + name + ";");
+                document.insertString(firstEndIndex - 1, "\n@property(nonatomic, strong) BImageView *" + typePrefix + "" + name + ";");
 
 
                 strContent = document.getText();
                 int lastEndIndex = strContent.lastIndexOf("@end");
                 StringBuilder strBuilder = new StringBuilder();
-                strBuilder.append("\n- (BImageView *)img").append(name).append(" {\n");
+                strBuilder.append("\n- (BImageView *)" + typePrefix + "").append(name).append(" {\n");
 
-                strBuilder.append("\tif (!_img").append(name).append("){\n");
+                strBuilder.append("\tif (!_" + typePrefix + "").append(name).append("){\n");
 
-                strBuilder.append("\t\t_img").append(name).append(" = [[BImageView alloc] initWithImage:[UIImage imageNamed:").append(CommonUtil.processImage(image)).append("]];\n");
+                strBuilder.append("\t\t_" + typePrefix + "").append(name).append(" = [[BImageView alloc] initWithImage:[UIImage imageNamed:").append(CommonUtil.processImage(image)).append("]];\n");
 
                 if (!TextUtils.isBlank(bgcolor)) {
-                    strBuilder.append("\t\t_img").append(name).append(".backgroundColor = ").append(CommonUtil.processColor(bgcolor)).append(";\n");
+                    strBuilder.append("\t\t_" + typePrefix + "").append(name).append(".backgroundColor = ").append(CommonUtil.processColor(bgcolor)).append(";\n");
                 } else {
-//                    strBuilder.append("\t\t_img").append(name).append(".backgroundColor = ").append("UIColor.clearColor").append(";\n");
+//                    strBuilder.append("\t\t_"+typePrefix"+"").append(name).append(".backgroundColor = ").append("UIColor.clearColor").append(";\n");
                 }
 
                 if (!TextUtils.isBlank(radius)) {
-                    strBuilder.append("\t\t[_img").append(name).append(" corner_radius:kNum(").append(radius).append(")];\n");
+                    strBuilder.append("\t\t[_" + typePrefix + "").append(name).append(" corner_radius:kNum(").append(radius).append(")];\n");
                 }
 
                 if (!TextUtils.isBlank(border) && !TextUtils.isBlank(border_color)) {
-                    strBuilder.append("\t\t[_img").append(name).append(" border:kNum(").append(border).append(") color:").append(CommonUtil.processColor(border_color)).append("];\n");
+                    strBuilder.append("\t\t[_" + typePrefix + "").append(name).append(" border:kNum(").append(border).append(") color:").append(CommonUtil.processColor(border_color)).append("];\n");
                 }
 
                 strBuilder.append("\t}\n");
-                strBuilder.append("\treturn _img").append(name).append(";\n");
+                strBuilder.append("\treturn _" + typePrefix + "").append(name).append(";\n");
                 strBuilder.append("}\n");
 
                 document.insertString(lastEndIndex - 1, strBuilder.toString());
@@ -88,7 +89,7 @@ public class newUIImageView extends AnAction {
                 int index = CommonUtil.getEndIndexOfMethod(strContent, "\\(void\\)updateConstraints");
 
                 strBuilder = new StringBuilder();
-                strBuilder.append("\n\t[self.img").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
+                strBuilder.append("\n\t[self." + typePrefix + "").append(name).append(" mas_makeConstraints:^(MASConstraintMaker *make) {\n");
                 strBuilder.append("\n\t\tmake.height.mas_equalTo(kNum(").append(height).append("));");
                 strBuilder.append("\n\t\tmake.width.mas_equalTo(kNum(").append(width).append("));");
                 var parsedMasory = MasoryUtil.parseMasory(masory);
@@ -101,12 +102,11 @@ public class newUIImageView extends AnAction {
                 index = CommonUtil.getEndIndexOfMethod(strContent, "\\(void\\)addView");
 
                 strBuilder = new StringBuilder();
-                strBuilder.append("\n\t[self." + superView + " addSubview:self.img").append(name).append("];");
+                strBuilder.append("\n\t[self." + superView + " addSubview:self." + typePrefix + "").append(name).append("];");
                 document.insertString(index - 1, strBuilder.toString());
 
 
-                MasoryUtil.moveCaretToMasoryLine(editor, document, name);
-
+                MasoryUtil.moveCaretToMasoryLine(editor, document, typePrefix+name);
 
 
             });
