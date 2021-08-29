@@ -11,6 +11,14 @@ import java.io.File;
 public class DocUtil {
 
 
+    public static int getNextLineOfLastIndexOfString(String pattern, com.intellij.openapi.editor.Document document) {
+        int index = document.getText().lastIndexOf(pattern);
+
+        int lineNumber = document.getLineNumber(index);
+
+        return document.getLineEndOffset(lineNumber);
+    }
+
     public static Document getHeaderDocument(Document curDocument) {
 
         Document headerDocument;

@@ -46,7 +46,7 @@ public class FieldParseUtil {
         list.add(propertyBuilder.toString());
         list.add(observerBuilder.toString());
         list.add(bindBuilder.toString());
-        list.add(bindBuilder.toString());
+        list.add(importBuilder.toString());
 
         return list;
 

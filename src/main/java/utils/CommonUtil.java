@@ -127,6 +127,12 @@ public class CommonUtil {
         return String.valueOf(methodName);
     }
 
+    public static String toLowerCase4Index(String string) {
+        char[] methodName = string.toCharArray();
+        methodName[0] = Character.toLowerCase(methodName[0]);
+        return String.valueOf(methodName);
+    }
+
     /**
      * 字符转成大写
      *

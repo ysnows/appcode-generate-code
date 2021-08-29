@@ -15,6 +15,7 @@ import com.intellij.psi.PsiFile;
 import java.io.File;
 
 import main.java.utils.CommonUtil;
+import main.java.utils.DocUtil;
 import main.java.utils.MyNotifier;
 
 public class newVmField extends AnAction {
@@ -72,9 +73,8 @@ public class newVmField extends AnAction {
                     int lineEndIndex = CommonUtil.getNextLineIndexOfString(strContent, "@interface", headerContent);
                     headerContent.insertString(lineEndIndex + 1, parsedTextList.get(0));
 
-                    strContent = headerContent.getText();
-                    int importLineEndIndex = CommonUtil.getNextLineIndexOfString(strContent, "#import", headerContent);
-                    headerContent.insertString(lineEndIndex + 1, parsedTextList.get(3));
+                    int importLineEndIndex = DocUtil.getNextLineOfLastIndexOfString("#import", headerContent);
+                    headerContent.insertString(importLineEndIndex + 1, parsedTextList.get(3));
                 }
 
                 //View文件添加监听方法
@@ -97,15 +97,19 @@ public class newVmField extends AnAction {
                     var endIndexOfMethod = CommonUtil.getEndIndexOfMethod(viewDocument.getText(), "\\(void\\)setupVm");
                     viewDocument.insertString(endIndexOfMethod - 1, parsedTextList.get(1));
 
+                    int importLineEndIndex = DocUtil.getNextLineOfLastIndexOfString("#import", viewDocument);
+                    viewDocument.insertString(importLineEndIndex + 1, parsedTextList.get(3));
+
                 }
                 if (bind.equals("yes")) {
 
                     var endIndexOfMethod = CommonUtil.getEndIndexOfMethod(viewDocument.getText(), "\\(void\\)setupVm");
                     viewDocument.insertString(endIndexOfMethod - 1, parsedTextList.get(2));
 
+                    int importLineEndIndex = DocUtil.getNextLineOfLastIndexOfString("#import", viewDocument);
+                    viewDocument.insertString(importLineEndIndex + 1, parsedTextList.get(3));
+
                 }
-
-
             });
         }
 
