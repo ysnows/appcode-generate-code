@@ -67,6 +67,7 @@ public class newUIButton extends AnAction {
                 strBuilder.append("\t\t[_btn").append(name).append(" setTitleColor:").append(CommonUtil.processColor(color)).append(" forState:UIControlStateNormal];\n");
                 strBuilder.append("\t\t[_btn").append(name).append(".titleLabel setFont:").append(CommonUtil.processFont(font)).append("];\n");
                 strBuilder.append("\t\t[_btn").append(name).append(" setTitle:").append(CommonUtil.processText(text)).append(" forState:UIControlStateNormal];\n");
+                strBuilder.append("\t\t[_btn").append(name).append(" sizeToFit];\n");
 
                 if (!TextUtils.isBlank(image) || (!TextUtils.isBlank(imageWidth) && !TextUtils.isBlank(imageHeight))) {
                     strBuilder.append("\t\tUIImage *resizedImage = [[UIImage imageNamed:@\"").append(image).append("\"] qmui_imageResizedInLimitedSize:CGSizeMake(kNum(").append(imageWidth).append("), kNum(").append(imageHeight).append(")) resizingMode:QMUIImageResizingModeScaleAspectFill];\n");

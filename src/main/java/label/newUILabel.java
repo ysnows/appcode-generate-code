@@ -69,6 +69,7 @@ public class newUILabel extends AnAction {
                 strBuilder.append("\t\t_label").append(name).append(".font = ").append(CommonUtil.processFont(font)).append(";\n");
                 strBuilder.append("\t\t_label").append(name).append(".text = ").append(CommonUtil.processText(text)).append(";\n");
                 strBuilder.append("\t\t_label").append(name).append(".adjustsFontSizeToFitWidth = NO;\n");
+                strBuilder.append("\t\t[_label").append(name).append(" sizeToFit];\n");
 
                 if ("1".equals(numberOfLines)) {
                     strBuilder.append("\t\t_label").append(name).append(".lineBreakMode = NSLineBreakByTruncatingTail").append(";\n");
